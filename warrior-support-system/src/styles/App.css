@@ -1,0 +1,372 @@
+/* Test CSS - Remove this after confirming it works */
+body {
+  background: red !important;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
+  min-height: 100vh;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* Common Login/Register Styles */
+.login-container,
+.register-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.login-left,
+.register-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  padding: 2rem;
+}
+
+.system-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.login-subtitle,
+.register-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 1rem;
+  opacity: 0.9;
+  color: white;
+}
+
+.logo-container {
+  margin: 2rem 0;
+}
+
+.military-logo-placeholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  border: 3px solid rgba(255,255,255,0.3);
+}
+
+.login-right,
+.register-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+}
+
+.login-logos,
+.register-logos {
+
+  display: flex;
+  
+  gap: 15rem;
+  margin-bottom: 2rem;
+}
+
+.login-logo-placeholder,
+.register-logo-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.login-form-container,
+.register-form-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.login-form-container h2,
+.register-form-container h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+/* Login Form Styles */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form input {
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.9);
+  font-size: 1rem;
+}
+
+.login-btn {
+  padding: 15px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: #357abd;
+}
+
+.login-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Registration Form Styles */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.register-form input,
+.register-form select {
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.9);
+  font-size: 1rem;
+}
+
+.register-form select {
+  cursor: pointer;
+}
+
+.register-btn {
+  padding: 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 1rem;
+}
+
+.register-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.register-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Message Styles */
+.error-message {
+  color: #ff6b6b;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 10px;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.success-message {
+  color: #51cf66;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 10px;
+  background: rgba(81, 207, 102, 0.1);
+  border-radius: 5px;
+  border: 1px solid rgba(81, 207, 102, 0.3);
+}
+
+/* Link Styles */
+.register-link,
+.login-link {
+  text-align: center;
+  margin-top: 2rem;
+  color: white;
+}
+
+.register-link a,
+.login-link a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover,
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Header Styles */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0,0,0,0.3);
+  color: white;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-logo-placeholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: white;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.user-role {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.profile-logo-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: bold;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-container,
+  .register-container {
+    flex-direction: column;
+  }
+  
+  .system-title {
+    font-size: 2rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .login-form-container,
+  .register-form-container {
+    max-width: 400px;
+  }
+  
+  .user-info {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .system-title {
+    font-size: 1.5rem;
+  }
+  
+  .login-left,
+  .register-left,
+  .login-right,
+  .register-right {
+    padding: 1rem;
+  }
+}

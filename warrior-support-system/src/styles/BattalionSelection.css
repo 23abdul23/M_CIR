@@ -1,0 +1,217 @@
+/* Battalion Selection Component Styles */
+.battalion-selection-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  position: relative;
+}
+
+.battalion-selection-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/images/background.jpg') center/cover;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.selection-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.selection-form {
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(15px);
+  padding: 3rem;
+  border-radius: 15px;
+  color: white;
+  min-width: 500px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  animation: fadeIn 0.8s ease-out;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.selection-form label {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.selection-form select {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 2rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(74, 144, 226, 0.9);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.selection-form select:focus {
+  outline: none;
+  background: rgba(74, 144, 226, 1);
+  box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+  transform: translateY(-2px);
+}
+
+.selection-form select option {
+  background: #4a90e2;
+  color: white;
+  padding: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 12px;
+  background: linear-gradient(135deg, #6c757d, #545b62);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.action-buttons button:hover {
+  background: linear-gradient(135deg, #545b62, #495057);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.add-battalion-form {
+  background: rgba(255,255,255,0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  animation: slideIn 0.5s ease-out;
+}
+
+.add-battalion-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.9);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.add-battalion-form input:focus {
+  outline: none;
+  background: rgba(255,255,255,1);
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.4);
+}
+
+.add-battalion-form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.add-battalion-form button:hover {
+  background: linear-gradient(135deg, #218838, #1e7e34);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.proceed-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3);
+}
+
+.proceed-btn:hover {
+  background: linear-gradient(135deg, #357abd, #2968a3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+}
+
+.proceed-btn:disabled {
+  background: linear-gradient(135deg, #6c757d, #545b62);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .selection-form {
+    min-width: auto;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .selection-form label {
+    font-size: 1.1rem;
+  }
+  
+  .selection-form select {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .selection-content {
+    padding: 1rem;
+  }
+  
+  .selection-form {
+    padding: 1.5rem;
+  }
+  
+  .proceed-btn {
+    font-size: 1rem;
+    padding: 15px;
+  }
+}

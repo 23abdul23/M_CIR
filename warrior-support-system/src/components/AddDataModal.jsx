@@ -1,0 +1,166 @@
+import React, { useState } from 'react'
+import axios from 'axios'
+
+const AddDataModal = ({ onClose, onSave, battalionId }) => {
+  const [formData, setFormData] = useState({
+    rank: '',
+    name: '',
+    armyNo: '',
+    coySquadronBty: '',
+    service: '',
+    dateOfInduction: '',
+    medCat: '',
+    leaveAvailed: '',
+    maritalStatus: 'MARRIED'
+  })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await axios.post('/api/personnel', {
+        ...formData,
+        battalion: battalionId
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      onSave()
+      onClose()
+    } catch (error) {
+      console.error('Error adding personnel:', error)
+    }
+  }
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>UPLOAD NEW DATA</h2>
+          <button className="close-btn" onClick={onClose}>×</button>
+        </div>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>RANK</label>
+              <input
+                type="text"
+                name="rank"
+                value={formData.rank}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>NAME</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>ARMY NO</label>
+              <input
+                type="text"
+                name="armyNo"
+                value={formData.armyNo}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>COY/SQN/BTY</label>
+              <input
+                type="text"
+                name="coySquadronBty"
+                value={formData.coySquadronBty}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>SERVICE (YEARS)</label>
+              <input
+                type="text"
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>DATE OF INDN</label>
+              <input
+                type="date"
+                name="dateOfInduction"
+                value={formData.dateOfInduction}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>MED CAT</label>
+              <select
+                name="medCat"
+                value={formData.medCat}
+                onChange={handleChange}
+                required
+              >
+                <option value="">MED CAT</option>
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+                <option value="C1">C1</option>
+                <option value="C2">C2</option>
+              </select>
+            </div>
+            
+            <div className="form-group">
+              <label>LEAVE AVAILED THIS YEAR(ACL)</label>
+              <input
+                type="text"
+                name="leaveAvailed"
+                value={formData.leaveAvailed}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>MARITAL STATUS</label>
+              <select
+                name="maritalStatus"
+                value={formData.maritalStatus}
+                onChange={handleChange}
+                required
+              >
+                <option value="MARRIED">MARRIED</option>
+                <option value="UNMARRIED">UNMARRIED</option>
+              </select>
+            </div>
+          </div>
+          
+          <button type="submit" className="submit-btn">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default AddDataModal
