@@ -1,9 +1,26 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Header from './Header'
+import '../styles/Instructions.css'
 
-const Instructions = () => {
+const Instructions = ({ currentUser, onLogout }) => {
   const [agreed, setAgreed] = useState(false)
   const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Clear all stored data
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('currentArmyNo')
+    
+    // Call parent logout function
+    if (onLogout) {
+      onLogout()
+    }
+    
+    // Redirect to login page
+    navigate('/login')
+  }
 
   const handleProceed = () => {
     if (agreed) {
@@ -13,17 +30,7 @@ const Instructions = () => {
 
   return (
     <div className="instructions-container">
-      <header className="app-header">
-        <div className="header-left">
-          <img src="/images/logo1.png" alt="Logo 1" className="header-logo" />
-          <img src="/images/logo2.png" alt="Logo 2" className="header-logo" />
-          <h1>WARRIOR SUPPORT SYSTEM</h1>
-        </div>
-        <div className="header-right">
-          <img src="/images/logo1.png" alt="Profile" className="profile-logo" />
-          <button className="logout-btn">LOGOUT</button>
-        </div>
-      </header>
+      <Header currentUser={currentUser} onLogout={handleLogout} />
 
       <div className="instructions-content">
         <h2>INSTRUCTIONS</h2>

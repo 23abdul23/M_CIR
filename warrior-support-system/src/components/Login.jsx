@@ -45,7 +45,7 @@ const Login = ({ setIsAuthenticated, setCurrentUser }) => {
       <div className="login-left">
         <h1 className="system-title">WARRIOR SUPPORT SYSTEM</h1>
         <div className="logo-container">
-          <div className="military-logo-placeholder">LOGO</div>
+          <div className="military-logo-placeholder"><img src="/images/logo1.png" alt="Logo 1" className="login-logo" /></div>
         </div>
         <p className="login-subtitle">Secure Military Personnel Management</p>
       </div>

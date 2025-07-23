@@ -5,7 +5,17 @@ const Header = ({ currentUser, onLogout }) => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    onLogout()
+    // Clear all stored data
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('currentArmyNo')
+    
+    // Call parent logout function if provided
+    if (onLogout) {
+      onLogout()
+    }
+    
+    // Redirect to login page
     navigate('/login')
   }
 

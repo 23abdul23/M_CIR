@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Header from './Header'
 import AddDataModal from './AddDataModal'
+import '../styles/DataTable.css'
 
-const DataTable = ({ selectedBattalion }) => {
+const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const navigate = useNavigate()
@@ -21,6 +23,21 @@ const DataTable = ({ selectedBattalion }) => {
     } catch (error) {
       console.error('Error fetching personnel:', error)
     }
+  }
+
+  const handleLogout = () => {
+    // Clear all stored data
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('currentArmyNo')
+    
+    // Call parent logout function
+    if (onLogout) {
+      onLogout()
+    }
+    
+    // Redirect to login page
+    navigate('/login')
   }
 
   const handleSaveAll = async () => {
@@ -41,17 +58,7 @@ const DataTable = ({ selectedBattalion }) => {
 
   return (
     <div className="data-table-container">
-      <header className="app-header">
-        <div className="header-left">
-          <img src="/images/logo1.png" alt="Logo 1" className="header-logo" />
-          <img src="/images/logo2.png" alt="Logo 2" className="header-logo" />
-          <h1>WARRIOR SUPPORT SYSTEM</h1>
-        </div>
-        <div className="header-right">
-          <img src="/images/logo1.png" alt="Profile" className="profile-logo" />
-          <button className="logout-btn">LOGOUT</button>
-        </div>
-      </header>
+      <Header currentUser={currentUser} onLogout={handleLogout} />
 
       <div className="table-content">
         <h2>71 FD REGT</h2>

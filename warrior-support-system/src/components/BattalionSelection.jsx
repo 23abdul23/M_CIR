@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
 
-const BattalionSelection = ({ selectedBattalion, setSelectedBattalion }) => {
+const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUser, onLogout }) => {
   const [battalions, setBattalions] = useState([])
   const [showAddForm, setShowAddForm] = useState(false)
   const [newBattalion, setNewBattalion] = useState({
@@ -25,6 +25,21 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion }) => {
     } catch (error) {
       console.error('Error fetching battalions:', error)
     }
+  }
+
+  const handleLogout = () => {
+    // Clear all stored data
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('currentArmyNo')
+    
+    // Call parent logout function
+    if (onLogout) {
+      onLogout()
+    }
+    
+    // Redirect to login page
+    navigate('/login')
   }
 
   const handleProceed = () => {
@@ -63,17 +78,7 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion }) => {
 
   return (
     <div className="battalion-selection-container">
-      <header className="app-header">
-        <div className="header-left">
-          <img src="/images/logo1.png" alt="Logo 1" className="header-logo" />
-          <img src="/images/logo2.png" alt="Logo 2" className="header-logo" />
-          <h1>WARRIOR SUPPORT SYSTEM</h1>
-        </div>
-        <div className="header-right">
-          <img src="/images/logo1.png" alt="Profile" className="profile-logo" />
-          <button className="logout-btn" >LOGOUT</button>
-        </div>
-      </header>
+      <Header currentUser={currentUser} onLogout={handleLogout} />
 
       <div className="selection-content">
         <div className="selection-form">
@@ -114,7 +119,11 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion }) => {
             </form>
           )}
 
-          <button onClick={handleProceed} className="proceed-btn">
+          <button 
+            onClick={handleProceed} 
+            className="proceed-btn"
+            disabled={!selectedBattalion}
+          >
             Proceed
           </button>
         </div>

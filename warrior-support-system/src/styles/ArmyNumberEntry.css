@@ -1,0 +1,131 @@
+.army-number-container {
+  min-height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+              url('/src/assets/mountain-background.jpg') center/cover;
+  display: flex;
+  flex-direction: column;
+}
+
+.entry-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.entry-form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  min-width: 400px;
+}
+
+.entry-form label {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.entry-form input {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #bdc3c7;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  background: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.entry-form input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.entry-form input::placeholder {
+  color: #95a5a6;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 5px;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.entry-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.back-btn,
+.proceed-btn {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.back-btn {
+  background: #95a5a6;
+  color: white;
+}
+
+.back-btn:hover {
+  background: #7f8c8d;
+  transform: translateY(-2px);
+}
+
+.proceed-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.proceed-btn:hover {
+  background: #229954;
+  transform: translateY(-2px);
+}
+
+.proceed-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .entry-form {
+    min-width: 300px;
+    padding: 30px 20px;
+  }
+  
+  .entry-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .back-btn,
+  .proceed-btn {
+    width: 100%;
+  }
+}

@@ -95,7 +95,7 @@
 
 .login-logos {
   display: flex;
-  gap: 2rem;
+  gap: 12rem;
   margin-bottom: 2rem;
   animation: fadeIn 1s ease-out 0.5s both;
 }
