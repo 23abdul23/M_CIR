@@ -127,14 +127,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
       <main className="jso-main-content">
         {/* Statistics Grid */}
         <section className="jso-stats-grid">
-          <div className="jso-stat-card">
-            <div className="jso-stat-header">
-              <span className="jso-stat-title">Total Personnel</span>
-              <div className="jso-stat-icon">👥</div>
-            </div>
-            <h2 className="jso-stat-value">{stats.totalPersonnel}</h2>
-            <p className="jso-stat-description">Under your command</p>
-          </div>
+          
 
           <div className="jso-stat-card">
             <div className="jso-stat-header">
@@ -154,14 +147,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
             <p className="jso-stat-description">Peer evaluations done</p>
           </div>
 
-          <div className="jso-stat-card">
-            <div className="jso-stat-header">
-              <span className="jso-stat-title">Exam Appeared</span>
-              <div className="jso-stat-icon">📝</div>
-            </div>
-            <h2 className="jso-stat-value">{stats.examAppeared}</h2>
-            <p className="jso-stat-description">Self-evaluation completed</p>
-          </div>
+          
         </section>
 
         {/* Battalion Information */}
@@ -217,19 +203,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
         <section className="jso-evaluation-section">
           <h2 className="jso-section-title">Quick Actions</h2>
           <div className="jso-evaluation-grid">
-            <div className="jso-evaluation-card">
-              <div className="jso-evaluation-header">
-                <h3 className="jso-personnel-name">Start Examination</h3>
-                <span className="jso-personnel-rank">EXAM</span>
-              </div>
-              <p>Begin a new examination for personnel assessment</p>
-              <button 
-                onClick={() => navigate('/army-number-entry')}
-                className="jso-btn-primary"
-              >
-                START EXAMINATION
-              </button>
-            </div>
+            
 
             <div className="jso-evaluation-card">
               <div className="jso-evaluation-header">
@@ -261,7 +235,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
           </div>
         </section>
 
-        {/* JSO Profile */}
+        {/* JSO Profile
         <section className="jso-csv-section">
           <h2 className="jso-section-title">My Profile</h2>
           <div className="jso-csv-actions">
@@ -287,7 +261,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </div>
   )
