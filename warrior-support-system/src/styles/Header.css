@@ -26,7 +26,6 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   letter-spacing: 1px;
 }
-
 .header-logo-placeholder {
   width: 50px;
   height: 50px;
@@ -40,11 +39,19 @@
   font-weight: bold;
   border: 2px solid rgba(255,255,255,0.3);
   transition: all 0.3s ease;
+  overflow: hidden; /* ensures image doesn't spill out */
 }
 
 .header-logo-placeholder:hover {
   transform: scale(1.1);
   border-color: rgba(255,255,255,0.5);
+}
+
+.header-logo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ensures it fills the circle */
+  border-radius: 50%; /* optional, in case you want circular cropping */
 }
 
 .header-right {

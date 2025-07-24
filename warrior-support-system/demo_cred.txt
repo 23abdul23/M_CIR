@@ -1,0 +1,5 @@
+### **Demo Credentials:**
+
+- **CO:** `co_admin` / `admin123`
+- **JSO:** `jso_officer` / `jso123`
+- **USER:** `user_soldier` / `user123`

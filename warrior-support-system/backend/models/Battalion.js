@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const battalionSchema = new mongoose.Schema({
   name: {
@@ -7,18 +7,28 @@ const battalionSchema = new mongoose.Schema({
     unique: true
   },
   postedStr: {
+    type: String
+  },
+  status: {
     type: String,
-    required: false
+    enum: ['PENDING', 'APPROVED', 'REJECTED'],
+    default: 'PENDING'
+  },
+  requestedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  approvedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   createdAt: {
     type: Date,
     default: Date.now
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+  approvedAt: {
+    type: Date
   }
 })
 
-export default mongoose.model('Battalion', battalionSchema)
+module.exports = mongoose.model('Battalion', battalionSchema)

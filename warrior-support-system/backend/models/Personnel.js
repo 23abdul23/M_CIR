@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const personnelSchema = new mongoose.Schema({
   armyNo: {
@@ -31,8 +31,7 @@ const personnelSchema = new mongoose.Schema({
     required: true
   },
   leaveAvailed: {
-    type: String,
-    required: true
+    type: String
   },
   maritalStatus: {
     type: String,
@@ -41,7 +40,26 @@ const personnelSchema = new mongoose.Schema({
   },
   selfEvaluation: {
     type: String,
-    required: false
+    enum: ['NOT_ATTEMPTED', 'EXAM_APPEARED', 'COMPLETED'],
+    default: 'NOT_ATTEMPTED'
+  },
+  peerEvaluation: {
+    status: {
+      type: String,
+      enum: ['PENDING', 'EVALUATED'],
+      default: 'PENDING'
+    },
+    evaluatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    evaluatedAt: {
+      type: Date
+    },
+    answers: [{
+      questionId: String,
+      answer: String
+    }]
   },
   battalion: {
     type: mongoose.Schema.Types.ObjectId,
@@ -54,4 +72,4 @@ const personnelSchema = new mongoose.Schema({
   }
 })
 
-export default mongoose.model('Personnel', personnelSchema)
+module.exports = mongoose.model('Personnel', personnelSchema)

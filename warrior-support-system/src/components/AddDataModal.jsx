@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import '../styles/AddDataModal.css'
 
 const AddDataModal = ({ onClose, onSave, battalionId }) => {
   const [formData, setFormData] = useState({
@@ -49,13 +50,26 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
           <div className="form-grid">
             <div className="form-group">
               <label>RANK</label>
-              <input
-                type="text"
-                name="rank"
-                value={formData.rank}
-                onChange={handleChange}
-                required
-              />
+              <select
+                    id="rank"
+                    name="rank"
+                    value={formData.rank}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Rank</option>
+                    <option value="Lt Col">Lt Col</option>
+                    <option value="Maj">Maj</option>
+                    <option value="Capt">Capt</option>
+                    <option value="Lt">Lt</option>
+                    <option value="2Lt">2Lt</option>
+                    <option value="Sub">Sub</option>
+                    <option value="Nb Sub">Nb Sub</option>
+                    <option value="Hav">Hav</option>
+                    <option value="Nk">Nk</option>
+                    <option value="L/Nk">L/Nk</option>
+                    <option value="Sep">Sep</option>
+                    <option value="Rfn">Rfn</option>
+                  </select>
             </div>
             
             <div className="form-group">

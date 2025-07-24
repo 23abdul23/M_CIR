@@ -1,50 +1,132 @@
-import express from 'express'
-import Battalion from '../models/Battalion.js'
-import auth from '../middleware/auth.js'
+const express = require('express')
+const Battalion = require('../models/Battalion')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
-// Get all battalions
+// Get all battalions (CO sees all, others see only approved)
 router.get('/', auth, async (req, res) => {
   try {
-    const battalions = await Battalion.find().populate('createdBy', 'username')
+    let query = {}
+    
+    // Non-CO users can only see approved battalions
+    if (req.user.role !== 'CO') {
+      query.status = 'APPROVED'
+    }
+
+    const battalions = await Battalion.find(query)
+      .populate('requestedBy', 'fullName username')
+      .populate('approvedBy', 'fullName username')
+      .sort({ createdAt: -1 })
+
     res.json(battalions)
   } catch (error) {
-    res.status(500).json({ message: 'Server error' })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
 })
 
-// Create new battalion
+// Get pending battalion requests (CO only)
+router.get('/pending', auth, async (req, res) => {
+  try {
+    if (req.user.role !== 'CO') {
+      return res.status(403).json({ message: 'Access denied' })
+    }
+
+    const pendingBattalions = await Battalion.find({ status: 'PENDING' })
+      .populate('requestedBy', 'fullName username armyNo rank')
+      .sort({ createdAt: -1 })
+
+    res.json(pendingBattalions)
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message })
+  }
+})
+
+// Create new battalion (request)
 router.post('/', auth, async (req, res) => {
   try {
-    const battalion = new Battalion({
-      ...req.body,
-      createdBy: req.user.userId
-    })
+    const { name, postedStr } = req.body
+
+    // Check if battalion already exists
+    const existingBattalion = await Battalion.findOne({ name })
+    if (existingBattalion) {
+      return res.status(400).json({ message: 'Battalion already exists' })
+    }
+
+    const battalionData = {
+      name,
+      postedStr,
+      requestedBy: req.user.userId
+    }
+
+    // CO can directly approve, others need approval
+    if (req.user.role === 'CO') {
+      battalionData.status = 'APPROVED'
+      battalionData.approvedBy = req.user.userId
+      battalionData.approvedAt = new Date()
+    }
+
+    const battalion = new Battalion(battalionData)
     await battalion.save()
+
+    await battalion.populate('requestedBy', 'fullName username')
+    await battalion.populate('approvedBy', 'fullName username')
+
     res.status(201).json(battalion)
   } catch (error) {
-    if (error.code === 11000) {
-      res.status(400).json({ message: 'Battalion name already exists' })
-    } else {
-      res.status(500).json({ message: 'Server error' })
-    }
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
 })
 
-// Delete battalion
-router.delete('/:id', auth, async (req, res) => {
+// Approve/Reject battalion (CO only)
+router.patch('/:id/status', auth, async (req, res) => {
   try {
-    const battalion = await Battalion.findByIdAndDelete(req.params.id)
+    if (req.user.role !== 'CO') {
+      return res.status(403).json({ message: 'Access denied' })
+    }
+
+    const { status } = req.body // 'APPROVED' or 'REJECTED'
     
+    if (!['APPROVED', 'REJECTED'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' })
+    }
+
+    const battalion = await Battalion.findById(req.params.id)
     if (!battalion) {
       return res.status(404).json({ message: 'Battalion not found' })
     }
-    
-    res.json({ message: 'Battalion deleted successfully' })
+
+    battalion.status = status
+    battalion.approvedBy = req.user.userId
+    battalion.approvedAt = new Date()
+
+    await battalion.save()
+    await battalion.populate('requestedBy', 'fullName username')
+    await battalion.populate('approvedBy', 'fullName username')
+
+    res.json(battalion)
   } catch (error) {
-    res.status(500).json({ message: 'Server error' })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
 })
 
-export default router
+// Delete battalion (CO only)
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    if (req.user.role !== 'CO') {
+      return res.status(403).json({ message: 'Access denied' })
+    }
+
+    const battalion = await Battalion.findById(req.params.id)
+    if (!battalion) {
+      return res.status(404).json({ message: 'Battalion not found' })
+    }
+
+    await Battalion.findByIdAndDelete(req.params.id)
+    res.json({ message: 'Battalion deleted successfully' })
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message })
+  }
+})
+
+module.exports = router

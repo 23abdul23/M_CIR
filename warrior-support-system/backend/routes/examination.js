@@ -1,6 +1,6 @@
-import express from 'express'
-import Examination from '../models/Examination.js'
-import auth from '../middleware/auth.js'
+const express = require('express')
+const Examination = require('../models/Examination')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -28,4 +28,4 @@ router.get('/army-no/:armyNo', auth, async (req, res) => {
   }
 })
 
-export default router
+module.exports = router

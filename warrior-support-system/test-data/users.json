@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "64a1b2c3d4e5f6789012345a",
+    "username": "co_admin",
+    "password": "$2a$10$rOzHqKnJbYV8WqGdwjL.eeKZqYxqYxqYxqYxqYxqYxqYxqYxqYxqY",
+    "fullName": "Colonel Rajesh Kumar",
+    "role": "CO",
+    "isActive": true,
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "_id": "64a1b2c3d4e5f6789012345b",
+    "username": "jso_officer",
+    "password": "$2a$10$rOzHqKnJbYV8WqGdwjL.eeKZqYxqYxqYxqYxqYxqYxqYxqYxqYxqY",
+    "fullName": "Major Priya Sharma",
+    "role": "JSO",
+    "armyNo": "JC15234M",
+    "rank": "Maj",
+    "battalion": "64a1b2c3d4e5f6789012345e",
+    "isActive": true,
+    "createdAt": "2024-01-15T08:30:00.000Z"
+  },
+  {
+    "_id": "64a1b2c3d4e5f6789012345c",
+    "username": "user_soldier",
+    "password": "$2a$10$rOzHqKnJbYV8WqGdwjL.eeKZqYxqYxqYxqYxqYxqYxqYxqYxqYxqY",
+    "fullName": "Sepoy Amit Singh",
+    "role": "USER",
+    "armyNo": "SS51782K",
+    "rank": "Sep",
+    "battalion": "64a1b2c3d4e5f6789012345e",
+    "isActive": true,
+    "createdAt": "2024-01-15T09:00:00.000Z"
+  },
+  {
+    "_id": "64a1b2c3d4e5f6789012345d",
+    "username": "user_soldier",
+    "password": "$2a$10$rOzHqKnJbYV8WqGdwjL.eeKZqYxqYxqYxqYxqYxqYxqYxqYxqYxqY",
+    "fullName": "Captain Karan Thakare",
+    "role": "USER",
+    "armyNo": "SSS1782K",
+    "rank": "Capt",
+    "battalion": "64a1b2c3d4e5f6789012345e",
+    "isActive": true,
+    "createdAt": "2024-01-15T09:15:00.000Z"
+  }
+]

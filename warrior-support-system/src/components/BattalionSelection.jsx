@@ -6,10 +6,8 @@ import Header from './Header'
 const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUser, onLogout }) => {
   const [battalions, setBattalions] = useState([])
   const [showAddForm, setShowAddForm] = useState(false)
-  const [newBattalion, setNewBattalion] = useState({
-    name: '',
-    postedStr: ''
-  })
+  const [newBattalion, setNewBattalion] = useState({ name: '', postedStr: '' })
+  const [selectedSubBattalion, setSelectedSubBattalion] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,22 +26,17 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
   }
 
   const handleLogout = () => {
-    // Clear all stored data
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.removeItem('currentArmyNo')
-    
-    // Call parent logout function
-    if (onLogout) {
-      onLogout()
-    }
-    
-    // Redirect to login page
+    if (onLogout) onLogout()
     navigate('/login')
   }
 
   const handleProceed = () => {
-    if (selectedBattalion) {
+    if (selectedBattalion && selectedSubBattalion) {
+      // Optional: save in localStorage or pass via state
+      localStorage.setItem('selectedSubBattalion', selectedSubBattalion)
       navigate('/main-menu')
     }
   }
@@ -70,6 +63,7 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
         })
         fetchBattalions()
         setSelectedBattalion('')
+        setSelectedSubBattalion('')
       } catch (error) {
         console.error('Error deleting battalion:', error)
       }
@@ -94,7 +88,19 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
               </option>
             ))}
           </select>
-          
+
+          <label>SELECT Sub BN</label>
+          <select 
+            value={selectedSubBattalion} 
+            onChange={(e) => setSelectedSubBattalion(e.target.value)}
+          >
+            <option value="">SELECT Sub BN</option>
+            <option value="P Bty">P Bty</option>
+            <option value="Q Bty">Q Bty</option>
+            <option value="R Bty">R Bty</option>
+            <option value="HQ Bty">HQ Bty</option>
+          </select>
+
           <div className="action-buttons">
             <button onClick={() => setShowAddForm(true)}>ADD BN</button>
             <button onClick={handleDeleteBattalion}>DELETE BN</button>
@@ -122,7 +128,7 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
           <button 
             onClick={handleProceed} 
             className="proceed-btn"
-            disabled={!selectedBattalion}
+            disabled={!selectedBattalion || !selectedSubBattalion}
           >
             Proceed
           </button>

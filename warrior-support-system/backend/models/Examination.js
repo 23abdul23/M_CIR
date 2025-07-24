@@ -1,28 +1,44 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const examinationSchema = new mongoose.Schema({
   armyNo: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    uppercase: true
   },
-  answers: {
-    type: Map,
-    of: String,
-    required: true
-  },
+  answers: [{
+    questionId: {
+      type: String,
+      required: true
+    },
+    answer: {
+      type: String,
+      required: true
+    }
+  }],
   completedAt: {
     type: Date,
-    required: true
-  },
-  submittedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    default: Date.now
   },
   createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
     type: Date,
     default: Date.now
   }
 })
 
-export default mongoose.model('Examination', examinationSchema)
+// Update the updatedAt field before saving
+examinationSchema.pre('save', function(next) {
+  this.updatedAt = new Date()
+  next()
+})
+
+// Index for faster queries
+examinationSchema.index({ armyNo: 1 })
+examinationSchema.index({ completedAt: -1 })
+
+module.exports = mongoose.model('Examination', examinationSchema)

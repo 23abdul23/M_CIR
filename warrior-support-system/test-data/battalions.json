@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "64a1b2c3d4e5f6789012345e",
+    "name": "71 FD REGT",
+    "postedStr": "450",
+    "status": "APPROVED",
+    "requestedBy": "64a1b2c3d4e5f6789012345a",
+    "approvedBy": "64a1b2c3d4e5f6789012345a",
+    "createdAt": "2024-01-10T10:00:00.000Z",
+    "approvedAt": "2024-01-10T10:05:00.000Z"
+  },
+  {
+    "_id": "64a1b2c3d4e5f6789012345f",
+    "name": "219 (I) Fd WKSP (Spl)",
+    "postedStr": "320",
+    "status": "APPROVED",
+    "requestedBy": "64a1b2c3d4e5f6789012345a",
+    "approvedBy": "64a1b2c3d4e5f6789012345a",
+    "createdAt": "2024-01-12T11:00:00.000Z",
+    "approvedAt": "2024-01-12T11:10:00.000Z"
+  },
+  {
+    "_id": "64a1b2c3d4e5f678901234a0",
+    "name": "15 PARA BN",
+    "postedStr": "800",
+    "status": "PENDING",
+    "requestedBy": "64a1b2c3d4e5f6789012345c",
+    "createdAt": "2024-01-20T14:30:00.000Z"
+  }
+]
