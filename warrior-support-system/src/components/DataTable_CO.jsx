@@ -8,6 +8,7 @@ import '../styles/DataTable.css'
 
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
+  const [results, setResults] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
@@ -21,8 +22,17 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
  
   useEffect(() => {
-    fetchPersonnel()
+    fetchPersonnel(), fetchResults()
   }, [selectedBattalion])
+
+  const fetchResults = async () => {
+    try {
+      
+    }
+    catch (error){
+      console.log("Error: ", error)
+    }
+  }
 
   const fetchPersonnel = async () => {
     setLoading(true)
@@ -235,8 +245,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                     <th>LEAVE AVAILED THIS YEAR (AL/CL)</th>
                     <th>MARITAL STATUS</th>
                     <th>SELF EVALUATION</th>
-                    {canReview && <th>PEER EVALUATION</th>}
+                    
+                    
                     {canManageData && <th>ACTION</th>}
+
+                    <th>Results</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -258,20 +271,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                            person.selfEvaluation || 'Not Set'}
                         </span>
                       </td>
-                      {canReview && (
-                        <td>
-                          {person.peerEvaluation?.status === 'EVALUATED' ? (
-                            <span className="datatable-status evaluated">EVALUATED</span>
-                          ) : (
-                            <button
-                              className="datatable-btn-small datatable-btn-review"
-                              onClick={() => handleReview(person._id)}
-                            >
-                              EVALUATE
-                            </button>
-                          )}
-                        </td>
-                      )}
+                      
                       {canManageData && (
                         <td>
                           <div className="datatable-actions-cell">
@@ -292,6 +292,9 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                           </div>
                         </td>
                       )}
+                      <td>
+                        ok
+                      </td>
                     </tr>
                   ))}
                 </tbody>

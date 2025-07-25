@@ -228,7 +228,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                     <th>MARITAL STATUS</th>
                     <th>SELF EVALUATION</th>
                     {canReview && <th>PEER EVALUATION</th>}
-                    {canManageData && <th>ACTION</th>}
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -264,26 +264,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                           )}
                         </td>
                       )}
-                      {canManageData && (
-                        <td>
-                          <div className="datatable-actions-cell">
-                            <button
-                              className="datatable-btn-icon datatable-btn-edit"
-                              onClick={() => handleEdit(person)}
-                              title="Edit"
-                            >
-                              ✏️
-                            </button>
-                            <button
-                              className="datatable-btn-icon datatable-btn-delete"
-                              onClick={() => handleDelete(person._id)}
-                              title="Delete"
-                            >
-                              🗑️
-                            </button>
-                          </div>
-                        </td>
-                      )}
+                      
                     </tr>
                   ))}
                 </tbody>

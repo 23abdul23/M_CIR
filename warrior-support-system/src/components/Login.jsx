@@ -6,7 +6,7 @@ import '../styles/Login.css'
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     username: '',
-    password: ''
+    password: '123456'
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)

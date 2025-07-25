@@ -150,7 +150,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
           
         </section>
 
-        {/* Battalion Information */}
+        {/* Battalion Information
         <section className="jso-personnel-section">
           <h2 className="jso-section-title">Battalion Information</h2>
           {battalionInfo ? (
@@ -178,27 +178,9 @@ const JSODashboard = ({ currentUser, onLogout }) => {
           ) : (
             <p>No battalion assigned</p>
           )}
-        </section>
+        </section> */}
 
-        {/* Personnel Management */}
-        <section className="jso-personnel-section">
-          <h2 className="jso-section-title">Personnel Management</h2>
-          <div className="jso-personnel-controls">
-            <div className="jso-search-filter">
-              <p>Manage your battalion's personnel data and evaluations</p>
-            </div>
-            <div className="jso-action-buttons">
-              <button 
-                onClick={handleViewData}
-                className="jso-btn-primary"
-                disabled={!currentUser.battalion}
-              >
-                VIEW & MANAGE PERSONNEL
-              </button>
-            </div>
-          </div>
-        </section>
-
+        
         {/* Quick Actions */}
         <section className="jso-evaluation-section">
           <h2 className="jso-section-title">Quick Actions</h2>

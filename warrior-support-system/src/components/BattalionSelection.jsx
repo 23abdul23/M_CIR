@@ -35,7 +35,7 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
 
   const handleProceed = () => {
     if (selectedBattalion && selectedSubBattalion) {
-      // Optional: save in localStorage or pass via state
+      localStorage.setItem('selectedBattalion', selectedBattalion)
       localStorage.setItem('selectedSubBattalion', selectedSubBattalion)
       navigate('/main-menu')
     }

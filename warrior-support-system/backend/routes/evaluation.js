@@ -92,6 +92,7 @@ router.post('/submit', auth, async (req, res) => {
 
     res.json({ message: 'Peer evaluation submitted successfully', personnel })
   } catch (error) {
+    console.log('Error:', error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 })

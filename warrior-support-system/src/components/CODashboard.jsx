@@ -191,13 +191,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
         <section className="co-actions-section">
           <h2 className="co-section-title">Quick Actions</h2>
           <div className="co-actions-grid">
-            <div className="co-action-card">
-              <h3 className="co-action-title">Add New User</h3>
-              <p className="co-action-description">Create a new user account in the system</p>
-              <button className="co-action-btn" onClick={() => navigate("/register")}>
-                ADD NEW USER
-              </button>
-            </div>
+            
             <div className="co-action-card">
               <h3 className="co-action-title">Manage Questions</h3>
               <p className="co-action-description">Add, edit, or manage examination questions</p>
@@ -298,17 +292,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
                       <strong>Approved:</strong>{" "}
                       {battalion.approvedAt ? new Date(battalion.approvedAt).toLocaleDateString() : "N/A"}
                     </div>
-                  </div>
-                  <div className="co-battalion-actions">
-                    <button
-                      className="co-btn-view"
-                      onClick={() => {
-                        setSelectedBattalion(battalion._id)
-                        navigate("/data-table")
-                      }}
-                    >
-                      VIEW DETAILS
-                    </button>
                   </div>
                 </div>
               ))}

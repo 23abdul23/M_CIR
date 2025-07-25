@@ -205,6 +205,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       // Calculate DASS scores
       const scores = scoreDASS(answers)
 
+      
       // Prepare examination data with scores
       const examinationData = {
         armyNo: armyNo,
@@ -220,8 +221,11 @@ const Questionnaire = ({ currentUser, onLogout }) => {
           stress: scores.stress,
           stressSeverity: scores.stressSeverity,
         },
+        battalion : localStorage.getItem('selectedBattalion'),
         completedAt: new Date(),
       }
+
+      console.log(examinationData)
       
       
       // Submit to backend

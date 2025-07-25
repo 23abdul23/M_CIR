@@ -30,13 +30,13 @@ const MainMenu = ({ selectedBattalion, currentUser, onLogout }) => {
             className="menu-btn start-examination"
             onClick={() => navigate('/army-number-entry')}
           >
-            START<br/>EXAMINATION
+            Manual<br/>EXAMINATION
           </button>
           <button 
             className="menu-btn view-data"
-            onClick={() => navigate('/data-table')}
+            onClick={() => navigate('/ai-exam')}
           >
-            VIEW DATA
+            AI<br/>Examination
           </button>
         </div>
       </div>
