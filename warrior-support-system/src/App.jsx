@@ -164,7 +164,6 @@ function App() {
             path="/data-table" 
             element={
               <ProtectedRoute allowedRoles={['CO', 'JSO', 'USER']}>
-                console.log(selectedBattalion)
                 <DataTable 
                   selectedBattalion={selectedBattalion}
                   currentUser={currentUser}

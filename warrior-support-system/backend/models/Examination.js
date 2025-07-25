@@ -1,44 +1,64 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const examinationSchema = new mongoose.Schema({
   armyNo: {
     type: String,
     required: true,
-    trim: true,
-    uppercase: true
   },
-  answers: [{
-    questionId: {
-      type: String,
-      required: true
+  answers: [
+    {
+      questionId: {
+        type: String,
+        required: true,
+      },
+      answer: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+      },
     },
-    answer: {
+  ],
+  dassScores: {
+    depression: {
+      type: Number,
+      default: 0,
+    },
+    depressionSeverity: {
       type: String,
-      required: true
-    }
-  }],
+      enum: ["Normal", "Mild", "Moderate", "Severe", "Extremely Severe"],
+      default: "Normal",
+    },
+    anxiety: {
+      type: Number,
+      default: 0,
+    },
+    anxietySeverity: {
+      type: String,
+      enum: ["Normal", "Mild", "Moderate", "Severe", "Extremely Severe"],
+      default: "Normal",
+    },
+    stress: {
+      type: Number,
+      default: 0,
+    },
+    stressSeverity: {
+      type: String,
+      enum: ["Normal", "Mild", "Moderate", "Severe", "Extremely Severe"],
+      default: "Normal",
+    },
+  },
   completedAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  battalion: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Battalion",
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
 })
 
-// Update the updatedAt field before saving
-examinationSchema.pre('save', function(next) {
-  this.updatedAt = new Date()
-  next()
-})
-
-// Index for faster queries
+// Index for efficient queries
 examinationSchema.index({ armyNo: 1 })
 examinationSchema.index({ completedAt: -1 })
+examinationSchema.index({ battalion: 1 })
 
-module.exports = mongoose.model('Examination', examinationSchema)
+module.exports = mongoose.model("Examination", examinationSchema)

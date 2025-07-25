@@ -1,45 +1,75 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import Header from './Header'
-import '../styles/Questionnaire.css'
+"use client"
 
-const depressionItems = [3,5,10,13,16,17,21,24,26,31,34,37,38,42]
-const anxietyItems    = [2,4,7,9,15,19,20,23,25,28,30,36,40,41]
-const stressItems     = [1,6,8,11,12,14,18,22,27,29,32,33,35,39]
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import Header from "./Header"
+import "../styles/Questionnaire.css"
+
+const depressionItems = [3, 5, 10, 13, 16, 17, 21, 24, 26, 31, 34, 37, 38, 42]
+const anxietyItems = [2, 4, 7, 9, 15, 19, 20, 23, 25, 28, 30, 36, 40, 41]
+const stressItems = [1, 6, 8, 11, 12, 14, 18, 22, 27, 29, 32, 33, 35, 39]
 
 function scoreDASS(answers) {
-  let depression = 0, anxiety = 0, stress = 0
+  let depression = 0,
+    anxiety = 0,
+    stress = 0
 
-  depressionItems.forEach(q => { depression += Number(answers[q] ?? 0) })
-  anxietyItems.forEach(q    => { anxiety    += Number(answers[q] ?? 0) })
-  stressItems.forEach(q     => { stress     += Number(answers[q] ?? 0) })
+  depressionItems.forEach((q) => {
+    depression += Number(answers[q] ?? 0)
+  })
+  anxietyItems.forEach((q) => {
+    anxiety += Number(answers[q] ?? 0)
+  })
+  stressItems.forEach((q) => {
+    stress += Number(answers[q] ?? 0)
+  })
+
+  // Multiply by 2 for DASS-21 scoring (since we're using 21 items instead of 42)
+  depression *= 2
+  anxiety *= 2
+  stress *= 2
 
   const depressionSeverity =
-    depression <= 9 ? "Normal"
-    : depression <= 13 ? "Mild"
-    : depression <= 20 ? "Moderate"
-    : depression <= 27 ? "Severe"
-    : "Extremely Severe"
+    depression <= 9
+      ? "Normal"
+      : depression <= 13
+        ? "Mild"
+        : depression <= 20
+          ? "Moderate"
+          : depression <= 27
+            ? "Severe"
+            : "Extremely Severe"
 
   const anxietySeverity =
-    anxiety <= 7 ? "Normal"
-    : anxiety <= 9 ? "Mild"
-    : anxiety <= 14 ? "Moderate"
-    : anxiety <= 19 ? "Severe"
-    : "Extremely Severe"
+    anxiety <= 7
+      ? "Normal"
+      : anxiety <= 9
+        ? "Mild"
+        : anxiety <= 14
+          ? "Moderate"
+          : anxiety <= 19
+            ? "Severe"
+            : "Extremely Severe"
 
   const stressSeverity =
-    stress <= 14 ? "Normal"
-    : stress <= 18 ? "Mild"
-    : stress <= 25 ? "Moderate"
-    : stress <= 33 ? "Severe"
-    : "Extremely Severe"
+    stress <= 14
+      ? "Normal"
+      : stress <= 18
+        ? "Mild"
+        : stress <= 25
+          ? "Moderate"
+          : stress <= 33
+            ? "Severe"
+            : "Extremely Severe"
 
   return {
-    depression, depressionSeverity,
-    anxiety, anxietySeverity,
-    stress, stressSeverity
+    depression,
+    depressionSeverity,
+    anxiety,
+    anxietySeverity,
+    stress,
+    stressSeverity,
   }
 }
 
@@ -49,7 +79,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
   const [questions, setQuestions] = useState([])
   const [personnelInfo, setPersonnelInfo] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
   const [showResults, setShowResults] = useState(false)
   const [finalScores, setFinalScores] = useState(null)
@@ -61,31 +91,31 @@ const Questionnaire = ({ currentUser, onLogout }) => {
   }, [])
 
   const fetchPersonnelInfo = async () => {
-    const armyNo = localStorage.getItem('currentArmyNo')
+    const armyNo = localStorage.getItem("currentArmyNo")
     if (!armyNo) {
-      setError('No Army Number found. Please start from the beginning.')
-      navigate('/army-number-entry')
+      setError("No Army Number found. Please start from the beginning.")
+      navigate("/army-number-entry")
       return
     }
     try {
       const response = await axios.get(`/api/personnel/army-no/${armyNo}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       setPersonnelInfo(response.data)
     } catch (error) {
-      setError('Error fetching personnel information')
+      setError("Error fetching personnel information")
     }
   }
 
   const loadQuestionsFromDatabase = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('/api/questions', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      const response = await axios.get("/api/questions", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       setQuestions(response.data)
     } catch (error) {
-      setError('Error loading questions. Please try again.')
+      setError("Error loading questions. Please try again.")
       // Fallback questions
       setQuestions([
         {
@@ -96,10 +126,9 @@ const Questionnaire = ({ currentUser, onLogout }) => {
             { optionId: "0", optionText: "Yeh mujh par bilkul bhi lagu nahi hua." },
             { optionId: "1", optionText: "Kabhi-Kabhi mere saath aise hota hain." },
             { optionId: "2", optionText: "Aise mere saath aksar hota rehta hain." },
-            { optionId: "3", optionText: "Aise lagbhag hamesha mere saath hota rehta hain." }
-          ]
-        }
-        // Add all fallback questions as needed...
+            { optionId: "3", optionText: "Aise lagbhag hamesha mere saath hota rehta hain." },
+          ],
+        },
       ])
     } finally {
       setLoading(false)
@@ -107,27 +136,27 @@ const Questionnaire = ({ currentUser, onLogout }) => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    localStorage.removeItem('currentArmyNo')
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    localStorage.removeItem("currentArmyNo")
     if (onLogout) onLogout()
-    navigate('/login')
+    navigate("/login")
   }
 
   const handleAnswerChange = (questionId, answer, questionType) => {
     setAnswers({
       ...answers,
-      [questionId]: questionType === "MCQ" ? Number(answer) : answer
+      [questionId]: questionType === "MCQ" ? Number(answer) : answer,
     })
-    setError('')
+    setError("")
   }
 
   const validateAnswers = () => {
-    for (let question of questions) {
+    for (const question of questions) {
       if (
         answers[question.questionId] === undefined ||
         answers[question.questionId] === null ||
-        (typeof answers[question.questionId] === "string" && answers[question.questionId].trim() === '')
+        (typeof answers[question.questionId] === "string" && answers[question.questionId].trim() === "")
       ) {
         return `Please answer question ${question.questionId}`
       }
@@ -140,14 +169,15 @@ const Questionnaire = ({ currentUser, onLogout }) => {
     if (
       answers[currentQuestionObj.questionId] === undefined ||
       answers[currentQuestionObj.questionId] === null ||
-      (typeof answers[currentQuestionObj.questionId] === "string" && answers[currentQuestionObj.questionId].trim() === "")
+      (typeof answers[currentQuestionObj.questionId] === "string" &&
+        answers[currentQuestionObj.questionId].trim() === "")
     ) {
-      setError('Please answer the current question before proceeding')
+      setError("Please answer the current question before proceeding")
       return
     }
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
-      setError('')
+      setError("")
     } else {
       handleSubmitExamination()
     }
@@ -156,7 +186,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
   const handleBack = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1)
-      setError('')
+      setError("")
     }
   }
 
@@ -167,20 +197,63 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       return
     }
     setIsSubmitting(true)
-    setError('')
+    setError("")
+
     try {
-      // Submit to backend if needed (as in your original code)
-      // ...
-      // Calculate and display scores
+      const armyNo = localStorage.getItem("currentArmyNo")
+
+      // Calculate DASS scores
       const scores = scoreDASS(answers)
+
+      // Prepare examination data with scores
+      const examinationData = {
+        armyNo: armyNo,
+        answers: Object.keys(answers).map((questionId) => ({
+          questionId,
+          answer: answers[questionId],
+        })),
+        dassScores: {
+          depression: scores.depression,
+          depressionSeverity: scores.depressionSeverity,
+          anxiety: scores.anxiety,
+          anxietySeverity: scores.anxietySeverity,
+          stress: scores.stress,
+          stressSeverity: scores.stressSeverity,
+        },
+        completedAt: new Date(),
+      }
+      
+      
+      // Submit to backend
+      const response = await axios.post("/api/examination/submit", examinationData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      
+      console.log('Examination submitted successfully:', response.data)
+      // // Update personnel self-evaluation status
+      // await axios.put(
+      //   `/api/personnel/army-no/${armyNo}`,
+      //   {
+      //     selfEvaluation: "COMPLETED",
+      //   },
+      //   {
+      //     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      //   },
+      // )
+
       setFinalScores(scores)
       setShowResults(true)
-      // Optionally: clear localStorage or navigation here
     } catch (error) {
-      setError('Error submitting examination. Please try again.')
+      console.error("Error submitting examination:", error)
+      setError("Error submitting examination. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  const handleContinue = () => {
+    localStorage.removeItem("currentArmyNo")
+    navigate("/examination-complete")
   }
 
   if (loading) {
@@ -188,7 +261,10 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       <div className="questionnaire-container">
         <Header currentUser={currentUser} onLogout={handleLogout} />
         <div className="questionnaire-content">
-          <div className="loading">Loading questionnaire...</div>
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <span>Loading questionnaire...</span>
+          </div>
         </div>
       </div>
     )
@@ -199,14 +275,89 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       <div className="questionnaire-container">
         <Header currentUser={currentUser} onLogout={handleLogout} />
         <div className="questionnaire-content">
-          <h2>Test Completed</h2>
-          <div className="dass-results">
-            <h3>DASS-42 Results</h3>
-            <ul>
-              <li><b>Depression:</b> {finalScores.depression} ({finalScores.depressionSeverity})</li>
-              <li><b>Anxiety:</b> {finalScores.anxiety} ({finalScores.anxietySeverity})</li>
-              <li><b>Stress:</b> {finalScores.stress} ({finalScores.stressSeverity})</li>
-            </ul>
+          <div className="results-container">
+            <div className="results-header">
+              <div className="success-icon">
+                <div className="checkmark">✓</div>
+              </div>
+              <h2>EXAMINATION COMPLETED</h2>
+              <p className="results-subtitle">Your mental health assessment results</p>
+            </div>
+
+            <div className="dass-results">
+              <h3>DASS-42 Assessment Results</h3>
+              <div className="scores-grid">
+                <div
+                  className={`score-card depression ${finalScores.depressionSeverity.toLowerCase().replace(" ", "-")}`}
+                >
+                  <div className="score-header">
+                    <div className="score-icon">😔</div>
+                    <h4>Depression</h4>
+                  </div>
+                  <div className="score-value">{finalScores.depression}</div>
+                  <div className="score-severity">{finalScores.depressionSeverity}</div>
+                  <div className="score-description">
+                    {finalScores.depressionSeverity === "Normal"
+                      ? "No significant depression symptoms"
+                      : finalScores.depressionSeverity === "Mild"
+                        ? "Mild depression symptoms present"
+                        : finalScores.depressionSeverity === "Moderate"
+                          ? "Moderate depression - consider support"
+                          : finalScores.depressionSeverity === "Severe"
+                            ? "Severe depression - seek professional help"
+                            : "Extremely severe depression - immediate professional help recommended"}
+                  </div>
+                </div>
+
+                <div className={`score-card anxiety ${finalScores.anxietySeverity.toLowerCase().replace(" ", "-")}`}>
+                  <div className="score-header">
+                    <div className="score-icon">😰</div>
+                    <h4>Anxiety</h4>
+                  </div>
+                  <div className="score-value">{finalScores.anxiety}</div>
+                  <div className="score-severity">{finalScores.anxietySeverity}</div>
+                  <div className="score-description">
+                    {finalScores.anxietySeverity === "Normal"
+                      ? "No significant anxiety symptoms"
+                      : finalScores.anxietySeverity === "Mild"
+                        ? "Mild anxiety symptoms present"
+                        : finalScores.anxietySeverity === "Moderate"
+                          ? "Moderate anxiety - consider support"
+                          : finalScores.anxietySeverity === "Severe"
+                            ? "Severe anxiety - seek professional help"
+                            : "Extremely severe anxiety - immediate professional help recommended"}
+                  </div>
+                </div>
+
+                <div className={`score-card stress ${finalScores.stressSeverity.toLowerCase().replace(" ", "-")}`}>
+                  <div className="score-header">
+                    <div className="score-icon">😤</div>
+                    <h4>Stress</h4>
+                  </div>
+                  <div className="score-value">{finalScores.stress}</div>
+                  <div className="score-severity">{finalScores.stressSeverity}</div>
+                  <div className="score-description">
+                    {finalScores.stressSeverity === "Normal"
+                      ? "Normal stress levels"
+                      : finalScores.stressSeverity === "Mild"
+                        ? "Mild stress symptoms present"
+                        : finalScores.stressSeverity === "Moderate"
+                          ? "Moderate stress - consider stress management"
+                          : finalScores.stressSeverity === "Severe"
+                            ? "Severe stress - seek professional help"
+                            : "Extremely severe stress - immediate professional help recommended"}
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <div className="results-actions">
+                <button onClick={handleContinue} className="continue-btn">
+                  CONTINUE
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -218,7 +369,10 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       <div className="questionnaire-container">
         <Header currentUser={currentUser} onLogout={handleLogout} />
         <div className="questionnaire-content">
-          <div className="loading">Loading questionnaire...</div>
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <span>Loading questionnaire...</span>
+          </div>
           {error && <div className="error-message">{error}</div>}
         </div>
       </div>
@@ -226,30 +380,51 @@ const Questionnaire = ({ currentUser, onLogout }) => {
   }
 
   const question = questions[currentQuestion]
+  const progressPercentage = ((currentQuestion + 1) / questions.length) * 100
 
   return (
     <div className="questionnaire-container">
       <Header currentUser={currentUser} onLogout={handleLogout} />
       <div className="questionnaire-content">
-
         <div className="personnel-info">
-          <div className="info-item"><span>ARMY NO</span><span>{personnelInfo.armyNo}</span></div>
-          <div className="info-item"><span>RANK</span><span>{personnelInfo.rank}</span></div>
-          <div className="info-item"><span>NAME</span><span>{personnelInfo.name}</span></div>
-          <div className="info-item"><span>COY/SQN/BTY</span><span>{personnelInfo.coySquadronBty}</span></div>
+          <div className="info-item">
+            <span>ARMY NO</span>
+            <span>{personnelInfo.armyNo}</span>
+          </div>
+          <div className="info-item">
+            <span>RANK</span>
+            <span>{personnelInfo.rank}</span>
+          </div>
+          <div className="info-item">
+            <span>NAME</span>
+            <span>{personnelInfo.name}</span>
+          </div>
+          <div className="info-item">
+            <span>COY/SQN/BTY</span>
+            <span>{personnelInfo.coySquadronBty}</span>
+          </div>
         </div>
 
-        <h2>QUESTIONNAIRE</h2>
+        <h2>MENTAL HEALTH QUESTIONNAIRE</h2>
         {error && <div className="error-message">{error}</div>}
 
         <div className="question-section">
           <div className="question-progress">
-            Question {currentQuestion + 1} of {questions.length}
+            <span>
+              Question {currentQuestion + 1} of {questions.length}
+            </span>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${progressPercentage}%` }}></div>
+            </div>
           </div>
-          <h3>{currentQuestion + 1}. {question.questionText}</h3>
-          {question.questionType === 'TEXT' ? (
+
+          <h3>
+            {currentQuestion + 1}. {question.questionText}
+          </h3>
+
+          {question.questionType === "TEXT" ? (
             <textarea
-              value={answers[question.questionId] || ''}
+              value={answers[question.questionId] || ""}
               onChange={(e) => handleAnswerChange(question.questionId, e.target.value, question.questionType)}
               placeholder="Enter your answer here..."
               rows="5"
@@ -268,7 +443,9 @@ const Questionnaire = ({ currentUser, onLogout }) => {
                     onChange={(e) => handleAnswerChange(question.questionId, e.target.value, question.questionType)}
                     disabled={isSubmitting}
                   />
-                  <span className="option-text">{option.optionId}. {option.optionText}</span>
+                  <span className="option-text">
+                    {option.optionId}. {option.optionText}
+                  </span>
                 </label>
               ))}
             </div>
@@ -276,16 +453,12 @@ const Questionnaire = ({ currentUser, onLogout }) => {
 
           <div className="navigation-buttons">
             {currentQuestion > 0 && (
-              <button onClick={handleBack} className="back-btn" disabled={isSubmitting}>BACK</button>
+              <button onClick={handleBack} className="back-btn" disabled={isSubmitting}>
+                BACK
+              </button>
             )}
-            <button
-              onClick={handleNext}
-              className="next-btn"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'SUBMITTING...' :
-                currentQuestion < questions.length - 1 ? 'NEXT' : 'SUBMIT'
-              }
+            <button onClick={handleNext} className="next-btn" disabled={isSubmitting}>
+              {isSubmitting ? "SUBMITTING..." : currentQuestion < questions.length - 1 ? "NEXT" : "SUBMIT"}
             </button>
           </div>
         </div>
