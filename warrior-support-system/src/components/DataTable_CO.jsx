@@ -2,16 +2,22 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
+import { useLocation } from 'react-router-dom'
 import AddDataModal from './AddDataModal'
 import '../styles/DataTable.css'
 
-const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
+const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
+
+  const location = useLocation()
+  const locationSelectedBattalion = location.state?.selectedBattalion
+
+
 
  
   useEffect(() => {
@@ -21,14 +27,15 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const fetchPersonnel = async () => {
     setLoading(true)
     try {
-      const battalionId = currentUser.battalion
+      const battalionId = selectedBattalion || locationSelectedBattalion
 
-      console.log(battalionId)
       
-      const response = await axios.get(`/api/personnel/battalion/${battalionId._id}`, {
+      const response = await axios.get(`/api/personnel/battalion/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setPersonnel(response.data)
+
+      
     } catch (error) {
       console.error('Error fetching personnel:', error)
     } finally {
@@ -144,8 +151,9 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
 
   const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
-  const canReview = currentUser.role === 'JSO'
- 
+  const canReview = currentUser.role === 'CO'
+  
+  
   return (
     <div className="datatable-container">
       <Header currentUser={currentUser} onLogout={handleLogout} />
@@ -154,7 +162,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
         <div className="datatable-header">
           <h2 className="datatable-title">WARRIOR SUPPORT SYSTEM</h2>
           
-          <p className="datatable-subtitle">{currentUser.battalion.name}</p>
+          <p className="datatable-subtitle">{}</p>
         </div>
 
         <div className="datatable-actions">
@@ -306,7 +314,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
             setEditingPersonnel(null)
           }}
           onSave={fetchPersonnel}
-          battalionId={selectedBattalion || currentUser.battalion}
+          battalionId={locationSelectedBattalion || currentUser.battalion}
           editData={editingPersonnel}
         />
       )}
@@ -314,4 +322,4 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   )
 }
 
-export default DataTable
+export default DataTable_CO

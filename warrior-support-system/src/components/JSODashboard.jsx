@@ -74,7 +74,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
   }
 
   const handleViewData = () => {
-    navigate('/data-table')
+    navigate('/data-table-jso')
   }
 
   const showNotification = (message, type) => {

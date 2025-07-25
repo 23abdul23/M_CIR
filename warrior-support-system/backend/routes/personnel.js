@@ -92,17 +92,14 @@ router.post("/", auth, async (req, res) => {
 
     const personnelData = req.body
 
-    // JSO can only add personnel to their battalion
-    if (req.user.role === "JSO") {
-      const user = await User.findOne({ armyNo: req.user.armyNo })
-      personnelData.battalion = user.battalion
-    }
+    
 
     // Check if personnel with this army number already exists
     const existingPersonnel = await Personnel.findOne({ armyNo: personnelData.armyNo })
     if (existingPersonnel) {
       return res.status(400).json({ message: "Personnel with this Army Number already exists" })
     }
+
 
     const personnel = new Personnel(personnelData)
     await personnel.save()

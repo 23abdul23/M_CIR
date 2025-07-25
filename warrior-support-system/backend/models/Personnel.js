@@ -14,7 +14,7 @@ const personnelSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  coySquadronBty: {
+  subBty: {
     type: String,
     required: true
   },

@@ -15,6 +15,7 @@ import ExaminationComplete from './components/ExaminationComplete'
 import CODashboard from './components/CODashboard'
 import JSODashboard from './components/JSODashboard'
 import PeerEvaluation from './components/PeerEvaluation'
+import DataTable_CO from './components/DataTable_CO'
 
 // Styles
 import './styles/App.css'
@@ -159,12 +160,25 @@ function App() {
             } 
           />
 
-          {/* Common Routes for JSO and CO */}
+          {/* Common Routes for JSO*/}
           <Route 
-            path="/data-table" 
+            path="/data-table-jso" 
             element={
-              <ProtectedRoute allowedRoles={['CO', 'JSO', 'USER']}>
+              <ProtectedRoute allowedRoles={['JSO']}>
                 <DataTable 
+                  selectedBattalion={selectedBattalion}
+                  currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/data-table-co" 
+            element={
+              <ProtectedRoute allowedRoles={['CO']}>
+                <DataTable_CO
                   selectedBattalion={selectedBattalion}
                   currentUser={currentUser}
                   onLogout={handleLogout}

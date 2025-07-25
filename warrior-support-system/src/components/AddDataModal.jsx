@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useLocation } from 'react-router-dom'
 import '../styles/AddDataModal.css'
 
 const AddDataModal = ({ onClose, onSave, battalionId }) => {
+  const location = useLocation()
+  const locationSelectedBattalion = location.state?.selectedBattalion
+  
+  
+
+
   const [formData, setFormData] = useState({
     rank: '',
     name: '',
     armyNo: '',
     subBty: '',
+    battalion : battalionId,
     service: '',
     dateOfInduction: '',
     medCat: '',
@@ -18,10 +26,8 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/api/personnel', {
-        ...formData,
-        battalion: battalionId
-      }, {
+      
+      await axios.post('/api/personnel', formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       onSave()

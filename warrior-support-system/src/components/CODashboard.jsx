@@ -114,7 +114,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
   const handleViewData = () => {
     if (selectedBattalion) {
-      navigate("/data-table")
+      navigate("/data-table-co", {
+        state: { selectedBattalion }
+      })
+
     }
   }
 
