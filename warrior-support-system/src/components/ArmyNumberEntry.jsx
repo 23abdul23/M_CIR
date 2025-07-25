@@ -5,7 +5,7 @@ import Header from './Header'
 import '../styles/ArmyNumberEntry.css'
 
 const ArmyNumberEntry = ({ currentUser, onLogout }) => {
-  const [armyNo, setArmyNo] = useState('')
+  const [armyNo, setArmyNo] = useState('SSS1782K')
   const [error, setError] = useState('')
   const navigate = useNavigate()
 

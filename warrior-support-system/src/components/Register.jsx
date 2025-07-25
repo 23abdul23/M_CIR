@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import '../styles/Register.css'
+"use client"
+
+import { useState, useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import "../styles/Register.css"
 
 const Register = ({ onRegister }) => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    confirmPassword: '',
-    fullName: '',
-    role: 'USER',
-    armyNo: '',
-    rank: '',
-    battalionId: ''
+    username: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    role: "USER",
+    armyNo: "",
+    rank: "",
+    battalionId: "",
   })
   const [battalions, setBattalions] = useState([])
-  const [error, setError] = useState('')
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -25,10 +27,10 @@ const Register = ({ onRegister }) => {
 
   const fetchBattalions = async () => {
     try {
-      const response = await axios.get('/api/battalion')
-      setBattalions(response.data.filter(b => b.status === 'APPROVED'))
+      const response = await axios.get("/api/battalion")
+      setBattalions(response.data.filter((b) => b.status === "APPROVED"))
     } catch (error) {
-      console.error('Error fetching battalions:', error)
+      console.error("Error fetching battalions:", error)
     }
   }
 
@@ -36,16 +38,16 @@ const Register = ({ onRegister }) => {
     const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     })
 
     // Clear army number and rank if role is CO
-    if (name === 'role' && value === 'CO') {
-      setFormData(prev => ({
+    if (name === "role" && value === "CO") {
+      setFormData((prev) => ({
         ...prev,
         [name]: value,
-        armyNo: '',
-        rank: ''
+        armyNo: "",
+        rank: "",
       }))
     }
   }
@@ -53,23 +55,23 @@ const Register = ({ onRegister }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
+    setError("")
 
     // Validation
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
+      setError("Passwords do not match")
       setLoading(false)
       return
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long')
+      setError("Password must be at least 6 characters long")
       setLoading(false)
       return
     }
 
-    if ((formData.role === 'JSO' || formData.role === 'USER') && !formData.armyNo) {
-      setError('Army Number is required for JSO and USER roles')
+    if ((formData.role === "JSO" || formData.role === "USER") && !formData.armyNo) {
+      setError("Army Number is required for JSO and USER roles")
       setLoading(false)
       return
     }
@@ -79,46 +81,46 @@ const Register = ({ onRegister }) => {
         username: formData.username,
         password: formData.password,
         fullName: formData.fullName,
-        role: formData.role
+        role: formData.role,
       }
 
       if (formData.armyNo) registrationData.armyNo = formData.armyNo
       if (formData.rank) registrationData.rank = formData.rank
       if (formData.battalionId) registrationData.battalionId = formData.battalionId
 
-      const response = await axios.post('/api/auth/register', registrationData)
+      const response = await axios.post("/api/auth/register", registrationData)
       const { user, token } = response.data
-      
+
       onRegister(user, token)
-      
+
       // Redirect based on user role
       switch (user.role) {
-        case 'CO':
-          navigate('/co-dashboard')
+        case "CO":
+          navigate("/co-dashboard")
           break
-        case 'JSO':
-          navigate('/jso-dashboard')
+        case "JSO":
+          navigate("/jso-dashboard")
           break
-        case 'USER':
-          navigate('/battalion-selection')
+        case "USER":
+          navigate("/battalion-selection")
           break
         default:
-          navigate('/')
+          navigate("/")
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Registration failed')
+      setError(error.response?.data?.message || "Registration failed")
     } finally {
       setLoading(false)
     }
   }
 
   const roleDescriptions = {
-    CO: 'Commanding Officer - Full administrative access to all system features',
-    JSO: 'Junior Staff Officer - Manage personnel and conduct peer evaluations',
-    USER: 'Regular User - Basic access for examinations and limited data management'
+    CO: "Commanding Officer - Full administrative access to all system features",
+    JSO: "Junior Staff Officer - Manage personnel and conduct peer evaluations",
+    USER: "Regular User - Basic access for examinations and limited data management",
   }
 
-  const requiresArmyNo = formData.role === 'JSO' || formData.role === 'USER'
+  const requiresArmyNo = formData.role === "JSO" || formData.role === "USER"
 
   return (
     <div className="register-container">
@@ -135,9 +137,9 @@ const Register = ({ onRegister }) => {
         <div className="register-form-container">
           <form onSubmit={handleSubmit} className="register-form">
             <h2>REGISTER</h2>
-            
+
             {error && <div className="error-message">{error}</div>}
-            
+
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="username">Username *</label>
@@ -196,20 +198,12 @@ const Register = ({ onRegister }) => {
 
             <div className="form-group">
               <label htmlFor="role">Role *</label>
-              <select
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                required
-              >
+              <select id="role" name="role" value={formData.role} onChange={handleChange} required>
                 <option value="USER">USER - Regular Soldier</option>
                 <option value="JSO">JSO - Junior Staff Officer</option>
                 <option value="CO">CO - Commanding Officer</option>
               </select>
-              <small className="role-description">
-                {roleDescriptions[formData.role]}
-              </small>
+              <small className="role-description">{roleDescriptions[formData.role]}</small>
             </div>
 
             {requiresArmyNo && (
@@ -229,12 +223,7 @@ const Register = ({ onRegister }) => {
 
                 <div className="form-group">
                   <label htmlFor="rank">Rank</label>
-                  <select
-                    id="rank"
-                    name="rank"
-                    value={formData.rank}
-                    onChange={handleChange}
-                  >
+                  <select id="rank" name="rank" value={formData.rank} onChange={handleChange}>
                     <option value="">Select Rank</option>
                     <option value="Lt Col">Lt Col</option>
                     <option value="Maj">Maj</option>
@@ -253,17 +242,12 @@ const Register = ({ onRegister }) => {
               </div>
             )}
 
-            {(formData.role === 'JSO' || formData.role === 'USER') && (
+            {(formData.role === "JSO" || formData.role === "USER") && (
               <div className="form-group">
                 <label htmlFor="battalionId">Battalion</label>
-                <select
-                  id="battalionId"
-                  name="battalionId"
-                  value={formData.battalionId}
-                  onChange={handleChange}
-                >
+                <select id="battalionId" name="battalionId" value={formData.battalionId} onChange={handleChange}>
                   <option value="">Select Battalion (Optional)</option>
-                  {battalions.map(battalion => (
+                  {battalions.map((battalion) => (
                     <option key={battalion._id} value={battalion._id}>
                       {battalion.name}
                     </option>
@@ -274,14 +258,17 @@ const Register = ({ onRegister }) => {
             )}
 
             <button type="submit" className="register-btn" disabled={loading}>
-              {loading ? 'CREATING ACCOUNT...' : 'CREATE ACCOUNT'}
+              {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
             </button>
           </form>
 
           <div className="register-footer">
             <p>
-              Already have an account? 
-              <Link to="/login" className="login-link"> Login here</Link>
+              Already have an account?
+              <Link to="/login" className="login-link">
+                {" "}
+                Login here
+              </Link>
             </p>
             <div className="system-info">
               <small>Warrior Support System v2.0 | Secure Military Portal</small>

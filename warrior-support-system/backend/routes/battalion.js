@@ -5,13 +5,13 @@ const auth = require('../middleware/auth')
 const router = express.Router()
 
 // Get all battalions (CO sees all, others see only approved)
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    let query = {}
-    
-    // Non-CO users can only see approved battalions
-    if (req.user.role !== 'CO') {
-      query.status = 'APPROVED'
+    let query = { status: 'APPROVED' } // default for public/unauthenticated
+
+    if (req.user && req.user.role === 'CO') {
+      // Only CO can see all battalions
+      query = {}
     }
 
     const battalions = await Battalion.find(query)
@@ -21,6 +21,7 @@ router.get('/', auth, async (req, res) => {
 
     res.json(battalions)
   } catch (error) {
+    console.log("Error: ", error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 })

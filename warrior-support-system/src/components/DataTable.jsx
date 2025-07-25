@@ -13,6 +13,8 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
 
+  console.log(selectedBattalion)
+
   useEffect(() => {
     fetchPersonnel()
   }, [selectedBattalion])

@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "68825358d62b6e71084d1bab"
+  },
+  "questionId": 1,
+  "questionText": "Maine paya ki main bahut chhoti-chhoti baton se pareshan ho jata hoon",
+  "questionType": "MCQ",
+  "options": [
+    {
+      "optionId": "0",
+      "optionText": "Bilkul bhi lagu nahi hota mujhe"
+    },
+    {
+      "optionId": "1",
+      "optionText": "Thoda bahut lagu hota hai mujhe"
+    },
+    {
+      "optionId": "2",
+      "optionText": "Kafi hadd tak lagu hota hai mujhe"
+    },
+    {
+      "optionId": "3",
+      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
+    }
+  ],
+  "isActive": true,
+  "order": 1,
+  "createdAt": "2025-07-24T15:36:00.000Z",
+  "updatedAt": "2025-07-24T15:36:00.000Z"
+},
+{
+  "_id": {
+    "$oid": "68825358d62b6e71084d1bac"
+  },
+  "questionId": 2,
+  "questionText": "Mujhe apne muh ki sookhapan ka ehsaas hua",
+  "questionType": "MCQ",
+  "options": [
+    {
+      "optionId": "0",
+      "optionText": "Bilkul bhi lagu nahi hota mujhe"
+    },
+    {
+      "optionId": "1",
+      "optionText": "Thoda bahut lagu hota hai mujhe"
+    },
+    {
+      "optionId": "2",
+      "optionText": "Kafi hadd tak lagu hota hai mujhe"
+    },
+    {
+      "optionId": "3",
+      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
+    }
+  ],
+  "isActive": true,
+  "order": 2,
+  "createdAt": "2025-07-24T15:36:00.000Z",
+  "updatedAt": "2025-07-24T15:36:00.000Z"
+}
+]

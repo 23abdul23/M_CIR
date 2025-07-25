@@ -7,56 +7,62 @@ const auth = require('../middleware/auth')
 const router = express.Router()
 
 // Register
+
 router.post('/register', async (req, res) => {
   try {
-    const { username, password, fullName, role, armyNo, rank, battalionId } = req.body
-
-    // Check if user exists
-    const existingUser = await User.findOne({ armyNo })
-    if (existingUser) {
-      console.log("User Exists")
-      return res.status(400).json({ message: 'User already exists' })
-    }
-
-    // Validate role-specific requirements
-    if ((role === 'JSO' || role === 'USER') && !armyNo) {
-      console.log("ArmyNumber Error")
-      return res.status(400).json({ message: 'Army Number is required for JSO and USER roles' })
-    }
-
-    const userData = {
+    const {
       username,
       password,
       fullName,
-      role: role || 'USER'
+      role = 'USER',
+      armyNo,
+      rank,
+      battalionId
+    } = req.body
+
+    // Check if user with same army number exists
+    if (armyNo) {
+      const existingUser = await User.findOne({ armyNo: armyNo.toUpperCase() })
+      if (existingUser) {
+        return res.status(400).json({ message: 'User with this Army Number already exists' })
+      }
     }
 
-    if (armyNo) userData.armyNo = armyNo
-    if (rank) userData.rank = rank
-    if (battalionId) userData.battalion = battalionId
+    // Validate required fields
+    if (!username || !password || !fullName) {
+      return res.status(400).json({ message: 'Username, password and full name are required' })
+    }
 
-    const user = new User(userData)
-    await user.save()
+    if ((role === 'JSO' || role === 'USER') && !armyNo) {
+      return res.status(400).json({ message: 'Army Number is required for JSO and USER roles' })
+    }
 
+    const newUser = new User({
+      username: username.trim(),
+      password,
+      fullName: fullName.trim(),
+      role,
+      armyNo: armyNo ? armyNo.toUpperCase() : undefined,
+      rank: rank ? rank.toUpperCase() : undefined,
+      battalion: battalionId || undefined
+    })
+
+    await newUser.save()
+
+    // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
+      { userId: newUser._id, role: newUser.role },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     )
 
     res.status(201).json({
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        fullName: user.fullName,
-        role: user.role,
-        armyNo: user.armyNo,
-        rank: user.rank,
-        battalion: user.battalion
-      }
+      user: newUser // thanks to the toJSON() method, password is excluded
     })
+
   } catch (error) {
+    console.error('Registration error:', error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 })

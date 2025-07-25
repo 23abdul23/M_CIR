@@ -7,7 +7,7 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
     rank: '',
     name: '',
     armyNo: '',
-    coySquadronBty: '',
+    subBty: '',
     service: '',
     dateOfInduction: '',
     medCat: '',
@@ -50,7 +50,7 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
           <div className="form-grid">
             <div className="form-group">
               <label>RANK</label>
-              <select
+                <select
                     id="rank"
                     name="rank"
                     value={formData.rank}
@@ -69,7 +69,7 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
                     <option value="L/Nk">L/Nk</option>
                     <option value="Sep">Sep</option>
                     <option value="Rfn">Rfn</option>
-                  </select>
+                </select>
             </div>
             
             <div className="form-group">
@@ -96,13 +96,17 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
             
             <div className="form-group">
               <label>COY/SQN/BTY</label>
-              <input
-                type="text"
-                name="coySquadronBty"
-                value={formData.coySquadronBty}
-                onChange={handleChange}
-                required
-              />
+              
+              <select 
+                value={formData.subBty} 
+                onChange={(e) => setFormData({ ...formData, subBty: e.target.value })}
+              >
+                <option value="">SELECT Sub BN</option>
+                <option value="P Bty">P Bty</option>
+                <option value="Q Bty">Q Bty</option>
+                <option value="R Bty">R Bty</option>
+                <option value="HQ Bty">HQ Bty</option>
+              </select>
             </div>
             
             <div className="form-group">
