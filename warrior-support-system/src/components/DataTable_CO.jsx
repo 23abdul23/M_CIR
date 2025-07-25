@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
-import { useLocation } from 'react-router-dom'
 import AddDataModal from './AddDataModal'
 import '../styles/DataTable.css'
 
@@ -18,19 +17,22 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const location = useLocation()
   const locationSelectedBattalion = location.state?.selectedBattalion
 
-
-
- 
   useEffect(() => {
-    fetchPersonnel(), fetchResults()
+    fetchPersonnel()
+    fetchResults()
   }, [selectedBattalion])
 
   const fetchResults = async () => {
     try {
-      
-    }
-    catch (error){
-      console.log("Error: ", error)
+      const battalionId = selectedBattalion || locationSelectedBattalion
+      const response = await axios.get(`/api/examination/battalion/${battalionId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      const n = response.data.map((e) => [e.dassScores, e.battalion])
+      console.log(n)
+      setResults(n)
+    } catch (error) {
+      console.log("Error fetching results: ", error)
     }
   }
 
@@ -38,14 +40,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     setLoading(true)
     try {
       const battalionId = selectedBattalion || locationSelectedBattalion
-
-      
       const response = await axios.get(`/api/personnel/battalion/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+      console.log(response.data)
       setPersonnel(response.data)
-
-      
     } catch (error) {
       console.error('Error fetching personnel:', error)
     } finally {
@@ -57,11 +56,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.removeItem('currentArmyNo')
-    
-    if (onLogout) {
-      onLogout()
-    }
-    
+    onLogout && onLogout()
     navigate('/login')
   }
 
@@ -86,9 +81,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     }
   }
 
-  const handleImport = () => {
-    fileInputRef.current.click()
-  }
+  const handleImport = () => fileInputRef.current.click()
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0]
@@ -114,7 +107,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       console.error('Error importing data:', error)
       alert('Error importing data. Please check the file format and try again.')
     }
-    // Reset file input
+
     event.target.value = ''
   }
 
@@ -161,51 +154,29 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
   const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
-  const canReview = currentUser.role === 'CO'
-  
-  
+
   return (
     <div className="datatable-container">
       <Header currentUser={currentUser} onLogout={handleLogout} />
-      
+
       <div className="datatable-content">
         <div className="datatable-header">
           <h2 className="datatable-title">WARRIOR SUPPORT SYSTEM</h2>
-          
           <p className="datatable-subtitle">{}</p>
         </div>
 
         <div className="datatable-actions">
           {canImportExport && (
             <>
-              <button onClick={handleImport} className="datatable-btn datatable-btn-import">
-                IMPORT
-              </button>
-              <button onClick={handleExport} className="datatable-btn datatable-btn-export">
-                EXPORT
-              </button>
+              <button onClick={handleImport} className="datatable-btn datatable-btn-import">IMPORT</button>
+              <button onClick={handleExport} className="datatable-btn datatable-btn-export">EXPORT</button>
             </>
           )}
           {canManageData && (
             <>
-              <button 
-                onClick={() => setShowAddModal(true)} 
-                className="datatable-btn datatable-btn-add"
-              >
-                ADD NEW
-              </button>
-              <button 
-                onClick={handleSaveAll} 
-                className="datatable-btn datatable-btn-save"
-              >
-                SAVE ALL
-              </button>
-              <button 
-                onClick={handleRemoveAll} 
-                className="datatable-btn datatable-btn-remove"
-              >
-                REMOVE ALL
-              </button>
+              <button onClick={() => setShowAddModal(true)} className="datatable-btn datatable-btn-add">ADD NEW</button>
+              <button onClick={handleSaveAll} className="datatable-btn datatable-btn-save">SAVE ALL</button>
+              <button onClick={handleRemoveAll} className="datatable-btn datatable-btn-remove">REMOVE ALL</button>
             </>
           )}
         </div>
@@ -242,14 +213,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                     <th>SERVICE</th>
                     <th>DATE OF INDN</th>
                     <th>MED CAT</th>
-                    <th>LEAVE AVAILED THIS YEAR (AL/CL)</th>
+                    <th>LEAVE AVAILED</th>
                     <th>MARITAL STATUS</th>
                     <th>SELF EVALUATION</th>
-                    
-                    
+                    <th>RESULTS</th>
                     {canManageData && <th>ACTION</th>}
-
-                    <th>Results</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -266,35 +234,50 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                       <td>{person.maritalStatus}</td>
                       <td>
                         <span className={`datatable-status ${person.selfEvaluation?.toLowerCase().replace('_', '-')}`}>
-                          {person.selfEvaluation === 'EXAM_APPEARED' ? 'Exam Appeared' : 
-                           person.selfEvaluation === 'NOT_ATTEMPTED' ? 'Not Attempted' : 
-                           person.selfEvaluation || 'Not Set'}
+                          {person.selfEvaluation === 'EXAM_APPEARED' ? 'Exam Appeared' :
+                            person.selfEvaluation === 'NOT_ATTEMPTED' ? 'Not Attempted' :
+                              person.selfEvaluation || 'Not Set'}
                         </span>
                       </td>
                       
+                      <td>
+                        {person.selfEvaluation === "COMPLETED" ? (() => {
+                          const resultEntry = results.find(r => r?.[1]?._id === person.battalion?._id?.toString());
+                          const scores = resultEntry?.[0];
+
+                          return scores ? (
+                            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                              <tbody>
+                                <tr>
+                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                    <strong>Anxiety:</strong> {scores.anxiety} ({scores.anxietySeverity})
+                                  </td>
+                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                    <strong>Depression:</strong> {scores.depression} ({scores.depressionSeverity})
+                                  </td>
+                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                    <strong>Stress:</strong> {scores.stress} ({scores.stressSeverity})
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          ) : (
+                            <div>No result found</div>
+                          );
+                        })() : (
+                          <div>Not Completed</div>
+                        )}
+                      </td>
+
                       {canManageData && (
                         <td>
                           <div className="datatable-actions-cell">
-                            <button
-                              className="datatable-btn-icon datatable-btn-edit"
-                              onClick={() => handleEdit(person)}
-                              title="Edit"
-                            >
-                              ✏️
-                            </button>
-                            <button
-                              className="datatable-btn-icon datatable-btn-delete"
-                              onClick={() => handleDelete(person._id)}
-                              title="Delete"
-                            >
-                              🗑️
-                            </button>
+                            <button className="datatable-btn-icon datatable-btn-edit" onClick={() => handleEdit(person)} title="Edit">✏️</button>
+                            <button className="datatable-btn-icon datatable-btn-delete" onClick={() => handleDelete(person._id)} title="Delete">🗑️</button>
                           </div>
                         </td>
                       )}
-                      <td>
-                        ok
-                      </td>
+
                     </tr>
                   ))}
                 </tbody>
@@ -311,7 +294,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       </div>
 
       {showAddModal && (
-        <AddDataModal 
+        <AddDataModal
           onClose={() => {
             setShowAddModal(false)
             setEditingPersonnel(null)
