@@ -44,7 +44,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
       const response = await axios.get("/api/battalion", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
-      console.log(response.data)
       setAllBattalions(response.data)
     } catch (error) {
       console.error("Error fetching battalions:", error)

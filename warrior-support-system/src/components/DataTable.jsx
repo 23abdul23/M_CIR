@@ -13,7 +13,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
 
-  console.log(selectedBattalion)
+  console.log(currentUser)
 
   useEffect(() => {
     fetchPersonnel()
@@ -23,7 +23,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
     setLoading(true)
     try {
       const battalionId = selectedBattalion || currentUser.battalion
-      console.log(battalionId._id)
+      
       const response = await axios.get(`/api/personnel/battalion/${battalionId._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
@@ -144,7 +144,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
   const canReview = currentUser.role === 'JSO'
-
+ 
   return (
     <div className="datatable-container">
       <Header currentUser={currentUser} onLogout={handleLogout} />
@@ -152,7 +152,8 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
       <div className="datatable-content">
         <div className="datatable-header">
           <h2 className="datatable-title">WARRIOR SUPPORT SYSTEM</h2>
-          <p className="datatable-subtitle">71 FD REGT</p>
+          
+          <p className="datatable-subtitle">{currentUser.battalion.name}</p>
         </div>
 
         <div className="datatable-actions">

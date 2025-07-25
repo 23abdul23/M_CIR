@@ -17,7 +17,6 @@ router.post("/submit", auth, async (req, res) => {
       return res.status(404).json({ message: "Personnel not found" })
     }
 
-    console.log(personnel)
     // Create new examination
     const examination = new Examination({
       ...req.body,
