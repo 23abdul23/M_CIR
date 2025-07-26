@@ -22,8 +22,8 @@ const Header = ({ currentUser, onLogout }) => {
   return (
     <header className="app-header">
       <div className="header-left">
-        <div className="header-logo-placeholder"><img src='public\images\logo1.png'></img></div>
-        <div className="header-logo-placeholder"><img src='public\images\logo2.png'></img></div>
+        <div className="header-logo-placeholder logo1"></div>
+        <div className="header-logo-placeholder logo2"></div>
         <h1>WARRIOR SUPPORT SYSTEM</h1>
       </div>
       <div className="header-right">

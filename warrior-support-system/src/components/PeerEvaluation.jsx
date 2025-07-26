@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
 import '../styles/PeerEvaluation.css'
+import _ from 'lodash';
+
 
 const PeerEvaluation = ({ currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState(null)
@@ -32,14 +34,36 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get('/api/evaluation/questions', {
+      const response = await axios.get('/api/questions/peer_question', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+
+      console.log(response.data)
       setQuestions(response.data)
       setLoading(false)
     } catch (error) {
       console.error('Error fetching questions:', error)
       setLoading(false)
+    }
+  }
+
+  const handleSubmitEvaluation = async () => {
+    try {
+      await axios.post('/api/evaluation/submit', {
+        personnelId: personnelId,
+        answers: Object.keys(answers).map(questionId => ({
+          questionId,
+          answer: answers[questionId]
+        }))
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+
+      alert('Peer evaluation submitted successfully!')
+      navigate('/data-table')
+    } catch (error) {
+      console.error('Error submitting evaluation:', error)
+      alert('Error submitting evaluation. Please try again.')
     }
   }
 
@@ -76,25 +100,7 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
     }
   }
 
-  const handleSubmitEvaluation = async () => {
-    try {
-      await axios.post('/api/evaluation/submit', {
-        personnelId: personnelId,
-        answers: Object.keys(answers).map(questionId => ({
-          questionId,
-          answer: answers[questionId]
-        }))
-      }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
 
-      alert('Peer evaluation submitted successfully!')
-      navigate('/data-table')
-    } catch (error) {
-      console.error('Error submitting evaluation:', error)
-      alert('Error submitting evaluation. Please try again.')
-    }
-  }
 
   if (loading || !personnel || !questions.length) {
     return (
@@ -137,9 +143,9 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
         <h2>PEER EVALUATION</h2>
 
         <div className="question-section">
-          <h3>{currentQuestion + 1}. {question.question}</h3>
+          <h3>{currentQuestion + 1}. { _.startCase(_.toLower(personnel.name))} {question.questionText.toLowerCase()}</h3>
 
-          {question.type === 'text' ? (
+          {question.questionType === 'TEXT' ? (
             <textarea
               value={answers[question.id] || ''}
               onChange={(e) => handleAnswerChange(question.id, e.target.value)}
@@ -153,12 +159,11 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
                 <label key={index} className="option-label">
                   <input
                     type="radio"
-                    name={`question-${question.id}`}
-                    value={option}
-                    checked={answers[question.id] === option}
-                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                  />
-                  <span className="option-text">{String.fromCharCode(65 + index)}. {option}</span>
+                    name={`question-${question._id}`}
+                    value={option.optionText}
+                    checked={answers[question._id] === option.optionText}
+                    onChange={(e) => handleAnswerChange(question._id, e.target.value)}
+                  />{option.optionText}
                 </label>
               ))}
             </div>

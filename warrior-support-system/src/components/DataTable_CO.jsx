@@ -29,7 +29,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       const n = response.data.map((e) => [e.dassScores, e.battalion])
-      console.log(n)
       setResults(n)
     } catch (error) {
       console.log("Error fetching results: ", error)
@@ -43,7 +42,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       const response = await axios.get(`/api/personnel/battalion/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log(response.data)
       setPersonnel(response.data)
     } catch (error) {
       console.error('Error fetching personnel:', error)

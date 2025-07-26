@@ -1,0 +1,72 @@
+[
+  {
+    "questionId": 1,
+    "questionText": "Discipline mein kaisa hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "1", "optionText": "1" },
+      { "optionId": "2", "optionText": "2" },
+      { "optionId": "3", "optionText": "3" },
+      { "optionId": "4", "optionText": "4" },
+      { "optionId": "5", "optionText": "5" }
+    ],
+    "isActive": true,
+    "order": 1
+  },
+  {
+    "questionId": 2,
+    "questionText": "Military Bearing kaisa hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "1", "optionText": "1" },
+      { "optionId": "2", "optionText": "2" },
+      { "optionId": "3", "optionText": "3" },
+      { "optionId": "4", "optionText": "4" },
+      { "optionId": "5", "optionText": "5" }
+    ],
+    "isActive": true,
+    "order": 2
+  },
+  {
+    "questionId": 3,
+    "questionText": "Morale kaisa hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "1", "optionText": "1" },
+      { "optionId": "2", "optionText": "2" },
+      { "optionId": "3", "optionText": "3" },
+      { "optionId": "4", "optionText": "4" },
+      { "optionId": "5", "optionText": "5" }
+    ],
+    "isActive": true,
+    "order": 3
+  },
+  {
+    "questionId": 4,
+    "questionText": "Medical Condition kaisa hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "1", "optionText": "1" },
+      { "optionId": "2", "optionText": "2" },
+      { "optionId": "3", "optionText": "3" },
+      { "optionId": "4", "optionText": "4" },
+      { "optionId": "5", "optionText": "5" }
+    ],
+    "isActive": true,
+    "order": 4
+  },
+  {
+    "questionId": 5,
+    "questionText": "Family ke prati vyavhaar kaisa hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "1", "optionText": "1" },
+      { "optionId": "2", "optionText": "2" },
+      { "optionId": "3", "optionText": "3" },
+      { "optionId": "4", "optionText": "4" },
+      { "optionId": "5", "optionText": "5" }
+    ],
+    "isActive": true,
+    "order": 5
+  }
+]

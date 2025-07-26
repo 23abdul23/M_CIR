@@ -9,6 +9,7 @@ const User = require(path.join(__dirname, '../models/User'))
 const Battalion = require(path.join(__dirname, '../models/Battalion'))
 const Personnel = require(path.join(__dirname, '../models/Personnel'))
 const Question = require(path.join(__dirname, '../models/Question'))
+const QuestionPeer = require(path.join(__dirname, '../models/Question_peer'))
 const Examination = require(path.join(__dirname, '../models/Examination'))
 
 
@@ -66,6 +67,7 @@ async function initializeDatabase() {
     await Personnel.deleteMany({})
     await Examination.deleteMany({})
     await Question.deleteMany({})
+    await QuestionPeer.deleteMany({})
     console.log('✅ Cleared existing data')
 
     // Create Questions first
@@ -74,6 +76,13 @@ async function initializeDatabase() {
     const processedQuestions = questionsData.map(q => convertDates(q))
     const questions = await Question.insertMany(processedQuestions)
     console.log(`✅ Created ${questions.length} questions`)
+
+    // Create Peer Questions first
+    console.log('📝 Creating questions...')
+    const questionsPeerData = readTestData('peer_questions.json')
+    const processedPeerQuestions = questionsPeerData.map(q => convertDates(q))
+    const peer_questions = await QuestionPeer.insertMany(processedPeerQuestions)
+    console.log(`✅ Created ${peer_questions.length} questions`)
 
     // Create Battalions
     console.log('🏛️ Creating battalions...')
@@ -106,6 +115,7 @@ async function initializeDatabase() {
     console.log('\n🎉 === DATABASE INITIALIZATION COMPLETED ===')
     console.log('\n📊 Summary:')
     console.log(`   Questions: ${questions.length}`)
+    console.log(`   Peer Questions: ${peer_mongoquestions.length}`)
     console.log(`   Users: ${users.length}`)
     console.log(`   Battalions: ${battalions.length}`)
     console.log(`   Personnel: ${personnel.length}`)

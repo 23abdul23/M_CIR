@@ -54,9 +54,9 @@ const Login = ({ onLogin }) => {
   // Demo login functions for testing
   const handleDemoLogin = async (role) => {
     const demoCredentials = {
-      CO: { username: 'co_admin', password: 'admin123' },
-      JSO: { username: 'jso_officer', password: 'jso123' },
-      USER: { username: 'user_soldier', password: 'user123' }
+      CO: { username: 'co_admin', password: '123456' },
+      JSO: { username: 'jso_allahabad', password: '123456' },
+      USER: { username: 'user_army', password: '123456' }
     }
 
     const credentials = demoCredentials[role]
@@ -90,8 +90,11 @@ const Login = ({ onLogin }) => {
       <div className="login-content">
         <div className="login-header">
           <div className="logo-section">
-            <div className="logo-placeholder">🇮🇳</div>
-            <div className="logo-placeholder">⚔️</div>
+            <div className="logo-placeholder logo1">
+            </div>
+            <div className="logo-placeholder logo2">
+            </div>
+
           </div>
           <h1>WARRIOR SUPPORT SYSTEM</h1>
           <p className="login-subtitle">Secure Authentication Portal</p>
@@ -168,7 +171,7 @@ const Login = ({ onLogin }) => {
                 className="demo-btn user-btn"
                 disabled={loading}
               >
-                <span className="role-icon">👨‍🎖️</span>
+                <span className="role-icon">👨</span>
                 <div>
                   <strong>USER (Soldier)</strong>
                   <small>Basic access</small>

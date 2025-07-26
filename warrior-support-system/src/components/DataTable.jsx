@@ -23,7 +23,6 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
     try {
       const battalionId = currentUser.battalion
 
-      console.log(battalionId)
       
       const response = await axios.get(`/api/personnel/battalion/${battalionId._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
