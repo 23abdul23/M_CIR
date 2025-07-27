@@ -37,7 +37,7 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
     if (selectedBattalion && selectedSubBattalion) {
       localStorage.setItem('selectedBattalion', selectedBattalion)
       localStorage.setItem('selectedSubBattalion', selectedSubBattalion)
-      navigate('/main-menu')
+      navigate('/decide-assessment')
     }
   }
 

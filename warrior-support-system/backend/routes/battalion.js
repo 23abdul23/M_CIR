@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
       .populate('approvedBy', 'fullName username')
       .sort({ createdAt: -1 })
 
+      
     res.json(battalions)
   } catch (error) {
     console.log("Error: ", error)

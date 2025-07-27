@@ -16,6 +16,7 @@ import CODashboard from './components/CODashboard'
 import JSODashboard from './components/JSODashboard'
 import PeerEvaluation from './components/PeerEvaluation'
 import DataTable_CO from './components/DataTable_CO'
+import DecideAsessment from './components/DecideAssessment'
 
 // Styles
 import './styles/App.css'
@@ -54,10 +55,12 @@ function App() {
     setLoading(false)
   }, [])
 
-  const handleLogin = (user, token) => {
+  const handleLogin = async (user, token) => {
     setCurrentUser(user)
     localStorage.setItem('token', token)
     localStorage.setItem('user', JSON.stringify(user))
+
+    
   }
 
   const handleLogout = () => {
@@ -195,6 +198,19 @@ function App() {
                 <BattalionSelection 
                   selectedBattalion={selectedBattalion}
                   setSelectedBattalion={setSelectedBattalion}
+                  currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/decide-assessment" 
+            element={
+              <ProtectedRoute allowedRoles={['USER']}>
+                <DecideAsessment 
+                  selectedBattalion={selectedBattalion}
                   currentUser={currentUser}
                   onLogout={handleLogout}
                 />

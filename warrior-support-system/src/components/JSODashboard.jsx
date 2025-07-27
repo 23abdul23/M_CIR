@@ -8,13 +8,13 @@ const JSODashboard = ({ currentUser, onLogout }) => {
   const [battalionInfo, setBattalionInfo] = useState(null)
   const [personnelCount, setPersonnelCount] = useState(0)
   const [stats, setStats] = useState({
-    totalPersonnel: 0,
     pendingEvaluations: 0,
     completedEvaluations: 0,
-    examAppeared: 0
   })
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+
+  localStorage.setItem('selectedBattalion', currentUser.battalion._id)
 
   useEffect(() => {
     fetchBattalionInfo()
@@ -39,18 +39,17 @@ const JSODashboard = ({ currentUser, onLogout }) => {
     try {
       setLoading(true)
       if (currentUser.battalion) {
-        const response = await axios.get(`/api/personnel/battalion/${currentUser.battalion}`, {
+        const response = await axios.get(`/api/personnel/battalion/${currentUser.battalion._id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
         const personnel = response.data
+
         setPersonnelCount(personnel.length)
         
         // Calculate stats
         const stats = {
-          totalPersonnel: personnel.length,
           pendingEvaluations: personnel.filter(p => p.peerEvaluation?.status === 'PENDING').length,
           completedEvaluations: personnel.filter(p => p.peerEvaluation?.status === 'EVALUATED').length,
-          examAppeared: personnel.filter(p => p.selfEvaluation === 'EXAM_APPEARED').length
         }
         setStats(stats)
       }

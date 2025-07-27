@@ -69,14 +69,22 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const calculateStats = async () => {
     try {
       // You can replace this with an actual API call if you have one
-      const approvedBattalions = allBattalions.filter((b) => b.status === "APPROVED").length
-      const pendingBattalions = allBattalions.filter((b) => b.status === "PENDING").length
-
+      const responce = await axios.get(`api/battalion`,{
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      console.log(responce.data.length)
+      
+      const approvedBattalions = responce.data.filter((b) => b.status === "APPROVED").length
+      const pendingBattalions = responce.data.filter((b) => b.status === "PENDING").length
+      
+      const res = await axios.get("/api/questions", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
       
       setStats({
         totalBattalions: approvedBattalions,
         pendingApprovals: pendingBattalions,
-        totalQuestions: questions.length,
+        totalQuestions: res.data.length,
       })
     } catch (error) {
       console.error("Error calculating stats:", error)

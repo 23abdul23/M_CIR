@@ -49,7 +49,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
 
   const handleExport = async () => {
     try {
-      const battalionId = selectedBattalion || currentUser.battalion
+      const battalionId = localStorage.getItem('selectedBattalion')
       const response = await axios.get(`/api/csv/export/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         responseType: 'blob'

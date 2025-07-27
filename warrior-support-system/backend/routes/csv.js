@@ -1,5 +1,6 @@
 const express = require('express')
 const Personnel = require('../models/Personnel')
+const Examination = require('../models/Examination')
 const auth = require('../middleware/auth')
 const User = require('../models/User')
 const csv = require('csv-parser')
@@ -20,51 +21,77 @@ router.get('/export/:battalionId', auth, async (req, res) => {
     }
 
     const { battalionId } = req.params
+    
 
-    // JSO can only export their battalion data
-    if (req.user.role === 'JSO') {
-      const user = await User.findById(req.user.userId)
-      if (user.battalion.toString() !== battalionId) {
-        return res.status(403).json({ message: 'Access denied to this battalion' })
-      }
-    }
+    // // JSO can only export their battalion data
+    // if (req.user.role === 'JSO') {
+    //   const user = await User.findById(req.user.userId)
+    //   if (user.battalion.toString() !== battalionId) {
+    //     return res.status(403).json({ message: 'Access denied to this battalion' })
+    //   }
+    // }
 
     const personnel = await Personnel.find({ battalion: battalionId })
       .populate('battalion', 'name')
       .populate('peerEvaluation.evaluatedBy', 'fullName rank')
 
-    // Prepare data for CSV export
-    const csvData = personnel.map(person => ({
-      'Army No': person.armyNo,
-      'Rank': person.rank,
-      'Name': person.name,
-      'Coy/Sqn/Bty': person.coySquadronBty,
-      'Service': person.service,
-      'Date of Induction': person.dateOfInduction.toISOString().split('T')[0],
-      'Med Cat': person.medCat,
-      'Leave Availed': person.leaveAvailed || 'NIL',
-      'Marital Status': person.maritalStatus,
-      'Self Evaluation': person.selfEvaluation,
-      'Peer Evaluation Status': person.peerEvaluation.status,
-      'Evaluated By': person.peerEvaluation.evaluatedBy ? 
-        `${person.peerEvaluation.evaluatedBy.rank} ${person.peerEvaluation.evaluatedBy.fullName}` : 'N/A',
-      'Evaluation Date': person.peerEvaluation.evaluatedAt ? 
-        person.peerEvaluation.evaluatedAt.toISOString().split('T')[0] : 'N/A'
-    }))
+    const examination = await Examination.find({ battalion: battalionId})
+      .populate('battalion', 'name')
+      
+    console.log(examination)
+    
+    const examMap = new Map()
+    examination.forEach(exam => {
+      if (exam.armyNo) {
+        examMap.set(exam.armyNo, exam)
+      }
+    })
+
+    const combinedData = personnel.map(person => {
+      const exam = (person.selfEvaluation === 'COMPLETED') 
+        ? examMap.get(person.armyNo) 
+        : null
+
+      return {
+        'Army No': person.armyNo,
+        'Rank': person.rank,
+        'Name': person.name,
+        'SubBty': person.subBty,
+        'Service': person.service,
+        'Date of Induction': person.dateOfInduction?.toISOString?.().split('T')[0] || 'N/A',
+        'Med Cat': person.medCat,
+        'Leave Availed': person.leaveAvailed || 'NIL',
+        'Marital Status': person.maritalStatus,
+        'Self Evaluation': person.selfEvaluation,
+        'Peer Evaluation Status': person.peerEvaluation?.status || 'N/A',
+        'Depresion': exam?.dassScores?.depressionSeverity || 'N/A',
+        'Stress': exam?.dassScores?.stressSeverity || 'N/A',
+        'Anxiety': exam?.dassScores?.anxietySeverity || 'N/A',
+        'Evaluated By': person.peerEvaluation?.evaluatedBy
+          ? `${person.peerEvaluation.evaluatedBy.rank} ${person.peerEvaluation.evaluatedBy.fullName}`
+          : 'N/A',
+        'Evaluation Date': person.peerEvaluation?.evaluatedAt
+          ? person.peerEvaluation.evaluatedAt.toISOString().split('T')[0]
+          : 'N/A'
+      }
+    })
 
     const fields = [
-      'Army No', 'Rank', 'Name', 'Coy/Sqn/Bty', 'Service', 
+      'Army No', 'Rank', 'Name', 'SubBty', 'Service', 
       'Date of Induction', 'Med Cat', 'Leave Availed', 'Marital Status',
-      'Self Evaluation', 'Peer Evaluation Status', 'Evaluated By', 'Evaluation Date'
+      'Self Evaluation', 'Peer Evaluation Status', 'Depresion', 'Stress', 'Anxiety',
+      'Evaluated By', 'Evaluation Date'
     ]
 
     const json2csvParser = new Parser({ fields })
-    const csv = json2csvParser.parse(csvData)
+    const csv = json2csvParser.parse(combinedData)
+
 
     res.header('Content-Type', 'text/csv')
     res.attachment(`personnel_data_${Date.now()}.csv`)
     res.send(csv)
   } catch (error) {
+    console.log("Error: ", error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 })
