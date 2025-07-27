@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .backend/env
+# Ignore all files/folders in models/
+python-backend/models/*
+
+# But keep Python files directly inside models/
+!python-backend/models/*.py

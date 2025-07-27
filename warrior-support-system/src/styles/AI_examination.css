@@ -1,0 +1,187 @@
+/* ===== AI Audio Recorder Styles ===== */
+.audio-transcript-textarea {
+  margin-bottom: 16px;
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f7fafc;
+  color: #2c3e50;
+  font-weight: 500;
+  width: 100%;
+  font-size: 15px;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.25s;
+}
+.audio-transcript-textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.17);
+}
+
+
+.audio-recorder-container {
+  background: linear-gradient(
+    rgba(44, 62, 80, 0.7),
+    rgba(52, 152, 219, 0.3)
+  );
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+/* Card style wrapper */
+.audio-recorder-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 14px;
+  box-shadow: 0 4px 32px rgba(52, 152, 219, 0.12);
+  padding: 40px 32px 28px 32px;
+  max-width: 420px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Header */
+.audio-recorder-title {
+  color: #3498db;
+  font-size: 26px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 0.5em;
+  text-shadow: 2px 2px 8px rgba(44, 62, 80, 0.07);
+  text-transform: uppercase;
+}
+
+.audio-recorder-divider {
+  border: none;
+  border-top: 2px solid #ecf0f1;
+  margin: 0 0 24px 0;
+}
+
+/* Mic select */
+.audio-microphone-select {
+  width: 100%;
+  padding: 13px 12px;
+  font-size: 15px;
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
+  background: #f7fafc;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+}
+.audio-microphone-select:disabled {
+  background: #ecf0f1;
+  color: #b2bec3;
+}
+
+.audio-recorder-label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #2980b9;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  display: block;
+}
+
+/* Buttons */
+.audio-recorder-btn {
+  width: 100%;
+  padding: 15px 0;
+  font-size: 17px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2px 14px rgba(52, 152, 219, 0.09);
+  transition: all 0.22s cubic-bezier(0.4,0.6,0.7,1.1);
+}
+
+.audio-recorder-btn.start {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: white;
+}
+.audio-recorder-btn.start:hover:not(:disabled) {
+  background: linear-gradient(135deg, #229954, #27ae60);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(39, 174, 96, .25);
+}
+.audio-recorder-btn.stop {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+.audio-recorder-btn.stop:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(231, 76, 60, .17);
+}
+.audio-recorder-btn:disabled {
+  background: #bdc3c7;
+  color: #fafafa;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Recording status */
+.audio-recorder-status {
+  background: rgba(231, 76, 60, 0.09);
+  color: #e74c3c;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px 0 8px 0;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 0;
+  border: 1.5px solid rgba(231, 76, 60, 0.12);
+  letter-spacing: 1.5px;
+}
+
+/* Audio Player */
+.audio-recorder-player {
+  background: rgba(236, 240, 241, 0.7);
+  padding: 18px 14px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(41, 128, 185, 0.08);
+}
+
+.audio-recorder-player audio {
+  width: 100%;
+  outline: none;
+  margin-top: 8px;
+}
+
+/* Permission/Warning Message */
+.audio-recorder-warning {
+  background: rgba(243, 156, 18, 0.11);
+  color: #e67e22;
+  border: 1.5px solid #f39c1260;
+  padding: 13px;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(243, 156, 18, 0.07);
+}
+
+/* Responsive tweaks */
+@media (max-width: 560px) {
+  .audio-recorder-card {
+    padding: 16px 4vw;
+    min-width: 0;
+    border-radius: 8px;
+  }
+  .audio-recorder-title {
+    font-size: 20px;
+  }
+}
+
+/* ===== end AI Audio Recorder Styles ===== */

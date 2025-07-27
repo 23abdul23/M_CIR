@@ -17,6 +17,7 @@ import JSODashboard from './components/JSODashboard'
 import PeerEvaluation from './components/PeerEvaluation'
 import DataTable_CO from './components/DataTable_CO'
 import DecideAsessment from './components/DecideAssessment'
+import AI_Assessment from './components/AI_examination'
 
 // Styles
 import './styles/App.css'
@@ -224,6 +225,19 @@ function App() {
               <ProtectedRoute allowedRoles={['USER']}>
                 <MainMenu 
                   selectedBattalion={selectedBattalion}
+                  currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Examination Routes (All authenticated users) */}
+          <Route 
+            path="/ai-exam" 
+            element={
+              <ProtectedRoute>
+                <AI_Assessment 
                   currentUser={currentUser}
                   onLogout={handleLogout}
                 />
