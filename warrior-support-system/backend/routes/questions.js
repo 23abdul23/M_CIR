@@ -151,4 +151,15 @@ router.delete('/:questionId', auth, async (req, res) => {
   }
 })
 
+// Fetch text-based questions for AI examination
+router.get('/ai-questions', async (req, res) => {
+  try {
+    const questions = await Question.find({ questionType: 'TEXT', isActive: true }).sort({ order: 1 })
+    res.json(questions)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Failed to fetch AI questions.' })
+  }
+})
+
 module.exports = router

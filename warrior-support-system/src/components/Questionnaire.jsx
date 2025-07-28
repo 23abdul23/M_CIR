@@ -108,31 +108,31 @@ const Questionnaire = ({ currentUser, onLogout }) => {
   }
 
   const loadQuestionsFromDatabase = async () => {
-    try {
-      setLoading(true)
-      const response = await axios.get("/api/questions", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      setQuestions(response.data)
-    } catch (error) {
-      setError("Error loading questions. Please try again.")
-      // Fallback questions
-      setQuestions([
-        {
-          questionId: 1,
-          questionText: "Maine paya ki main bahut chhoti-chhoti baton se pareshan ho jata hun",
-          questionType: "MCQ",
-          options: [
-            { optionId: "0", optionText: "Yeh mujh par bilkul bhi lagu nahi hua." },
-            { optionId: "1", optionText: "Kabhi-Kabhi mere saath aise hota hain." },
-            { optionId: "2", optionText: "Aise mere saath aksar hota rehta hain." },
-            { optionId: "3", optionText: "Aise lagbhag hamesha mere saath hota rehta hain." },
-          ],
-        },
-      ])
-    } finally {
-      setLoading(false)
-    }
+  try {
+    setLoading(true)
+    const response = await axios.get("/api/questions", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
+    setQuestions(response.data)
+  } catch (error) {
+    setError("Error loading questions. Please try again.")
+    // Fallback questions
+    setQuestions([
+      {
+        questionId: 1,
+        questionText: "Maine paya ki main bahut chhoti-chhoti baton se pareshan ho jata hun",
+        questionType: "MCQ",
+        options: [
+          { optionId: "0", optionText: "Yeh mujh par bilkul bhi lagu nahi hua." },
+          { optionId: "1", optionText: "Kabhi-Kabhi mere saath aise hota hain." },
+          { optionId: "2", optionText: "Aise mere saath aksar hota rehta hain." },
+          { optionId: "3", optionText: "Aise lagbhag hamesha mere saath hota rehta hain." },
+        ],
+      },
+    ])
+  } finally {
+    setLoading(false)
+  }
   }
 
   const handleLogout = () => {

@@ -34,7 +34,7 @@ const MainMenu = ({ selectedBattalion, currentUser, onLogout }) => {
           </button>
           <button 
             className="menu-btn view-data"
-            onClick={() => navigate('/ai-exam')}
+            onClick={() => navigate('/ai-questionnaire')}
           >
             AI<br/>Examination
           </button>

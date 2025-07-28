@@ -1,3 +1,6 @@
+#uvicorn app:app --reload
+
+
 import os
 import shutil
 import tempfile
@@ -28,36 +31,33 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.post("/api/translate")
 async def translate_audio(audio: UploadFile = File(...)):
-
-    # Save uploaded file to a temp file
+    tmp_path = None
     try:
+        # Save uploaded file to a temp file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmpfile:
             shutil.copyfileobj(audio.file, tmpfile)
             tmp_path = tmpfile.name
 
         processor = EnhancedVoiceProcessor()
-
+        print(f"Processing file at: {tmp_path}")
         transcript = processor.transcribe_audio(tmp_path)
 
-        print(transcript['transcription'])
-        
-        # # Transcribe audio using whisper
-        # # Whisper will automatically convert using ffmpeg if needed
-        # result = model.transcribe(tmp_path, language="en")
-        # transcript = result.get("text", "").strip()
+        if not transcript or 'transcription' not in transcript:
+            raise ValueError("Transcription failed or returned no result.")
 
+        print(f"Transcription result: {transcript['transcription']}")
+        return {"transcript": transcript['transcription']}
     except Exception as e:
+        print(f"Error in translate_audio: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
     finally:
-        if os.path.exists(tmp_path):
+        if tmp_path and os.path.exists(tmp_path):
             os.remove(tmp_path)
 
-    return {"transcript": transcript['transcription']}
 
-
+    
 SESSIONS: Dict[str, list] = {}  # Stores frame paths per session
 DURATION = 0
 
@@ -119,13 +119,18 @@ def get_final_score(session_id: str):
         frame_stress = calculate_frame_stress_score(frame_result, emotion_stress_weights)
         frame_stress_scores.append(frame_stress)
 
-        # Store frame data
-        dominant_emotions = [e["dominant_emotion"] for e in frame_result.get("emotions", [])]
-        frame_emotions.extend(dominant_emotions)
+        try:
+            # Store frame data
+            dominant_emotions = [e["dominant_emotion"] for e in frame_result.get("emotions", [])]
+            frame_emotions.extend(dominant_emotions)
 
-        avg_confidence = sum(e["confidence"] for e in frame_result.get("emotions", [])) / len(frame_result.get("emotions", []))
-        frame_confidences.append(avg_confidence)
-    
+            avg_confidence = sum(e["confidence"] for e in frame_result.get("emotions", [])) / len(frame_result.get("emotions", []))
+            frame_confidences.append(avg_confidence)
+        
+        except Exception as e:
+            print(f"Error processing frame: {e}")
+            
+
     base_path = os.path.join(curr_path, 'sessions')
 
     # Iterate through all subdirectories

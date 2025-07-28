@@ -19,6 +19,7 @@ import DataTable_CO from './components/DataTable_CO'
 import DecideAsessment from './components/DecideAssessment'
 import AI_Assessment from './components/AI_examination'
 import Facial_examination from './components/Facial_examination'
+import AI_Questionnaire from './components/AI_Questionnaire'
 
 // Styles
 import './styles/App.css'
@@ -233,6 +234,11 @@ function App() {
             } 
           />
 
+          <Route 
+          path="/ai-questionnaire" 
+          element={<AI_Questionnaire />} 
+          />
+
           {/* Examination Routes (All authenticated users) */}
           <Route 
             path="/ai-exam" 
@@ -306,6 +312,8 @@ function App() {
               </ProtectedRoute>
             } 
           />
+
+          
 
           {/* Default Routes */}
           <Route path="/" element={<DashboardRedirect />} />
