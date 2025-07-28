@@ -18,6 +18,7 @@ import PeerEvaluation from './components/PeerEvaluation'
 import DataTable_CO from './components/DataTable_CO'
 import DecideAsessment from './components/DecideAssessment'
 import AI_Assessment from './components/AI_examination'
+import Facial_examination from './components/Facial_examination'
 
 // Styles
 import './styles/App.css'
@@ -238,6 +239,18 @@ function App() {
             element={
               <ProtectedRoute>
                 <AI_Assessment 
+                  currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/facial-analysis" 
+            element={
+              <ProtectedRoute>
+                <Facial_examination 
                   currentUser={currentUser}
                   onLogout={handleLogout}
                 />

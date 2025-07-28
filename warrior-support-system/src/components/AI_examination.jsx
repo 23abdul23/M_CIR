@@ -1,10 +1,13 @@
 import '../styles/AI_examination.css';
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import useClipboard from 'react-use-clipboard';
 
 const AI_assessment = () => {
+  const navigate = useNavigate();
+  
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
   const [availableDevices, setAvailableDevices] = useState([]);
@@ -275,6 +278,18 @@ const AI_assessment = () => {
             <audio src={audioURL} controls style={{ width: '100%', marginTop: '8px' }} />
           </div>
         )}
+
+        {/* Next Button */}
+        <div style={{ marginTop: '24px' }}>
+          <button
+            onClick={() => navigate('/facial-analysis')}
+            className="audio-recorder-btn next"
+            type="button"
+            style={{ width: '100%' }}
+          >
+            ➡️ Next: Facial Analysis
+          </button>
+        </div>
 
         {!permissionGranted && (
           <div className="audio-recorder-warning" style={{ marginTop: '12px' }}>

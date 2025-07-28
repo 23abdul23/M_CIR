@@ -1,0 +1,46 @@
+{
+  "analysis_summary": {
+    "total_frames": 121,
+    "valid_frames": 121,
+    "duration": 5,
+    "analysis_type": "general_assessment",
+    "average_stress_score": 0.85,
+    "final_stress_level": "Severe",
+    "overall_assessment": "severe_concern",
+    "stress_distribution": {
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "severe": 121
+    },
+    "emotion_distribution": {
+      "fear": 121
+    },
+    "average_confidence": 0.14938439884461646,
+    "severe_stress_ratio": 1.0,
+    "high_stress_ratio": 0.0
+  },
+  "recommendations": [
+    "Immediate professional mental health consultation recommended",
+    "Consider contacting military mental health services immediately",
+    "Reach out to trusted colleagues, supervisors, or family members",
+    "Emergency mental health hotline available 24/7",
+    "Address specific fears or anxieties with mental health counselor"
+  ],
+  "frame_analysis": {
+    "stress_scores": [
+      0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85,
+      0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85
+    ],
+    "emotions": [
+      "fear", "fear", "fear", "fear", "fear", "fear", "fear", "fear", "fear", "fear",
+      "fear", "fear", "fear", "fear", "fear", "fear", "fear", "fear", "fear", "fear"
+      
+    ],
+    "confidences": [
+      0.1493, 0.1493, 0.1493, 0.1493, 0.1493, 0.1493, 0.1494, 0.1494, 0.1494, 0.1494,
+      0.1494, 0.1494, 0.1494, 0.1494, 0.1494, 0.1494, 0.1494, 0.1494, 0.1494, 0.1494
+    
+    ]
+  }
+}

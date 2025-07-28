@@ -173,7 +173,7 @@ class EnhancedVoiceProcessor:
             logger.error(f"❌ Recording thread error: {e}")
             self.recording = False
     
-    def transcribe_audio(self, temp_path: str, language_hint: str = "hi") -> Dict:
+    def transcribe_audio(self, temp_path, language_hint: str = "hi") -> Dict:
         """
         Transcribe audio to text with Hinglish support
         
@@ -189,7 +189,7 @@ class EnhancedVoiceProcessor:
         
         try:
             # # Save audio to temporary file
-            # with tempfile.NamedTemporaryFile(suffix=".webm", delete=False) as temp_file:
+            # with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_file:
             #     sf.write(temp_file.name, audio_data, self.sample_rate)
             #     temp_path = temp_file.name
             
