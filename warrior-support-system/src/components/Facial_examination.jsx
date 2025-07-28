@@ -19,9 +19,11 @@ const Facial_examination = () => {
   const [isStreamingFrames, setIsStreamingFrames] = useState(false);
   const [frameCount, setFrameCount] = useState(0);
   const [analysisProgress, setAnalysisProgress] = useState(0);
+
+  const [imgData, setimgData] = useState('')
   
   const FRAME_INTERVAL = 1000 / 24; // 1 frame per second
-  const CAPTURE_DURATION = 8000; // 30 seconds
+  const CAPTURE_DURATION = 5000; // 30 seconds
   const sessionIdRef = useRef(null);
   const streamingIntervalRef = useRef(null);
 
@@ -75,6 +77,7 @@ const Facial_examination = () => {
         try {
           const result = await axios.get(`http://localhost:8000/api/final_score?session_id=${sessionIdRef.current}`);
           setAnalysisResults(result.data);
+          setimgData(result.data.image_base64)
           console.log('Analysis results:', result.data);
         } catch (err) {
           console.error('Error getting final results:', err);
@@ -234,162 +237,147 @@ const Facial_examination = () => {
         <h2 className="facial-examination-title">📷 Facial Expression Analysis</h2>
         <hr className="facial-examination-divider" />
 
-        {/* Camera Selection */}
-        {permissionGranted && availableDevices.length > 0 && (
-          <>
-            <label htmlFor="cameraSelect" className="facial-examination-label">
-              Select Camera:
-            </label>
-            <select
-              id="cameraSelect"
-              className="facial-camera-select"
-              value={selectedDeviceId}
-              onChange={(e) => setSelectedDeviceId(e.target.value)}
-              disabled={isCapturing}
-            >
-              {availableDevices.map((device) => (
-                <option key={device.deviceId} value={device.deviceId}>
-                  {device.label || `Camera ${device.deviceId.substring(0, 8)}`}
-                </option>
-              ))}
-            </select>
-          </>
-        )}
+        <div className="facial-examination-content">
+          {/* Camera Selection */}
+          <div className="camera-selection">
+            {permissionGranted && availableDevices.length > 0 && (
+              <>
+                <label htmlFor="cameraSelect" className="facial-examination-label">
+                  Select Camera:
+                </label>
+                <select
+                  id="cameraSelect"
+                  className="facial-camera-select"
+                  value={selectedDeviceId}
+                  onChange={(e) => setSelectedDeviceId(e.target.value)}
+                  disabled={isCapturing}
+                >
+                  {availableDevices.map((device) => (
+                    <option key={device.deviceId} value={device.deviceId}>
+                      {device.label || `Camera ${device.deviceId.substring(0, 8)}`}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+          </div>
 
-        {/* Video Preview */}
-        <div className="video-container">
-          <video
-            ref={videoRef}
-            className="video-preview"
-            autoPlay
-            muted
-            playsInline
-          />
-          <canvas ref={canvasRef} style={{ display: 'none' }} />
-        </div>
+          {/* Video Preview */}
+          <div className="video-preview-section">
+            <div className="video-container">
+              <video
+                ref={videoRef}
+                className="video-preview"
+                autoPlay
+                muted
+                playsInline
+              />
+              <canvas ref={canvasRef} style={{ display: 'none' }} />
+            </div>
 
-        {/* Camera Controls */}
-        <div className="camera-controls">
-          {!isCapturing ? (
-            <button
-              onClick={startCapture}
-              className="facial-examination-btn start"
-              disabled={!selectedDeviceId}
-            >
-              📹 Start Camera
-            </button>
-          ) : (
-            <>
-              <button
-                onClick={captureImage}
-                className="facial-examination-btn capture"
-              >
-                📸 Capture Image
-              </button>
-              <button
-                onClick={stopCapture}
-                className="facial-examination-btn stop"
-              >
-                ⏹️ Stop Camera
-              </button>
-            </>
-          )}
-        </div>
-
-        {/* Captured Images */}
-        {capturedImages.length > 0 && (
-          <div className="captured-images-section">
-            <h3 className="section-title">Captured Images</h3>
-            <div className="captured-images-grid">
-              {capturedImages.map((image) => (
-                <div key={image.id} className="captured-image-item">
-                  <img src={image.dataUrl} alt="Captured" className="captured-image" />
-                  <div className="image-timestamp">{image.timestamp}</div>
-                  <button
-                    onClick={() => removeImage(image.id)}
-                    className="remove-image-btn"
-                  >
-                    ❌
-                  </button>
-                </div>
-              ))}
+            {/* Camera Controls */}
+            <div className="camera-controls">
+              {!isCapturing ? (
+                <button
+                  onClick={startCapture}
+                  className="facial-examination-btn start"
+                  disabled={!selectedDeviceId}
+                >
+                  📹 Start Camera
+                </button>
+              ) : (
+                <button
+                  onClick={stopCapture}
+                  className="facial-examination-btn stop"
+                >
+                  ⏹️ Stop Camera
+                </button>
+              )}
             </div>
           </div>
-        )}
 
-        {/* Analysis Section */}
-        <div className="analysis-section">
-          <button
-            onClick={analyzeFacialExpressions}
-            className="facial-examination-btn analyze"
-            disabled={!isCapturing || isAnalyzing}
-          >
-            {isAnalyzing ? '🔄 Analyzing... (30s)' : '🧠 Analyze Expressions'}
-          </button>
-
-          {isStreamingFrames && (
-            <div className="analysis-status">
-              <div className="streaming-indicator">
-                🔴 Analyzing facial expressions... ({analysisProgress}% complete)
-                <br />
-                Frames captured: {frameCount} | Time remaining: {Math.max(0, 30 - Math.floor(analysisProgress * 30 / 100))}s
-              </div>
-              <div className="progress-bar" style={{ marginTop: '10px' }}>
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${analysisProgress}%` }}
-                ></div>
-              </div>
-              <button
-                onClick={stopAnalysis}
-                className="facial-examination-btn stop"
-                style={{ marginTop: '10px' }}
-              >
-                ⏹️ Stop Analysis
-              </button>
-            </div>
-          )}
-
-          {analysisResults && (
-            <div className="analysis-results">
-              <h3 className="section-title">Analysis Results</h3>
-              <div className="result-item">
-                <strong>Overall Mood:</strong> {analysisResults}
-              </div>
-              
-              
-              <div className="emotions-breakdown">
-                <h4>Emotion Breakdown:</h4>
-                {Object.entries(analysisResults.emotions).map(([emotion, value]) => (
-                  <div key={emotion} className="emotion-item">
-                    <span className="emotion-label">{emotion.charAt(0).toUpperCase() + emotion.slice(1)}:</span>
-                    <div className="emotion-bar">
-                      <div 
-                        className="emotion-fill" 
-                        style={{ width: `${value}%` }}
-                      ></div>
-                    </div>
-                    <span className="emotion-value">{value}%</span>
+          {/* Captured Images */}
+          {capturedImages.length > 0 && (
+            <div className="captured-images-section">
+              <h3 className="section-title">Captured Images</h3>
+              <div className="captured-images-grid">
+                {capturedImages.map((image) => (
+                  <div key={image.id} className="captured-image-item">
+                    <img src={image.dataUrl} alt="Captured" className="captured-image" />
+                    <div className="image-timestamp">{image.timestamp}</div>
+                    <button
+                      onClick={() => removeImage(image.id)}
+                      className="remove-image-btn"
+                    >
+                      ❌
+                    </button>
                   </div>
                 ))}
               </div>
-
-              <div className="recommendations">
-                <h4>Recommendations:</h4>
-                <ul>
-                  {analysisResults.recommendations.map((rec, index) => (
-                    <li key={index}>{rec}</li>
-                  ))}
-                </ul>
-              </div>
             </div>
           )}
+
+          {/* Analysis Section */}
+          <div className="analysis-section">
+            <button
+              onClick={analyzeFacialExpressions}
+              className="facial-examination-btn analyze"
+              disabled={!isCapturing || isAnalyzing}
+            >
+              {isAnalyzing ? `🔄 Analyzing... (${CAPTURE_DURATION / 1000}s)` : "🧠 Analyze Expressions"}
+            </button>
+
+            {isStreamingFrames && (
+              <div className="analysis-status">
+                <div className="streaming-indicator">
+                  🔴 Analyzing facial expressions... ({analysisProgress}% complete)
+                  <br />
+                  Frames captured: {frameCount} | Time remaining: {Math.max(0, CAPTURE_DURATION/1000 - Math.floor(analysisProgress * CAPTURE_DURATION / 100))}s
+                </div>
+                <div className="progress-bar" style={{ marginTop: '10px' }}>
+                  <div 
+                    className="progress-fill" 
+                    style={{ width: `${analysisProgress}%` }}
+                  ></div>
+                </div>
+                <button
+                  onClick={stopAnalysis}
+                  className="facial-examination-btn stop"
+                  style={{ marginTop: '10px' }}
+                >
+                  ⏹️ Stop Analysis
+                </button>
+              </div>
+            )}
+
+            {analysisResults && (
+              <div className="analysis-results">
+                <h3 className="section-title">Analysis Results</h3>
+                <div className="result-item">
+                  <strong>Overall Mood:</strong> {analysisResults.results.frame_analysis.emotions[0]}
+                </div>
+
+                <div className="recommendations">
+                  <h4>Recommendations:</h4>
+                  <ul>
+                    {analysisResults.results.recommendations.map((rec, index) => (
+                      <li key={index}>{rec}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className='figureStress'>
+                  {imgData && <img src={`data:image/png;base64,${imgData}`} alt="Plot" />}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Navigation Buttons */}
         <div className="navigation-buttons">
           <button
-            onClick={() => navigate('/ai-exam')}
+            onClick={() => navigate('/ai-questionnaire')}
             className="facial-examination-btn back"
           >
             ⬅️ Back to Voice Analysis

@@ -379,6 +379,27 @@
   box-shadow: 0 2px 10px rgba(243, 156, 18, 0.07);
 }
 
+/* Figure Stress */
+.figureStress {
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.figureStress img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .facial-examination-card {

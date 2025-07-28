@@ -150,7 +150,7 @@ const AI_examination = ({ questionNo, question, onTranscriptUpdate, onAudioUpdat
       )}
 
       <br></br>
-      <h3>{questionNo}) {question}</h3>
+      <h3 className='question-title'>{questionNo}) {question}</h3>
 
       <div className="voice-input-section">
         <p>{listening ? 'Listening...' : 'Press the button and start speaking.'}</p>
