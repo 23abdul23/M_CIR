@@ -212,7 +212,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                       <td>{person.armyNo}</td>
                       <td>{person.rank}</td>
                       <td>{person.name}</td>
-                      <td>{person.coySquadronBty}</td>
+                      <td>{person.subBty}</td>
                       <td>{person.service}</td>
                       <td>{new Date(person.dateOfInduction).toLocaleDateString()}</td>
                       <td>{person.medCat}</td>

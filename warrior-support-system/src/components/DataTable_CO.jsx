@@ -11,6 +11,8 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
+  const [filters, setFilters] = useState({})
+  const [uniqueValues, setUniqueValues] = useState({})
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
 
@@ -21,6 +23,25 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     fetchPersonnel()
     fetchResults()
   }, [selectedBattalion])
+
+  useEffect(() => {
+    if (personnel.length > 0) {
+      const unique = {}
+      personnel.forEach((person) => {
+        Object.keys(person).forEach((key) => {
+          if (!unique[key]) {
+            unique[key] = new Set()
+          }
+          unique[key].add(person[key])
+        })
+      })
+      const uniqueValuesObj = {}
+      Object.keys(unique).forEach((key) => {
+        uniqueValuesObj[key] = Array.from(unique[key]).filter((val) => val !== undefined && val !== null)
+      })
+      setUniqueValues(uniqueValuesObj)
+    }
+  }, [personnel])
 
   const fetchResults = async () => {
     try {
@@ -60,22 +81,35 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
   const handleExport = async () => {
     try {
-      const battalionId = localStorage.getItem('selectedBattalion')
-      const response = await axios.get(`/api/csv/export/${battalionId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        responseType: 'blob'
-      })
-      const url = window.URL.createObjectURL(new Blob([response.data]))
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', `personnel_data_${Date.now()}.csv`)
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-      window.URL.revokeObjectURL(url)
+      const filteredData = filteredPersonnel.map((person) => ({
+        'Army No': person.armyNo,
+        'Rank': person.rank,
+        'Name': person.name,
+        'SubBty': person.subBty,
+        'Service': person.service,
+        'Date of Induction': new Date(person.dateOfInduction).toLocaleDateString(),
+        'Med Cat': person.medCat,
+        'Leave Availed': person.leaveAvailed || 'NIL',
+        'Marital Status': person.maritalStatus,
+        'Self Evaluation': person.selfEvaluation,
+      }));
+
+      const csvContent = [
+        Object.keys(filteredData[0]).join(','),
+        ...filteredData.map((row) => Object.values(row).join(',')),
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `filtered_personnel_data_${Date.now()}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
-      console.error('Error exporting data:', error)
-      alert('Error exporting data. Please try again.')
+      console.error('Error exporting data:', error);
     }
   }
 
@@ -150,6 +184,20 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     }
   }
 
+  const handleFilterChange = (column, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [column]: value,
+    }));
+  };
+
+  const filteredPersonnel = personnel.filter((person) => {
+    return Object.entries(filters).every(([column, value]) => {
+      if (!value) return true;
+      return person[column]?.toString().toLowerCase() === value.toLowerCase();
+    });
+  });
+
   const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
 
@@ -166,14 +214,13 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         <div className="datatable-actions">
           {canImportExport && (
             <>
-              <button onClick={handleImport} className="datatable-btn datatable-btn-import">IMPORT</button>
+              {/* <button onClick={handleImport} className="datatable-btn datatable-btn-import">IMPORT</button> */}
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">EXPORT</button>
             </>
           )}
           {canManageData && (
             <>
               <button onClick={() => setShowAddModal(true)} className="datatable-btn datatable-btn-add">ADD NEW</button>
-              <button onClick={handleSaveAll} className="datatable-btn datatable-btn-save">SAVE ALL</button>
               <button onClick={handleRemoveAll} className="datatable-btn datatable-btn-remove">REMOVE ALL</button>
             </>
           )}
@@ -204,27 +251,137 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
               <table className="datatable-table">
                 <thead>
                   <tr>
-                    <th>ARMY NO.</th>
-                    <th>RANK</th>
-                    <th>NAME</th>
-                    <th>COY/SQN/BTY</th>
-                    <th>SERVICE</th>
-                    <th>DATE OF INDN</th>
-                    <th>MED CAT</th>
-                    <th>LEAVE AVAILED</th>
-                    <th>MARITAL STATUS</th>
-                    <th>SELF EVALUATION</th>
+                    <th>
+                      ARMY NO.
+                      <select
+                        onChange={(e) => handleFilterChange('armyNo', e.target.value)}
+                        value={filters.armyNo || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.armyNo?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      RANK
+                      <select
+                        onChange={(e) => handleFilterChange('rank', e.target.value)}
+                        value={filters.rank || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.rank?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      NAME
+                      <select
+                        onChange={(e) => handleFilterChange('name', e.target.value)}
+                        value={filters.name || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.name?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      COY/SQN/BTY
+                      <select
+                        onChange={(e) => handleFilterChange('subBty', e.target.value)}
+                        value={filters.subBty || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.subBty?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      SERVICE
+                      <select
+                        onChange={(e) => handleFilterChange('service', e.target.value)}
+                        value={filters.service || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.service?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      DATE OF INDN
+                      <select
+                        onChange={(e) => handleFilterChange('dateOfInduction', e.target.value)}
+                        value={filters.dateOfInduction || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.dateOfInduction?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      MED CAT
+                      <select
+                        onChange={(e) => handleFilterChange('medCat', e.target.value)}
+                        value={filters.medCat || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.medCat?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      LEAVE AVAILED
+                      <select
+                        onChange={(e) => handleFilterChange('leaveAvailed', e.target.value)}
+                        value={filters.leaveAvailed || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.leaveAvailed?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      MARITAL STATUS
+                      <select
+                        onChange={(e) => handleFilterChange('maritalStatus', e.target.value)}
+                        value={filters.maritalStatus || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.maritalStatus?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      SELF EVALUATION
+                      <select
+                        onChange={(e) => handleFilterChange('selfEvaluation', e.target.value)}
+                        value={filters.selfEvaluation || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.selfEvaluation?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
                     <th>RESULTS</th>
                     {canManageData && <th>ACTION</th>}
                   </tr>
                 </thead>
                 <tbody>
-                  {personnel.map((person) => (
+                  {filteredPersonnel.map((person) => (
                     <tr key={person._id}>
                       <td>{person.armyNo}</td>
                       <td>{person.rank}</td>
                       <td>{person.name}</td>
-                      <td>{person.coySquadronBty}</td>
+                      <td>{person.subBty}</td>
                       <td>{person.service}</td>
                       <td>{new Date(person.dateOfInduction).toLocaleDateString()}</td>
                       <td>{person.medCat}</td>
