@@ -7,9 +7,6 @@ const AddDataModal = ({ onClose, onSave, battalionId }) => {
   const location = useLocation()
   const locationSelectedBattalion = location.state?.selectedBattalion
   
-  
-
-
   const [formData, setFormData] = useState({
     rank: '',
     name: '',

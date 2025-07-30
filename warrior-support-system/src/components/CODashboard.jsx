@@ -19,25 +19,17 @@ const CODashboard = ({ currentUser, onLogout }) => {
     pendingApprovals: 0,
     totalQuestions: 0,
   })
+  const [pendingUsers, setPendingUsers] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetchPendingBattalions()
     fetchAllBattalions()
     fetchQuestions()
     calculateStats()
+    fetchPendingUsers()
   }, [])
 
-  const fetchPendingBattalions = async () => {
-    try {
-      const response = await axios.get("/api/battalion/pending", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      setPendingBattalions(response.data)
-    } catch (error) {
-      console.error("Error fetching pending battalions:", error)
-    }
-  }
+  
 
   const fetchAllBattalions = async () => {
     try {
@@ -72,7 +64,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
       const responce = await axios.get(`api/battalion`,{
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log(responce.data.length)
       
       const approvedBattalions = responce.data.filter((b) => b.status === "APPROVED").length
       const pendingBattalions = responce.data.filter((b) => b.status === "PENDING").length
@@ -91,22 +82,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
 
-  const handleBattalionAction = async (battalionId, action) => {
-    try {
-      await axios.patch(
-        `/api/battalion/${battalionId}/status`,
-        { status: action },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
-      )
-      fetchPendingBattalions()
-      fetchAllBattalions()
-      calculateStats()
-      showNotification(`Battalion ${action.toLowerCase()}d successfully`, "success")
-    } catch (error) {
-      console.error("Error updating battalion status:", error)
-      showNotification("Error updating battalion status", "error")
-    }
-  }
 
   const handleLogout = () => {
     localStorage.removeItem("token")
@@ -129,6 +104,34 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
 
+  const handleApproveUser = async (userId, action) => {
+    try {
+      await axios.put(
+        `/api/personnel/approve-user/${userId}`,
+        { status: action },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+      )
+      fetchPendingUsers() // Refresh the list of pending users
+      fetchAllBattalions()
+      calculateStats()
+      showNotification(`User ${action.toLowerCase()}d successfully`, "success")
+    } catch (error) {
+      console.error(`Error ${action.toLowerCase()}ing user:`, error)
+      showNotification(`Error ${action.toLowerCase()}ing user`, "error")
+    }
+  }
+
+  const fetchPendingUsers = async () => {
+    try {
+      const response = await axios.get("/api/personnel/pending", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      setPendingUsers(response.data)
+    } catch (error) {
+      console.error("Error fetching pending users:", error)
+    }
+  }
+
   const showNotification = (message, type) => {
     // Simple notification implementation
     const notification = document.createElement("div")
@@ -141,6 +144,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }, 3000)
   }
 
+  // console.log("Battalions: ", allBattalions)
+  // console.log('Pending Users: ', pendingUsers)
   return (
     <div className="co-dashboard">
       {/* Header */}
@@ -181,7 +186,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
               <span className="co-stat-title">Pending Approvals</span>
               <div className="co-stat-icon">⏳</div>
             </div>
-            <h2 className="co-stat-value">{pendingBattalions.length}</h2>
+            <h2 className="co-stat-value">{pendingUsers.length}</h2>
             <p className="co-stat-description">Awaiting approval</p>
           </div>
 
@@ -239,33 +244,29 @@ const CODashboard = ({ currentUser, onLogout }) => {
         {/* Battalion Management */}
         <section className="co-battalion-management">
           <h2 className="co-section-title">Battalion Management</h2>
-          {pendingBattalions.length > 0 ? (
+          {pendingUsers.length > 0 ? (
             <div className="co-battalion-grid">
-              {pendingBattalions.map((battalion) => (
-                <div key={battalion._id} className="co-battalion-card">
+              {pendingUsers.map((user) => (
+                <div key={user._id} className="co-battalion-card">
                   <div className="co-battalion-header">
-                    <h3 className="co-battalion-name">{battalion.name}</h3>
+                    <h3 className="co-battalion-name">{user.name}</h3>
                     <span className="co-battalion-status pending">PENDING</span>
                   </div>
                   <div className="co-battalion-info">
                     <div>
-                      <strong>Posted Strength:</strong> {battalion.postedStr}
+                      <strong>Posted Strength:</strong> {user.addedBattalion || allBattalions.find(b => b._id === user.battalion)?.name || "Unknown"}
                     </div>
                     <div>
-                      <strong>Created:</strong> {new Date(battalion.createdAt).toLocaleDateString()}
+                      <strong>Created:</strong> {new Date(user.createdAt).toLocaleDateString()}
                     </div>
-                    <div>
-                      <strong>Requested by:</strong> {battalion.requestedBy?.fullName || "Unknown"}
-                    </div>
-                    <div>
-                      <strong>Username:</strong> {battalion.requestedBy?.username || "Unknown"}
-                    </div>
+                    
+                    
                   </div>
                   <div className="co-battalion-actions">
-                    <button className="co-btn-approve" onClick={() => handleBattalionAction(battalion._id, "APPROVED")}>
+                    <button className="co-btn-approve" onClick={(e) => handleApproveUser(user.armyNo, "APPROVED")}>
                       APPROVE
                     </button>
-                    <button className="co-btn-reject" onClick={() => handleBattalionAction(battalion._id, "REJECTED")}>
+                    <button className="co-btn-reject" onClick={() => handleApproveUser(user.armyNo, "REJECTED")}>
                       REJECT
                     </button>
                   </div>
@@ -305,6 +306,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
               ))}
           </div>
         </section>
+
+        
       </main>
 
       {/* Add Question Modal */}

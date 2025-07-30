@@ -12,22 +12,15 @@ const battalionSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['PENDING', 'APPROVED', 'REJECTED'],
-    default: 'PENDING'
-  },
-  requestedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  approvedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    default: 'APPROVED'
   },
   createdAt: {
     type: Date,
     default: Date.now
   },
   approvedAt: {
-    type: Date
+    type: Date,
+    default: Date.now
   }
 })
 

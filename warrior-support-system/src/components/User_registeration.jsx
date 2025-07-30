@@ -6,13 +6,20 @@ import axios from "axios"
 import "../styles/Register.css"
 
 const UserRegister = ({ onRegister }) => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    role: "USER",
-    armyNo: "",
-    rank: "",
-    battalionId: "",
-  })
+  let [formData, setFormData] = useState({
+      rank: '',
+      name: '',
+      armyNo: '',
+      subBty: '',
+      battalion : "",
+      service: '',
+      dateOfInduction: '',
+      medCat: '',
+      leaveAvailed: '',
+      maritalStatus: 'MARRIED',
+      status : 'PENDING'
+    })
+
   const [battalions, setBattalions] = useState([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -57,83 +64,36 @@ const UserRegister = ({ onRegister }) => {
     setLoading(true)
     setError("")
 
-    // Validation
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match")
+
+    
+    if ((formData.role === "USER") && !formData.armyNo) {
+      setError("Army Number is required USER roles")
       setLoading(false)
       return
     }
 
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long")
-      setLoading(false)
-      return
-    }
 
-    if ((formData.role === "JSO" || formData.role === "USER") && !formData.armyNo) {
-      setError("Army Number is required for JSO and USER roles")
-      setLoading(false)
-      return
-    }
 
     try {
-      const registrationData = {
-        username: formData.username,
-        password: formData.password,
-        fullName: formData.fullName,
-        role: formData.role,
-      }
+    
+    formData = {...formData, 'addedBattalion' : newBattalion.name}
 
-      if (formData.armyNo) registrationData.armyNo = formData.armyNo
-      if (formData.rank) registrationData.rank = formData.rank
-      if (formData.battalionId) registrationData.battalionId = formData.battalionId
+    formData = {...formData, 'postedStr' : newBattalion.postedStr}
 
-      const response = await axios.post("/api/auth/register", registrationData)
-      const { user, token } = response.data
-
-      onRegister(user, token)
-
-      // Redirect based on user role
-      switch (user.role) {
-        case "CO":
-          navigate("/co-dashboard")
-          break
-        case "JSO":
-          navigate("/jso-dashboard")
-          break
-        case "USER":
-          navigate("/battalion-selection")
-          break
-        default:
-          navigate("/")
-      }
+    // formData['battalion'] = formData['battalionId']
+    
+    await axios.post('/api/personnel', formData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
     } catch (error) {
-      setError(error.response?.data?.message || "Registration failed")
+    console.error('Error adding personnel:', error)
     } finally {
       setLoading(false)
-    }
-  }
-
-    const handleAddBattalion = async (e) => {
-    e.preventDefault()
-    try {
-      await axios.post('/api/battalion', newBattalion, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      fetchBattalions()
-      setShowAddForm(false)
-      setNewBattalion({ name: '', postedStr: '' })
-    } catch (error) {
-      console.error('Error adding battalion:', error)
+      navigate('/login')
     }
   }
 
   
-
-  
-
-  const requiresArmyNo = formData.role === "JSO" || formData.role === "USER"
-
   return (
     <div className="register-container">
       <div className="register-content">
@@ -152,95 +112,170 @@ const UserRegister = ({ onRegister }) => {
 
             {error && <div className="error-message">{error}</div>}
 
-            <div className="form-row">
-              
-
-              <div className="form-group">
-                <label htmlFor="fullName">Full Name *</label>
-                <input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter full name"
-                />
-              </div>
-            </div>
-
-
-            {requiresArmyNo && (
-              <div className="form-row">
+     
+            <div className="form-grid">
                 <div className="form-group">
-                  <label htmlFor="armyNo">Army Number *</label>
-                  <input
+                <label>RANK</label>
+                    <select
+                        id="rank"
+                        name="rank"
+                        value={formData.rank}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Rank</option>
+                        <option value="Lt Col">Lt Col</option>
+                        <option value="Maj">Maj</option>
+                        <option value="Capt">Capt</option>
+                        <option value="Lt">Lt</option>
+                        <option value="2Lt">2Lt</option>
+                        <option value="Sub">Sub</option>
+                        <option value="Nb Sub">Nb Sub</option>
+                        <option value="Hav">Hav</option>
+                        <option value="Nk">Nk</option>
+                        <option value="L/Nk">L/Nk</option>
+                        <option value="Sep">Sep</option>
+                        <option value="Rfn">Rfn</option>
+                    </select>
+                </div>
+                
+                <div className="form-group">
+                <label>NAME</label>
+                <input
                     type="text"
-                    id="armyNo"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                />
+                </div>
+                
+                <div className="form-group">
+                <label>ARMY NO</label>
+                <input
+                    type="text"
                     name="armyNo"
                     value={formData.armyNo}
                     onChange={handleChange}
                     required
-                    placeholder="Enter army number"
-                  />
+                />
                 </div>
-
+                
                 <div className="form-group">
-                  <label htmlFor="rank">Rank</label>
-                  <select id="rank" name="rank" value={formData.rank} onChange={handleChange}>
-                    <option value="">Select Rank</option>
-                    <option value="Lt Col">Lt Col</option>
-                    <option value="Maj">Maj</option>
-                    <option value="Capt">Capt</option>
-                    <option value="Lt">Lt</option>
-                    <option value="2Lt">2Lt</option>
-                    <option value="Sub">Sub</option>
-                    <option value="Nb Sub">Nb Sub</option>
-                    <option value="Hav">Hav</option>
-                    <option value="Nk">Nk</option>
-                    <option value="L/Nk">L/Nk</option>
-                    <option value="Sep">Sep</option>
-                    <option value="Rfn">Rfn</option>
-                  </select>
-                </div>
-              </div>
-            )}
-
-            {( formData.role === "USER") && (
-              <div className="form-group">
-                <label htmlFor="battalionId">Battalion</label>
-                <select id="battalionId" name="battalionId" value={formData.battalionId} onChange={handleChange}>
-                  <option value="">Select Battalion</option>
-                  {battalions.map((battalion) => (
-                    <option key={battalion._id} value={battalion._id}>
-                      {battalion.name}
-                    </option>
-                  ))}
+                <label>COY/SQN/BTY</label>
+                
+                <select 
+                    value={formData.subBty} 
+                    onChange={(e) => setFormData({ ...formData, subBty: e.target.value })}
+                >
+                    <option value="">SELECT Sub BN</option>
+                    <option value="P Bty">P Bty</option>
+                    <option value="Q Bty">Q Bty</option>
+                    <option value="R Bty">R Bty</option>
+                    <option value="HQ Bty">HQ Bty</option>
                 </select>
-              </div>
-            )}
+                </div>
+                
+                <div className="form-group">
+                <label>SERVICE (YEARS)</label>
+                <input
+                    type="text"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    required
+                />
+                </div>
+                
+                <div className="form-group">
+                <label>DATE OF INDN</label>
+                <input
+                    type="date"
+                    name="dateOfInduction"
+                    value={formData.dateOfInduction}
+                    onChange={handleChange}
+                    required
+                />
+                </div>
+                
+                <div className="form-group">
+                <label>MED CAT</label>
+                <select
+                    name="medCat"
+                    value={formData.medCat}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">MED CAT</option>
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                </select>
+                </div>
+                
+                <div className="form-group">
+                <label>LEAVE AVAILED THIS YEAR(ACL)</label>
+                <input
+                    type="text"
+                    name="leaveAvailed"
+                    value={formData.leaveAvailed}
+                    onChange={handleChange}
+                    required
+                />
+                </div>
+                
+                <div className="form-group">
+                <label>MARITAL STATUS</label>
+                <select
+                    name="maritalStatus"
+                    value={formData.maritalStatus}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="MARRIED">MARRIED</option>
+                    <option value="UNMARRIED">UNMARRIED</option>
+                </select>
+                </div>
+            </div>
+            
+            
+            
+            <div className="form-group">
+            <label htmlFor="battalionId">Battalion</label>
+            <select id="battalion" name="battalion" value={formData.battalion} onChange={handleChange}>
+                <option value="">Select Battalion</option>
+                {battalions.map((battalion) => (
+                <option key={battalion._id} value={battalion._id}>
+                    {battalion.name}
+                </option>
+                ))}
+            </select>
+            </div>
+            
 
             <div className="action-buttons">
                 <button onClick={() => setShowAddForm(true)}>ADD BN</button>
             </div>
 
             {showAddForm && (
-                <form onSubmit={handleAddBattalion} className="add-battalion-form">
-                <input
-                    type="text"
-                    placeholder="ENTER BN/REGT NAME"
-                    value={newBattalion.name}
-                    onChange={(e) => setNewBattalion({...newBattalion, name: e.target.value})}
-                    required
-                />
-                <input
-                    type="text"
-                    placeholder="POSTED STR"
-                    value={newBattalion.postedStr}
-                    onChange={(e) => setNewBattalion({...newBattalion, postedStr: e.target.value})}
-                />
-                <button type="submit">SUBMIT</button>
-                </form>
+                
+                <div>
+                    <input
+                        type="text"
+                        placeholder="ENTER BN/REGT NAME"
+                        value={newBattalion.name}
+                        onChange={(e) => setNewBattalion({...newBattalion, name: e.target.value})}
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="POSTED STR"
+                        value={newBattalion.postedStr}
+                        onChange={(e) => setNewBattalion({...newBattalion, postedStr: e.target.value})}
+                    />
+                </div>
             )}
 
             <button type="submit" className="register-btn" disabled={loading}>
@@ -248,18 +283,7 @@ const UserRegister = ({ onRegister }) => {
             </button>
           </form>
 
-          <div className="register-footer">
-            <p>
-              Already have an account?
-              <Link to="/login" className="login-link">
-                {" "}
-                Login here
-              </Link>
-            </p>
-            <div className="system-info">
-              <small>Warrior Support System v2.0 | Secure Military Portal</small>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>

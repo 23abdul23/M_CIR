@@ -15,8 +15,6 @@ router.get('/', async (req, res) => {
     }
 
     const battalions = await Battalion.find(query)
-      .populate('requestedBy', 'fullName username')
-      .populate('approvedBy', 'fullName username')
       .sort({ createdAt: -1 })
 
       

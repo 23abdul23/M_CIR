@@ -1,5 +1,6 @@
 const express = require("express")
 const Personnel = require("../models/Personnel")
+const Battalion = require('../models/Battalion')
 const Examination = require("../models/Examination")
 const auth = require("../middleware/auth")
 const User = require("../models/User")
@@ -83,22 +84,23 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
   }
 })
 
-// Create personnel (CO and JSO only)
+// Create personnel (CO)
 router.post("/", auth, async (req, res) => {
   try {
-    if (req.user.role === "USER") {
-      return res.status(403).json({ message: "Access denied" })
-    }
 
     const personnelData = req.body
-
-    
 
     // Check if personnel with this army number already exists
     const existingPersonnel = await Personnel.findOne({ armyNo: personnelData.armyNo })
     if (existingPersonnel) {
+      console.log("Army Men ALready Exists")
       return res.status(400).json({ message: "Personnel with this Army Number already exists" })
     }
+    if (!personnelData.battalion) {
+      delete personnelData.battalion;
+    }
+
+    console.log(personnelData)
 
 
     const personnel = new Personnel(personnelData)
@@ -117,9 +119,6 @@ router.post("/", auth, async (req, res) => {
     res.status(201).json(enhancedPersonnel)
   } catch (error) {
     console.error("Error creating personnel:", error)
-    if (error.code === 11000) {
-      return res.status(400).json({ message: "Personnel with this Army Number already exists" })
-    }
     res.status(500).json({ message: "Server error", error: error.message })
   }
 })
@@ -294,6 +293,76 @@ router.get("/stats/battalion/:battalionId", auth, async (req, res) => {
     res.json(stats)
   } catch (error) {
     console.error("Error fetching personnel statistics:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+})
+
+// Add a route for CO to approve pending users
+router.put("/approve-user/:id", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "CO") {
+      return res.status(403).json({ message: "Access denied" })
+    }
+    const user = await Personnel.findOne({ armyNo: req.params.id })
+
+    const status = req.body.status
+
+    if (user.addedBattalion != '' && status == 'APPROVED'){
+      const battalion = new Battalion({
+        _id: user.battalion,       // use the given ObjectId
+        name: user.addedBattalion, // battalion name from addedBattalion
+        postedStr: user.subBty,
+        status: 'APPROVED'
+      });
+
+      await battalion.save();
+    }
+
+    user.status = status
+    await user.save()
+
+    res.json({ message: "User approved successfully", user })
+  } catch (error) {
+    console.error("Error approving user:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+})
+
+// Add a route to fetch pending users
+router.get("/pending", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "CO") {
+      return res.status(403).json({ message: "Access denied" })
+    }
+
+    const pendingUsers = await Personnel.find({ status: "PENDING" })
+    res.json(pendingUsers)
+  } catch (error) {
+    console.error("Error fetching pending users:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+})
+
+// Update battalion creation route to automatically approve new battalions
+router.post("/battalion", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "CO") {
+      return res.status(403).json({ message: "Access denied" })
+    }
+
+    const { name, postedStr } = req.body
+
+    const newBattalion = new Battalion({
+      name,
+      postedStr,
+      status: "APPROVED", // Automatically approve new battalions
+    })
+
+    await newBattalion.save()
+
+    res.status(201).json({ message: "Battalion created and approved successfully", battalion: newBattalion })
+  } catch (error) {
+    console.error("Error creating battalion:", error)
     res.status(500).json({ message: "Server error", error: error.message })
   }
 })

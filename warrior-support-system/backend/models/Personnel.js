@@ -40,7 +40,7 @@ const personnelSchema = new mongoose.Schema({
   },
   selfEvaluation: {
     type: String,
-    enum: ['NOT_ATTEMPTED', 'EXAM_APPEARED', 'COMPLETED'],
+    enum: ['NOT_ATTEMPTED', 'COMPLETED'],
     default: 'NOT_ATTEMPTED'
   },
   peerEvaluation: {
@@ -67,7 +67,24 @@ const personnelSchema = new mongoose.Schema({
   battalion: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Battalion',
-    required: true
+    required: true,
+    default: () => new mongoose.Types.ObjectId()
+  },
+  addedBattalion : {
+    type: String,
+    default: "",
+    required: function () {
+    return !this.battalion; // only required if no battalion selected
+  }
+  },
+  status : {
+    type: String,
+    enum: ['PENDING', 'APPROVED', 'REJECTED'],
+    default: 'PENDING'
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   },
   createdAt: {
     type: Date,
