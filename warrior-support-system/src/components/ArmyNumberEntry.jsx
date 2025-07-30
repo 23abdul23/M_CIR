@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
 import '../styles/ArmyNumberEntry.css'
+import UserRegister from './User_registeration'
 
 const ArmyNumberEntry = ({ currentUser, onLogout }) => {
   const [armyNo, setArmyNo] = useState('SSS1782K')
   const [error, setError] = useState('')
+  const [showRegister, setShowRegister] = useState(false)
+
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -22,6 +25,14 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
     
     // Redirect to login page
     navigate('/login')
+  }
+
+  const handleLogin = async (user, token) => {
+    // setCurrentUser(user)
+    localStorage.getItem('token')
+    localStorage.getItem('user')
+
+    
   }
 
   const handleProceed = async () => {
@@ -41,10 +52,12 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
         localStorage.setItem('currentArmyNo', armyNo)
         navigate('/instructions')
       } else {
-        setError('Army Number not found')
+        setError('Army Number not found in Database')
+        
       }
     } catch (error) {
-      setError('Army Number not found')
+      setError('Army Number Not Valid, Register First')
+      setShowRegister(true) // Show the registration component
     }
   }
 
@@ -72,6 +85,11 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
             <button onClick={handleProceed} className="proceed-btn">PROCEED</button>
           </div>
         </div>
+        {showRegister && (
+          <div className="registration-section">
+            <UserRegister onRegister={handleLogin} />
+          </div>
+        )}
       </div>
     </div>
   )

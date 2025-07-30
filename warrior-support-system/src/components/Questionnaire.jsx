@@ -456,11 +456,6 @@ const Questionnaire = ({ currentUser, onLogout }) => {
           )}
 
           <div className="navigation-buttons">
-            {currentQuestion > 0 && (
-              <button onClick={handleBack} className="back-btn" disabled={isSubmitting}>
-                BACK
-              </button>
-            )}
             <button onClick={handleNext} className="next-btn" disabled={isSubmitting}>
               {isSubmitting ? "SUBMITTING..." : currentQuestion < questions.length - 1 ? "NEXT" : "SUBMIT"}
             </button>

@@ -101,10 +101,10 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
             <option value="HQ Bty">HQ Bty</option>
           </select>
 
-          <div className="action-buttons">
+          {/* <div className="action-buttons">
             <button onClick={() => setShowAddForm(true)}>ADD BN</button>
             <button onClick={handleDeleteBattalion}>DELETE BN</button>
-          </div>
+          </div> */}
 
           {showAddForm && (
             <form onSubmit={handleAddBattalion} className="add-battalion-form">

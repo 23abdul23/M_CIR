@@ -147,48 +147,24 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
  
   return (
     <div className="datatable-container">
-      <Header currentUser={currentUser} onLogout={handleLogout} />
       
       <div className="datatable-content">
         <div className="datatable-header">
-          <h2 className="datatable-title">WARRIOR SUPPORT SYSTEM</h2>
-          
-          <p className="datatable-subtitle">{currentUser.battalion.name}</p>
+          <h1 className="datatable-subtitle">{currentUser.battalion.name}</h1>
         </div>
 
         <div className="datatable-actions">
           {canImportExport && (
             <>
-              <button onClick={handleImport} className="datatable-btn datatable-btn-import">
+              {/* <button onClick={handleImport} className="datatable-btn datatable-btn-import">
                 IMPORT
-              </button>
+              </button> */}
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">
-                EXPORT
+                EXPORT DATA
               </button>
             </>
           )}
-          {canManageData && (
-            <>
-              <button 
-                onClick={() => setShowAddModal(true)} 
-                className="datatable-btn datatable-btn-add"
-              >
-                ADD NEW
-              </button>
-              <button 
-                onClick={handleSaveAll} 
-                className="datatable-btn datatable-btn-save"
-              >
-                SAVE ALL
-              </button>
-              <button 
-                onClick={handleRemoveAll} 
-                className="datatable-btn datatable-btn-remove"
-              >
-                REMOVE ALL
-              </button>
-            </>
-          )}
+          
         </div>
 
         <input
@@ -244,21 +220,20 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                       <td>{person.maritalStatus}</td>
                       <td>
                         <span className={`datatable-status ${person.selfEvaluation?.toLowerCase().replace('_', '-')}`}>
-                          {person.selfEvaluation === 'EXAM_APPEARED' ? 'Exam Appeared' : 
-                           person.selfEvaluation === 'NOT_ATTEMPTED' ? 'Not Attempted' : 
+                          {person.selfEvaluation === 'NOT_ATTEMPTED' ? 'Not Attempted' : 
                            person.selfEvaluation || 'Not Set'}
                         </span>
                       </td>
                       {canReview && (
                         <td>
                           {person.peerEvaluation?.status === 'EVALUATED' ? (
-                            <span className="datatable-status evaluated">EVALUATED</span>
+                            <span className="datatable-status evaluated">DONE</span>
                           ) : (
                             <button
                               className="datatable-btn-small datatable-btn-review"
                               onClick={() => handleReview(person._id)}
                             >
-                              EVALUATE
+                              NOT DONE
                             </button>
                           )}
                         </td>

@@ -13,7 +13,7 @@ router.post('/submit', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied' })
     }
 
-    const { personnelId, answers } = req.body
+    const { personnelId, answers , eval} = req.body
 
     const personnel = await Personnel.findById(personnelId)
     if (!personnel) {
@@ -31,7 +31,8 @@ router.post('/submit', auth, async (req, res) => {
       status: 'EVALUATED',
       evaluatedBy: req.user.userId,
       evaluatedAt: new Date(),
-      answers: answers
+      answers: answers,
+      evaluation: eval
     }
 
     await personnel.save()

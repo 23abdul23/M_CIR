@@ -8,14 +8,18 @@
 }
 
 .datatable-content {
+  margin-top: 50px;
   padding: 2rem;
+  background-color: white;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .datatable-header {
+  
   text-align: center;
   margin-bottom: 2rem;
+  align-items: center;
 }
 
 .datatable-title {
@@ -29,8 +33,9 @@
 }
 
 .datatable-subtitle {
-  color: #a8d5a8;
-  font-size: 1.2rem;
+  color: #000000;
+  font-size: 1.8rem;
+  border: #000 5px double;
   font-weight: 600;
   margin: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -170,7 +175,7 @@
   text-align: center;
 }
 
-.datatable-status.exam-appeared {
+.datatable-status.completed {
   background: linear-gradient(135deg, #d5f4e6, #a8e6cf);
   color: #27ae60;
   border: 1px solid #27ae60;
@@ -183,8 +188,8 @@
 }
 
 .datatable-status.evaluated {
-  background: linear-gradient(135deg, #d6eaf8, #aed6f1);
-  color: #3498db;
+  background: linear-gradient(135deg, #d6eaf8, #44e87a);
+  color: #2a7e4f;
   border: 1px solid #3498db;
 }
 
@@ -200,14 +205,10 @@
 }
 
 .datatable-btn-review {
-  background: linear-gradient(135deg, #9b59b6, #bb8fce);
+  background: linear-gradient(135deg, #b65959, #d30f0f);
   color: white;
 }
 
-.datatable-btn-review:hover {
-  background: linear-gradient(135deg, #8e44ad, #9b59b6);
-  transform: translateY(-1px);
-}
 
 .datatable-actions-cell {
   display: flex;

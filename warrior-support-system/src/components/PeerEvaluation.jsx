@@ -12,6 +12,8 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
   const [answers, setAnswers] = useState({})
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [finalEvaluation, setFinalEvaluation] = useState("")
   const { personnelId } = useParams()
   const navigate = useNavigate()
 
@@ -53,7 +55,8 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
         personnelId: personnelId,
         answers: Object.keys(answers).map(questionId => ({
           questionId,
-          answer: answers[questionId]
+          answer: answers[questionId],
+          eval : finalEvaluation
         }))
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -87,8 +90,21 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
   }
 
   const handleNext = () => {
+    const currentQuestionObj = questions[currentQuestion]
+    const selectedAnswer = answers[currentQuestionObj._id] // Ensure correct key is used
+
+    if (
+      selectedAnswer === undefined ||
+      selectedAnswer === null ||
+      (typeof selectedAnswer === "string" && selectedAnswer.trim() === "")
+    ) {
+      setError("Please answer the current question before proceeding")
+      return
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
+      setError("")
     } else {
       handleSubmitEvaluation()
     }
@@ -99,6 +115,24 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
       setCurrentQuestion(currentQuestion - 1)
     }
   }
+
+  const peerEvaluationScale = [
+  { range: "0-20", rating: "Poor" },
+  { range: "21-40", rating: "Fair" },
+  { range: "41-60", rating: "Average" },
+  { range: "61-80", rating: "Good" },
+  { range: "81-100", rating: "Excellent" }
+];
+
+const calculateFinalEvaluation = () => {
+  const totalScore = Object.values(answers).reduce((sum, answer) => sum + parseInt(answer || 0, 10), 0)
+  const scale = peerEvaluationScale.find(({ range }) => {
+    const [min, max] = range.split("-").map(Number)
+    return totalScore >= min && totalScore <= max
+  })
+
+  setFinalEvaluation(scale ? scale.rating : "Unknown")
+}
 
 
 
@@ -156,18 +190,28 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
           ) : (
             <div className="options">
               {question.options.map((option, index) => (
-                <label key={index} className="option-label">
-                  <input
-                    type="radio"
-                    name={`question-${question._id}`}
-                    value={option.optionText}
-                    checked={answers[question._id] === option.optionText}
-                    onChange={(e) => handleAnswerChange(question._id, e.target.value)}
-                  />{option.optionText}
-                </label>
+                <div
+                  key={index}
+                  className="option-column"
+                  style={{ display: "inline-block", width: "45%"}}
+                >
+                  <label className="option-label">
+                    <input
+                      required={true}
+                      type="radio"
+                      name={`question-${question._id}`}
+                      value={option.optionText}
+                      checked={answers[question._id] === option.optionText}
+                      onChange={(e) => handleAnswerChange(question._id, e.target.value)}
+                    />
+                    {option.optionText}
+                  </label>
+                </div>
               ))}
             </div>
           )}
+
+          {error && <div className="error-message">{error}</div>}
 
           <div className="navigation-buttons">
             {currentQuestion > 0 && (

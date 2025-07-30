@@ -59,7 +59,10 @@ const personnelSchema = new mongoose.Schema({
     answers: [{
       questionId: String,
       answer: String
-    }]
+    }],
+    evaluation: {
+      answer: String
+    }
   },
   battalion: {
     type: mongoose.Schema.Types.ObjectId,

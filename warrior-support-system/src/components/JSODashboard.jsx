@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../styles/JSODashboard.css'
 import '../styles/DashboardCommon.css'
+import DataTable from './DataTable'
 
 const JSODashboard = ({ currentUser, onLogout }) => {
   const [battalionInfo, setBattalionInfo] = useState(null)
@@ -99,6 +100,8 @@ const JSODashboard = ({ currentUser, onLogout }) => {
     )
   }
 
+  console.log(currentUser.battalion )
+
   return (
     <div className="jso-dashboard">
       {/* Header */}
@@ -149,72 +152,13 @@ const JSODashboard = ({ currentUser, onLogout }) => {
           
         </section>
 
-        {/* Battalion Information
-        <section className="jso-personnel-section">
-          <h2 className="jso-section-title">Battalion Information</h2>
-          {battalionInfo ? (
-            <div className="jso-evaluation-grid">
-              <div className="jso-evaluation-card">
-                <div className="jso-evaluation-header">
-                  <h3 className="jso-personnel-name">{battalionInfo.name}</h3>
-                  <span className="jso-personnel-rank">ACTIVE</span>
-                </div>
-                <div className="jso-evaluation-progress">
-                  <div className="jso-progress-bar">
-                    <div 
-                      className="jso-progress-fill" 
-                      style={{ width: `${(personnelCount / parseInt(battalionInfo.postedStr)) * 100}%` }}
-                    ></div>
-                  </div>
-                  <p className="jso-progress-text">
-                    {personnelCount} / {battalionInfo.postedStr} Personnel
-                  </p>
-                </div>
-                <p><strong>Status:</strong> {battalionInfo.status}</p>
-                <p><strong>Created:</strong> {new Date(battalionInfo.createdAt).toLocaleDateString()}</p>
-              </div>
-            </div>
-          ) : (
-            <p>No battalion assigned</p>
-          )}
-        </section> */}
-
         
-        {/* Quick Actions */}
-        <section className="jso-evaluation-section">
-          <h2 className="jso-section-title">Quick Actions</h2>
-          <div className="jso-evaluation-grid">
-            
 
-            <div className="jso-evaluation-card">
-              <div className="jso-evaluation-header">
-                <h3 className="jso-personnel-name">Peer Evaluations</h3>
-                <span className="jso-personnel-rank">EVAL</span>
-              </div>
-              <p>Review and evaluate personnel under your command</p>
-              <button 
-                onClick={handleViewData}
-                className="jso-btn-secondary"
-              >
-                MANAGE EVALUATIONS
-              </button>
-            </div>
-
-            <div className="jso-evaluation-card">
-              <div className="jso-evaluation-header">
-                <h3 className="jso-personnel-name">Data Export</h3>
-                <span className="jso-personnel-rank">CSV</span>
-              </div>
-              <p>Export personnel data for analysis and reporting</p>
-              <button 
-                onClick={handleViewData}
-                className="jso-btn-success"
-              >
-                EXPORT DATA
-              </button>
-            </div>
-          </div>
-        </section>
+        {<DataTable 
+          selectedBattalion={currentUser.battalion}
+          currentUser={currentUser}
+          onLogout={handleLogout}
+        />}
 
         {/* JSO Profile
         <section className="jso-csv-section">
