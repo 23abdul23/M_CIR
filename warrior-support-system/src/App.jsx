@@ -20,6 +20,7 @@ import DecideAsessment from './components/DecideAssessment'
 import AI_Assessment from './components/AI_examination'
 import Facial_examination from './components/Facial_examination'
 import AI_Questionnaire from './components/AI_Questionnaire'
+import FinancialForm from './components/FinancialForm'
 
 // Styles
 import './styles/App.css'
@@ -230,6 +231,15 @@ function App() {
                   currentUser={currentUser}
                   onLogout={handleLogout}
                 />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/fianancial-menu" 
+            element={
+              <ProtectedRoute allowedRoles={['USER']}>
+                <FinancialForm/>
               </ProtectedRoute>
             } 
           />

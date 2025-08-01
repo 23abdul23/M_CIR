@@ -253,7 +253,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                   <tr>
                     <th>
                       ARMY NO.
-                      <select
+                      {/* <select
                         onChange={(e) => handleFilterChange('armyNo', e.target.value)}
                         value={filters.armyNo || ''}
                       >
@@ -261,7 +261,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                         {uniqueValues.armyNo?.map((value) => (
                           <option key={value} value={value}>{value}</option>
                         ))}
-                      </select>
+                      </select> */}
                     </th>
                     <th>
                       RANK
@@ -277,7 +277,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                     </th>
                     <th>
                       NAME
-                      <select
+                      {/* <select
                         onChange={(e) => handleFilterChange('name', e.target.value)}
                         value={filters.name || ''}
                       >
@@ -285,7 +285,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                         {uniqueValues.name?.map((value) => (
                           <option key={value} value={value}>{value}</option>
                         ))}
-                      </select>
+                      </select> */}
                     </th>
                     <th>
                       COY/SQN/BTY

@@ -1,0 +1,266 @@
+/* FinancialForm.css - Minimalist Design */
+
+/* Container and Layout */
+.financial-form-container {
+  padding: 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Typography */
+.form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1f2937;
+  text-align: center;
+  letter-spacing: -0.025em;
+  position: relative;
+}
+
+.form-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: 2px;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Input and Select Styles */
+.form-input,
+.form-select {
+  width: 85%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #374151;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  position: relative;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-input:hover,
+.form-select:hover {
+  border-color: #9ca3af;
+}
+
+/* Placeholder styling */
+.form-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.form-select option {
+  padding: 0.5rem;
+  color: #374151;
+  background-color: #ffffff;
+}
+
+/* Button Styling */
+.submit-button-container {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.submit-button {
+  padding: 0.875rem 2.5rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Result Display */
+.result-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #d1fae5;
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.result-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #065f46;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.result-title::before {
+  content: '✓';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.result-item {
+  margin-bottom: 0.75rem;
+  color: #047857;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.result-label {
+  font-weight: 600;
+  color: #065f46;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .financial-form-container {
+    padding: 1.5rem;
+    margin: 0 1rem;
+    border-radius: 8px;
+  }
+  
+  .form-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .form-input,
+  .form-select {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .submit-button {
+    padding: 0.75rem 2rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .financial-form-container {
+    padding: 1rem;
+    margin: 0 0.5rem;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 0.875rem;
+  }
+}
+
+/* Loading State */
+.submit-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-button:disabled:hover {
+  background: #9ca3af;
+  transform: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus styles for accessibility */
+.form-input:focus-visible,
+.form-select:focus-visible,
+.submit-button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Animation for form elements */
+.form-input,
+.form-select {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom scrollbar for select dropdowns */
+.form-select::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-select::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.form-select::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.form-select::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

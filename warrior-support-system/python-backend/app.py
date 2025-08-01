@@ -4,6 +4,8 @@
 import os
 import shutil
 import tempfile
+from joblib import load
+import numpy as np
 import base64
 from fastapi import FastAPI, File, UploadFile, Form
 import plotly.express as px
@@ -300,3 +302,90 @@ def get_final_score(session_id: str):
         'results': results,
         "image_base64": encoded_string
     }
+
+model = load("best_financial_model.pkl")
+
+# ------------------------------
+# Helper Functions (same as training)
+# ------------------------------
+
+# Convert range strings (e.g., "5000-10000") into numeric midpoints
+def convert_range(value):
+    if pd.isna(value) or value == "None":
+        return 0
+    if isinstance(value, str):
+        if ">" in value:
+            return float(value.replace(">", "")) * 1.2  # slightly higher than value
+        elif "<" in value:
+            return float(value.replace("<", "")) * 0.8  # slightly lower than value
+        elif "-" in value:
+            low, high = value.split("-")
+            return (float(low) + float(high)) / 2
+    return float(value)
+
+# Convert percentage strings (e.g., "<10%" → 5, "10%-20%" → 15, ">30%" → 35)
+def convert_percentage(value):
+    if pd.isna(value):
+        return 0
+    if isinstance(value, str):
+        if ">" in value:
+            return float(value.replace(">", "").replace("%", "")) + 5
+        elif "<" in value:
+            return float(value.replace("<", "").replace("%", "")) / 2
+        elif "-" in value:
+            low, high = value.replace("%", "").split("-")
+            return (float(low) + float(high)) / 2
+    return float(value)
+
+# Binary mapping
+def yes_no_to_binary(value):
+    return 1 if str(value).lower() == "yes" else 0
+
+@app.route("/predict_financial", methods=["POST"])
+
+def predict_financial():
+    try:
+        data = request.get_json()
+        print("Received data", data)
+
+        df = pd.DataFrame([data])
+        print("Before preprocessing:\n", df)
+
+        # Apply the same preprocessing as training
+        # Convert numeric fields using the same functions as training
+        df["Monthly_Income"] = df["Monthly_Income"].apply(convert_range)
+        df["Additional_Income"] = df["Additional_Income"].apply(convert_range)
+        df["Monthly_Loan_Repayment"] = df["Monthly_Loan_Repayment"].apply(convert_range)
+        df["Monthly_Essentials"] = df["Monthly_Essentials"].apply(convert_range)
+        df["Savings_Percentage"] = df["Savings_Percentage"].apply(convert_percentage)
+        df["Child_Family_Support"] = df["Child_Family_Support"].apply(convert_range)
+        df["Insurance_Payments"] = df["Insurance_Payments"].apply(convert_range)
+        df["Medical_Payments"] = df["Medical_Payments"].apply(convert_range)
+        df["Future_Savings"] = df["Future_Savings"].apply(convert_range)
+
+        # Binary conversions
+        df["Track_Budget"] = df["Track_Budget"].apply(yes_no_to_binary)
+        df["Emergency_Fund"] = df["Emergency_Fund"].apply(yes_no_to_binary)
+
+        print("After preprocessing:\n", df)
+
+        # Drop personal fields (ID_No and Name are dropped, but keep Rank and Unit for model)
+        df_for_prediction = df.drop(columns=["ID_No", "Name"], errors='ignore')
+        
+        print("Final DataFrame for prediction:\n", df_for_prediction)
+
+        # Replace empty strings with NaN and check for missing values
+        df_for_prediction.replace("", np.nan, inplace=True)
+
+        if df_for_prediction.isnull().any().any():
+            return jsonify({"error": "Some fields are missing or empty. Please fill all the inputs."}), 400
+
+        prediction = model.predict(df_for_prediction)[0]
+        return jsonify({
+            "score": int(prediction),
+            "message": "Prediction successful."
+        })
+
+    except Exception as e:
+        print("Error:", str(e))  # Add this line to print the exception
+        return jsonify({"error": str(e)}), 500

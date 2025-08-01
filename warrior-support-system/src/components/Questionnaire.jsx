@@ -405,7 +405,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
           </div>
           <div className="info-item">
             <span>COY/SQN/BTY</span>
-            <span>{personnelInfo.coySquadronBty}</span>
+            <span>{personnelInfo.subBty}</span>
           </div>
         </div>
 
