@@ -37,6 +37,7 @@ router.get("/battalion/:battalionId", auth, async (req, res) => {
           ...person.toObject(),
           hasExamination: !!examination,
           dassScores: examination ? examination.dassScores : null,
+          mode: examination ? examination.mode : null,
           examinationDate: examination ? examination.completedAt : null,
         }
       }),

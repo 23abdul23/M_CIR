@@ -21,6 +21,7 @@ import AI_Assessment from './components/AI_examination'
 import Facial_examination from './components/Facial_examination'
 import AI_Questionnaire from './components/AI_Questionnaire'
 import FinancialForm from './components/FinancialForm'
+import IndividualMonitoring from './components/IndividualMonitoring'
 
 // Styles
 import './styles/App.css'
@@ -188,6 +189,19 @@ function App() {
                 <DataTable_CO
                   selectedBattalion={selectedBattalion}
                   currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Individual Monitoring Route (CO and JSO only) */}
+          <Route 
+            path="/individual-monitoring/:armyNo" 
+            element={
+              <ProtectedRoute allowedRoles={['CO', 'JSO']}>
+                <IndividualMonitoring 
+                  currentUser={currentUser} 
                   onLogout={handleLogout}
                 />
               </ProtectedRoute>

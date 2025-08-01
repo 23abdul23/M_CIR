@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
 import AddDataModal from './AddDataModal'
+import IndividualMonitoring from './IndividualMonitoring'
 import '../styles/DataTable.css'
 
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
@@ -13,6 +14,8 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [editingPersonnel, setEditingPersonnel] = useState(null)
   const [filters, setFilters] = useState({})
   const [uniqueValues, setUniqueValues] = useState({})
+  const [selectedPersonnel, setSelectedPersonnel] = useState(null)
+  const [showIndividualMonitoring, setShowIndividualMonitoring] = useState(false)
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
 
@@ -81,6 +84,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
   const handleExport = async () => {
     try {
+      if (filteredPersonnel.length === 0) {
+        alert('No data to export');
+        return;
+      }
+
       const filteredData = filteredPersonnel.map((person) => ({
         'Army No': person.armyNo,
         'Rank': person.rank,
@@ -110,10 +118,13 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       document.body.removeChild(link);
     } catch (error) {
       console.error('Error exporting data:', error);
+      alert('Error exporting data. Please try again.');
     }
   }
 
   const handleImport = () => fileInputRef.current.click()
+
+  
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0]
@@ -165,6 +176,16 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     navigate(`/peer-evaluation/${personnelId}`)
   }
 
+  const handleRowClick = (person) => {
+    setSelectedPersonnel(person)
+    setShowIndividualMonitoring(true)
+  }
+
+  const handleCloseMonitoring = () => {
+    setShowIndividualMonitoring(false)
+    setSelectedPersonnel(null)
+  }
+
   const handleSaveAll = async () => {
     console.log('Saving all data...')
     alert('All data saved successfully!')
@@ -198,8 +219,21 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     });
   });
 
-  const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
+  const canManageData = ['CO'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
+
+  // If showing individual monitoring, render that component
+  if (showIndividualMonitoring && selectedPersonnel) {
+    return (
+      <IndividualMonitoring 
+        armyNo={selectedPersonnel.armyNo}
+        currentUser={currentUser}
+        onLogout={onLogout}
+        onBack={handleCloseMonitoring}
+      />
+    )
+  }
+  console.log(personnel)
 
   return (
     <div className="datatable-container">
@@ -372,12 +406,18 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                       </select>
                     </th>
                     <th>RESULTS</th>
+                    <th>Mode</th>
                     {canManageData && <th>ACTION</th>}
                   </tr>
                 </thead>
                 <tbody>
                   {filteredPersonnel.map((person) => (
-                    <tr key={person._id}>
+                    <tr 
+                      key={person._id} 
+                      className="clickable-row"
+                      onClick={() => handleRowClick(person)}
+                      title="Click to view individual monitoring"
+                    >
                       <td>{person.armyNo}</td>
                       <td>{person.rank}</td>
                       <td>{person.name}</td>
@@ -424,8 +464,10 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                         )}
                       </td>
 
+                      <td>{person.mode}</td>
+
                       {canManageData && (
-                        <td>
+                        <td onClick={(e) => e.stopPropagation()}>
                           <div className="datatable-actions-cell">
                             <button className="datatable-btn-icon datatable-btn-edit" onClick={() => handleEdit(person)} title="Edit">✏️</button>
                             <button className="datatable-btn-icon datatable-btn-delete" onClick={() => handleDelete(person._id)} title="Delete">🗑️</button>
@@ -443,7 +485,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
         <div className="datatable-footer">
           <span className="datatable-count">
-            {personnel.length} Out Of {personnel.length}
+            {filteredPersonnel.length} Out Of {personnel.length}
           </span>
         </div>
       </div>

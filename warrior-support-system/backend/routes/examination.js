@@ -210,6 +210,36 @@ router.delete("/:id", auth, async (req, res) => {
   }
 })
 
+// Get examination history for a specific army number (CO and JSO only)
+router.get("/history/:armyNo", auth, async (req, res) => {
+  try {
+    const { armyNo } = req.params
+
+    if (req.user.role === "USER") {
+      return res.status(403).json({ message: "Access denied" })
+    }
+
+    // JSO can only see examinations from their battalion
+    if (req.user.role === "JSO") {
+      const user = await User.findOne({ armyNo: req.user.armyNo })
+      const personnel = await Personnel.findOne({ armyNo }).populate("battalion")
+      
+      if (!personnel || personnel.battalion._id.toString() !== user.battalion.toString()) {
+        return res.status(403).json({ message: "Access denied to this personnel data" })
+      }
+    }
+
+    const examinations = await Examination.find({ armyNo })
+      .populate("battalion", "name")
+      .sort({ completedAt: 1 }) // Oldest first for trend analysis
+
+    res.json(examinations)
+  } catch (error) {
+    console.error("Error fetching examination history:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+})
+
 // Get all examinations (CO only)
 router.get("/all", auth, async (req, res) => {
   try {

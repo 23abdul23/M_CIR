@@ -46,6 +46,11 @@ const examinationSchema = new mongoose.Schema({
       default: "Normal",
     },
   },
+  mode: {
+    type: String,
+    enum: ['AI', 'MANUAL'],
+    default: 'MANUAL',
+  },
   completedAt: {
     type: Date,
     default: Date.now,
