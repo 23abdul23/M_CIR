@@ -341,9 +341,8 @@ def convert_percentage(value):
 def yes_no_to_binary(value):
     return 1 if str(value).lower() == "yes" else 0
 
-@app.route("/predict_financial", methods=["POST"])
-
-def predict_financial():
+@app.route("/api/predict", methods=["POST"])
+def predict():
     try:
         data = request.get_json()
         print("Received data", data)
@@ -389,3 +388,7 @@ def predict_financial():
     except Exception as e:
         print("Error:", str(e))  # Add this line to print the exception
         return jsonify({"error": str(e)}), 500
+
+
+if __name__ == "__main__":
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

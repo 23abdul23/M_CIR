@@ -21,48 +21,6 @@
 },
 {
   "_id": {
-    "$oid": "64a1b2c3d4e5f6789012345f"
-  },
-  "name": "219 (I) Fd WKSP (Spl)",
-  "postedStr": "320",
-  "status": "APPROVED",
-  "requestedBy": {
-    "$oid": "64a1b2c3d4e5f6789012345a"
-  },
-  "approvedBy": {
-    "$oid": "64a1b2c3d4e5f6789012345a"
-  },
-  "createdAt": {
-    "$date": "2024-01-12T11:00:00.000Z"
-  },
-  "approvedAt": {
-    "$date": "2024-01-12T11:10:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "64a1b2c3d4e5f678901234a0"
-  },
-  "name": "15 PARA BN",
-  "postedStr": "800",
-  "status": "APPROVED",
-  "requestedBy": {
-    "$oid": "64a1b2c3d4e5f6789012345c"
-  },
-  "approvedBy": {
-    "$oid": "6883152ffa5537a2db90642e"
-  },
-  "createdAt": {
-    "$date": "2024-01-20T14:30:00.000Z"
-  },
-  "approvedAt": {
-    "$date": "2025-07-25T07:02:28.655Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
     "$oid": "68832bf35a9c9096000530f4"
   },
   "name": "Allahabad",
@@ -81,46 +39,4 @@
     "$date": "2025-07-25T07:02:28.071Z"
   },
   "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688468f9822d90f477c8468f"
-  },
-  "name": "Aligarh Regiment",
-  "postedStr": "HQ BTY",
-  "status": "APPROVED",
-  "requestedBy": {
-    "$oid": "6883152ffa5537a2db906435"
-  },
-  "createdAt": {
-    "$date": "2025-07-26T05:34:49.677Z"
-  },
-  "__v": 0,
-  "approvedAt": {
-    "$date": "2025-07-26T05:34:56.446Z"
-  },
-  "approvedBy": {
-    "$oid": "6883152ffa5537a2db90642e"
-  }
-},
-{
-  "_id": {
-    "$oid": "688473c358c6d7152d09ca6b"
-  },
-  "name": "Roorkee Cant",
-  "postedStr": "P Bty",
-  "status": "APPROVED",
-  "requestedBy": {
-    "$oid": "6883152ffa5537a2db906435"
-  },
-  "createdAt": {
-    "$date": "2025-07-26T06:20:51.811Z"
-  },
-  "__v": 0,
-  "approvedAt": {
-    "$date": "2025-07-26T06:20:59.197Z"
-  },
-  "approvedBy": {
-    "$oid": "6883152ffa5537a2db90642e"
-  }
 }]

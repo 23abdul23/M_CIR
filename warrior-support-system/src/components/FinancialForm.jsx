@@ -41,7 +41,7 @@ const handleSubmit = async (e) => {
 	setResult(res.data); };
 
 const submitForm = async (data) => {
-  return await axios.post('http://127.0.0.1:5000/predict_financial', data);
+  return await axios.post('http://127.0.0.1:8000/api/predict', data);
 };
 
 return ( 

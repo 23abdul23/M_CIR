@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from './Header'
+import '../styles/MainMenu.css'
 
 const MainMenu = ({ selectedBattalion, currentUser, onLogout }) => {
   const navigate = useNavigate()
@@ -33,10 +34,10 @@ const MainMenu = ({ selectedBattalion, currentUser, onLogout }) => {
             Manual<br/>EXAMINATION
           </button>
           <button 
-            className="menu-btn view-data"
-            onClick={() => navigate('/ai-questionnaire')}
+            className="menu-btn combined-assessment"
+            onClick={() => navigate('/combined-assessment')}
           >
-            AI<br/>Examination
+            AI<br/>EXAMINATION
           </button>
         </div>
       </div>

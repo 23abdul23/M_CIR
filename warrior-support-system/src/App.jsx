@@ -17,11 +17,9 @@ import JSODashboard from './components/JSODashboard'
 import PeerEvaluation from './components/PeerEvaluation'
 import DataTable_CO from './components/DataTable_CO'
 import DecideAsessment from './components/DecideAssessment'
-import AI_Assessment from './components/AI_examination'
-import Facial_examination from './components/Facial_examination'
-import AI_Questionnaire from './components/AI_Questionnaire'
 import FinancialForm from './components/FinancialForm'
 import IndividualMonitoring from './components/IndividualMonitoring'
+import CombinedAssessment from './components/CombinedAssessment'
 
 // Styles
 import './styles/App.css'
@@ -258,29 +256,12 @@ function App() {
             } 
           />
 
+          {/* Combined AI Assessment Route */}
           <Route 
-          path="/ai-questionnaire" 
-          element={<AI_Questionnaire />} 
-          />
-
-          {/* Examination Routes (All authenticated users) */}
-          <Route 
-            path="/ai-exam" 
+            path="/combined-assessment" 
             element={
               <ProtectedRoute>
-                <AI_Assessment 
-                  currentUser={currentUser}
-                  onLogout={handleLogout}
-                />
-              </ProtectedRoute>
-            } 
-          />
-
-          <Route 
-            path="/facial-analysis" 
-            element={
-              <ProtectedRoute>
-                <Facial_examination 
+                <CombinedAssessment 
                   currentUser={currentUser}
                   onLogout={handleLogout}
                 />

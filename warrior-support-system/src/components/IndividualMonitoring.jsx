@@ -279,7 +279,7 @@ const IndividualMonitoring = ({ armyNo: propArmyNo, currentUser, onLogout, onBac
                          'Good' : 'Needs Attention'}
                       </td>
                       <td>
-                        {exam.mode``}
+                        {exam.mode}
                       </td>
                     </tr>
                   ))}
