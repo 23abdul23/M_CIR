@@ -7,7 +7,8 @@ import tempfile
 from joblib import load
 import numpy as np
 import base64
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.responses import JSONResponse
+from fastapi import FastAPI, File, UploadFile, Form, Request
 import plotly.express as px
 import plotly.io as po
 import pandas as pd
@@ -28,7 +29,10 @@ curr_path = os.getcwd()
 
 app = FastAPI()
 model = whisper.load_model("base")  # You can use 'small', 'medium', or 'large' for more accuracy but slower
-
+origins = [
+    "http://localhost:5173",  # Vite
+    "http://127.0.0.1:5173",
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,6 +44,7 @@ app.add_middleware(
 @app.post("/api/translate")
 async def translate_audio(audio: UploadFile = File(...)):
     tmp_path = None
+    print('Audio received:',audio)
     try:
         # Save uploaded file to a temp file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmpfile:
@@ -151,7 +156,7 @@ def get_final_score(session_id: str):
                     os.unlink(item_path)  # remove file or symlink
                 elif os.path.isdir(item_path):
                     shutil.rmtree(item_path)  # remove directory
-        
+    
     results = calculate_final_stress_analysis(
         frame_stress_scores,
         frame_emotions,
@@ -342,9 +347,9 @@ def yes_no_to_binary(value):
     return 1 if str(value).lower() == "yes" else 0
 
 @app.route("/api/predict", methods=["POST"])
-def predict():
+async def predict(request: Request):
     try:
-        data = request.get_json()
+        data = await request.json()
         print("Received data", data)
 
         df = pd.DataFrame([data])
@@ -377,17 +382,17 @@ def predict():
         df_for_prediction.replace("", np.nan, inplace=True)
 
         if df_for_prediction.isnull().any().any():
-            return jsonify({"error": "Some fields are missing or empty. Please fill all the inputs."}), 400
+            return JSONResponse({"error": "Some fields are missing or empty. Please fill all the inputs."}), 400
 
         prediction = model.predict(df_for_prediction)[0]
-        return jsonify({
+        return JSONResponse({
             "score": int(prediction),
             "message": "Prediction successful."
         })
 
     except Exception as e:
         print("Error:", str(e))  # Add this line to print the exception
-        return jsonify({"error": str(e)}), 500
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 
 if __name__ == "__main__":

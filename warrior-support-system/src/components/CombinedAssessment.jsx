@@ -47,7 +47,7 @@ const CombinedAssessment = () => {
   
 
   // Constants
-  const FACIAL_FRAME_INTERVAL = 1000 / 24; // 24 FPS
+  const FACIAL_FRAME_INTERVAL = 1000; // 24 FPS
 
   // Track assessment start time for duration calculation
   const assessmentStartTimeRef = useRef(null);
@@ -346,6 +346,8 @@ const CombinedAssessment = () => {
           const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
           const formData = new FormData();
           formData.append('audio', audioBlob);
+
+          console.log("Recorded ASuidio Data", audioBlob)
           
           try {
             setVoiceLoading(true);
@@ -672,7 +674,7 @@ const CombinedAssessment = () => {
                 {currentQuestion.questionText}
               </div>
               
-              {currentQuestion.questionType === 'MCQ' && currentQuestion.options && (
+              {/* {currentQuestion.questionType === 'MCQ' && currentQuestion.options && (
                 <div className="options-container">
                   {currentQuestion.options.map((option, index) => (
                     <button
@@ -691,7 +693,7 @@ const CombinedAssessment = () => {
                     </button>
                   ))}
                 </div>
-              )}
+              )} */}
               
               {/* Voice Recording Section */}
               <div className="voice-section">
@@ -749,13 +751,7 @@ const CombinedAssessment = () => {
               
               {/* Navigation */}
               <div className="question-navigation">
-                <button
-                  onClick={handleBack}
-                  disabled={currentQuestionIndex === 0}
-                  className="nav-btn back"
-                >
-                  ← Previous
-                </button>
+                
                 
                 <button
                   onClick={handleNext}

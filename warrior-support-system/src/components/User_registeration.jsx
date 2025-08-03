@@ -253,30 +253,6 @@ const UserRegister = ({ onRegister }) => {
                 ))}
             </select>
             </div>
-            
-
-            <div className="action-buttons">
-                <button onClick={() => setShowAddForm(true)}>ADD BN</button>
-            </div>
-
-            {showAddForm && (
-                
-                <div>
-                    <input
-                        type="text"
-                        placeholder="ENTER BN/REGT NAME"
-                        value={newBattalion.name}
-                        onChange={(e) => setNewBattalion({...newBattalion, name: e.target.value})}
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="POSTED STR"
-                        value={newBattalion.postedStr}
-                        onChange={(e) => setNewBattalion({...newBattalion, postedStr: e.target.value})}
-                    />
-                </div>
-            )}
 
             <button type="submit" className="register-btn" disabled={loading}>
               {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}

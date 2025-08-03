@@ -11,9 +11,46 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
   const fileInputRef = useRef(null)
+  const [filters, setFilters] = useState({})
+  const [uniqueValues, setUniqueValues] = useState({})
+
   const navigate = useNavigate()
 
- 
+  useEffect(() => {
+    if (personnel.length > 0) {
+      const unique = {}
+      personnel.forEach((person) => {
+        Object.keys(person).forEach((key) => {
+          if (!unique[key]) {
+            unique[key] = new Set()
+          }
+          unique[key].add(person[key])
+        })
+      })
+      const uniqueValuesObj = {}
+      Object.keys(unique).forEach((key) => {
+        uniqueValuesObj[key] = Array.from(unique[key]).filter((val) => val !== undefined && val !== null)
+      })
+      setUniqueValues(uniqueValuesObj)
+    }
+  }, [personnel])
+
+  const filteredPersonnel = personnel.filter((person) => {
+    return Object.entries(filters).every(([column, value]) => {
+      if (!value) return true;
+      return person[column]?.toString().toLowerCase() === value.toLowerCase();
+    });
+  });
+
+const handleFilterChange = (column, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [column]: value,
+    }));
+  };
+  
+
+
   useEffect(() => {
     fetchPersonnel()
   }, [selectedBattalion])
@@ -193,21 +230,109 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                 <thead>
                   <tr>
                     <th>ARMY NO.</th>
-                    <th>RANK</th>
+                    <th>
+                      RANK
+                      <select
+                        onChange={(e) => handleFilterChange('rank', e.target.value)}
+                        value={filters.rank || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.rank?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
                     <th>NAME</th>
-                    <th>COY/SQN/BTY</th>
-                    <th>SERVICE</th>
-                    <th>DATE OF INDN</th>
-                    <th>MED CAT</th>
-                    <th>LEAVE AVAILED THIS YEAR (AL/CL)</th>
-                    <th>MARITAL STATUS</th>
-                    <th>SELF EVALUATION</th>
+                    <th>
+                      COY/SQN/BTY
+                      <select
+                        onChange={(e) => handleFilterChange('subBty', e.target.value)}
+                        value={filters.subBty || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.subBty?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      SERVICE
+                      <select
+                        onChange={(e) => handleFilterChange('service', e.target.value)}
+                        value={filters.service || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.service?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      DATE OF INDN
+                      <select
+                        onChange={(e) => handleFilterChange('dateOfInduction', e.target.value)}
+                        value={filters.dateOfInduction || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.dateOfInduction?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      MED CAT
+                      <select
+                        onChange={(e) => handleFilterChange('medCat', e.target.value)}
+                        value={filters.medCat || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.medCat?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      LEAVE AVAILED
+                      <select
+                        onChange={(e) => handleFilterChange('leaveAvailed', e.target.value)}
+                        value={filters.leaveAvailed || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.leaveAvailed?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      MARITAL STATUS
+                      <select
+                        onChange={(e) => handleFilterChange('maritalStatus', e.target.value)}
+                        value={filters.maritalStatus || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.maritalStatus?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
+                    <th>
+                      SELF EVALUATION
+                      <select
+                        onChange={(e) => handleFilterChange('selfEvaluation', e.target.value)}
+                        value={filters.selfEvaluation || ''}
+                      >
+                        <option value="">All</option>
+                        {uniqueValues.selfEvaluation?.map((value) => (
+                          <option key={value} value={value}>{value}</option>
+                        ))}
+                      </select>
+                    </th>
                     {canReview && <th>PEER EVALUATION</th>}
                     
                   </tr>
                 </thead>
                 <tbody>
-                  {personnel.map((person) => (
+                  {filteredPersonnel.map((person) => (
                     <tr key={person._id}>
                       <td>{person.armyNo}</td>
                       <td>{person.rank}</td>

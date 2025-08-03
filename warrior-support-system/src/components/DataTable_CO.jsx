@@ -122,9 +122,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     }
   }
 
-  const handleImport = () => fileInputRef.current.click()
-
-  
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0]
@@ -186,10 +183,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     setSelectedPersonnel(null)
   }
 
-  const handleSaveAll = async () => {
-    console.log('Saving all data...')
-    alert('All data saved successfully!')
-  }
 
   const handleRemoveAll = async () => {
     if (window.confirm('Are you sure you want to remove all personnel data?')) {
