@@ -21,6 +21,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
     totalQuestions: 0,
   })
   const [pendingUsers, setPendingUsers] = useState([])
+  const [showAddUserForm, setShowAddUserForm] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -97,21 +98,18 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
 
-  const addNewUsername = async () => {
-    try { 
-
-    }
-
-    catch (error){
-      console.log(error)
-    }
-
-  }
-
 
   const handleEditUser = async (armyNo, currentUsername, action) => {
     try {
       
+      if (action === "delete"){
+         axios.post(`api/personnel/updateUser/${armyNo}`, {'currentUsername': "", 'newUsername' : "", 'action':action},{
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+
+      window.location.reload();
+      }
+
       if (action === "username"){
         const newUsername = prompt("Enter New Username: ");
         
@@ -242,6 +240,103 @@ const CODashboard = ({ currentUser, onLogout }) => {
       }
     }
   }
+
+  const addNewUsername = async () => {
+    const newUser = {
+      username: "",
+      password: "",
+      fullName: "",
+      role: "USER",
+      armyNo: "",
+      rank: "",
+      battalionId: "",
+    };
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      newUser[name] = value;
+    };
+
+    const handleSubmit = async () => {
+      try {
+        const resoponce = await axios.post(
+          "/api/auth/register",
+          newUser,
+          {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          }
+        );
+        alert("User added successfully");
+        document.querySelector(".modal-overlay").remove();
+        window.location.reload();
+      } catch (error) {
+        console.error("Error adding user:", error);
+      }
+    };
+
+    const handleClose = () => {
+      document.querySelector(".modal-overlay").remove();
+    };
+
+    const battalionOptions = allBattalions
+      .map((battalion) => `<option value='${battalion._id}'>${battalion.name}</option>`)
+      .join("");
+
+    const formHtml = `
+      <div class='modal-overlay'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h2>Add New User</h2>
+            <button class='close-btn' onclick='(${handleClose})()'>×</button>
+          </div>
+          <form>
+            <label>Username</label>
+            <input type='text' name='username' onchange='(${handleChange})(event)' required />
+            <label>Password</label>
+            <input type='password' name='password' onchange='(${handleChange})(event)' required />
+            <label>Full Name</label>
+            <input type='text' name='fullName' onchange='(${handleChange})(event)' required />
+            <label>Role</label>
+            <select name='role' onchange='(${handleChange})(event)' required>
+              <option value='JSO'>JSO</option>
+              <option value='CO'>CO</option>
+            </select>
+            <label>Army Number</label>
+            <input type='text' name='armyNo' onchange='(${handleChange})(event)' required />
+            <label>RANK</label>
+                    <select
+                        id="rank"
+                        name="rank"
+                        value={formData.rank}
+                        onChange=(${handleChange})
+                      >
+                        <option value="">Select Rank</option>
+                        <option value="Lt Col">Lt Col</option>
+                        <option value="Maj">Maj</option>
+                        <option value="Capt">Capt</option>
+                        <option value="Lt">Lt</option>
+                        <option value="2Lt">2Lt</option>
+                        <option value="Sub">Sub</option>
+                        <option value="Nb Sub">Nb Sub</option>
+                        <option value="Hav">Hav</option>
+                        <option value="Nk">Nk</option>
+                        <option value="L/Nk">L/Nk</option>
+                        <option value="Sep">Sep</option>
+                        <option value="Rfn">Rfn</option>
+                    </select>
+            <label>Battalion ID</label>
+            <select name='battalionId' onchange='(${handleChange})(event)'>
+              <option value=''>Select Battalion</option>
+              ${battalionOptions}
+            </select>
+            <button type='button' onclick='(${handleSubmit})()'>Submit</button>
+          </form>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", formHtml);
+  };
 
   return (
     <div className="co-dashboard">
@@ -408,7 +503,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                     </div>
                   </div>
                   <div className="co-battalion-actions">
-                    <button className="co-btn-delete" onClick={() => handleDeleteBattalion(battalion._id)}>DELETE</button>
+                    <button className="delete-btn" style={{ ...buttonStyles.button, ...buttonStyles.deleteButton }} onClick={() => handleDeleteBattalion(battalion._id)}>DELETE</button>
                   </div>
                 </div>
               ))}
@@ -419,11 +514,11 @@ const CODashboard = ({ currentUser, onLogout }) => {
         {/* All Passwords and Usernames */}
         <section className="co-recent-activity">
           <h2 className="co-section-title">Usernames & Passwords</h2>
-          <button onClick={() => addNewUsername()}>Add New Username</button>
+          <button className="edit-btn" style={{ ...buttonStyles.button, ...buttonStyles.editButton }} onClick={() => setShowAddUserForm(true)}>Add New Username</button>
           <div className="co-battalion-grid">
             
             {allUsernmaes.map((user, index) => (
-              <div key={index}>
+              <div key={index} className="co-user-actions">
                 <div>
                   Username: {user.username}   
                 </div>
@@ -431,14 +526,24 @@ const CODashboard = ({ currentUser, onLogout }) => {
                   Army No: {user.armyNo}
                 </div>
 
-                <button onClick={(e) => handleEditUser(user.armyNo, user.username, "username")}>Edit Username</button>
-                <button onClick={(e) => handleEditUser(user.armyNo, user.username, "password")}>Edit Password</button>
+                <div  style={buttonStyles.container}>
+                  <button className="edit-btn" style={{ ...buttonStyles.button, ...buttonStyles.editButton }} onClick={(e) => handleEditUser(user.armyNo, user.username, "username")}>Edit Username</button>
+                  <button className="edit-btn" style={{ ...buttonStyles.button, ...buttonStyles.editButton }} onClick={(e) => handleEditUser(user.armyNo, user.username, "password")}>Edit Password</button>
+                  <button className="delete-btn" style={{ ...buttonStyles.button, ...buttonStyles.deleteButton }} onClick={(e) => handleEditUser(user.armyNo, user.username, "delete")}>Delete User</button>
+                </div>
               </div> 
             ))}
           </div>
         </section>
 
-        
+        {/* Add User Form */}
+        {showAddUserForm && (
+          <AddUserForm
+            onClose={() => setShowAddUserForm(false)}
+            onUserAdded={fetchAllUsernames}
+            allBattalions={allBattalions}
+          />
+        )}
       </main>
 
       {/* Add Question Modal */}
@@ -725,4 +830,117 @@ const ViewQuestionsModal = ({ questions, onClose, onRefresh, showNotification })
   )
 }
 
+// Add User Form Component
+const AddUserForm = ({ onClose, onUserAdded, allBattalions }) => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    fullName: "",
+    role: "USER",
+    armyNo: "",
+    rank: "",
+    battalionId: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        "/api/auth/register",
+        formData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      alert("User added successfully");
+      onUserAdded();
+      onClose();
+    } catch (error) {
+      console.error("Error adding user:", error);
+      alert("Error adding user");
+    }
+  };
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>Add New User</h2>
+          <button className="close-btn" onClick={onClose}>×</button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <label>Username</label>
+          <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+          <label>Password</label>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+          <label>Full Name</label>
+          <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required />
+          <label>Role</label>
+          <select name="role" value={formData.role} onChange={handleChange} required>
+            <option value="USER">USER</option>
+            <option value="JSO">JSO</option>
+            <option value="CO">CO</option>
+          </select>
+          <label>Army Number</label>
+          <input type="text" name="armyNo" value={formData.armyNo} onChange={handleChange} required />
+          <label>Rank</label>
+          <select name="rank" value={formData.rank} onChange={handleChange} required>
+            <option value="">Select Rank</option>
+            <option value="Lt Col">Lt Col</option>
+            <option value="Maj">Maj</option>
+            <option value="Capt">Capt</option>
+            <option value="Lt">Lt</option>
+            <option value="2Lt">2Lt</option>
+            <option value="Sub">Sub</option>
+            <option value="Nb Sub">Nb Sub</option>
+            <option value="Hav">Hav</option>
+            <option value="Nk">Nk</option>
+            <option value="L/Nk">L/Nk</option>
+            <option value="Sep">Sep</option>
+            <option value="Rfn">Rfn</option>
+          </select>
+          <label>Battalion ID</label>
+          <select name="battalionId" value={formData.battalionId} onChange={handleChange}>
+            <option value="">Select Battalion</option>
+            {allBattalions.map((battalion) => (
+              <option key={battalion._id} value={battalion._id}>{battalion.name}</option>
+            ))}
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const buttonStyles = {
+  container: {
+    display: 'flex',
+    gap: '15px',
+    marginTop: '10px',
+  },
+  button: {
+    padding: '5px 12px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '12px',
+  },
+  editButton: {
+    backgroundColor: '#4caf50',
+    color: 'white',
+  },
+  deleteButton: {
+    backgroundColor: '#f44336',
+    color: 'white',
+  },
+};
+
 export default CODashboard
+
+/* Add CSS for user action buttons */

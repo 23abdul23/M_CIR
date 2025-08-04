@@ -48,9 +48,13 @@ router.post("/updateUser/:armyNo", auth, async (req, res) => {
       await user.save();
     }
     }
-      
-  
+
     await user.save();
+
+
+    if (action === 'delete'){
+      await User.deleteOne({armyNo: req.params.armyNo});
+    }
 
     return res.status(200).json({ message: 'User updated successfully', data: user });
     
@@ -116,7 +120,6 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
     }
 
     if (personnel.status === "PENDING"){
-      console.log("Pending")
       return res.status(400).json({ message: "Your application is pending approval by the CO." });
     }
 
