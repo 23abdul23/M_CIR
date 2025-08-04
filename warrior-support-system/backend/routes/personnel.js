@@ -115,6 +115,11 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
       return res.status(404).json({ message: "Personnel not found" })
     }
 
+    if (personnel.status === "PENDING"){
+      console.log("Pending")
+      return res.status(400).json({ message: "Your application is pending approval by the CO." });
+    }
+
     // Role-based access control
     if (req.user.role === "JSO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
@@ -147,11 +152,11 @@ router.post("/", auth, async (req, res) => {
 
     // Check if personnel with this army number already exists
     const existingPersonnel = await Personnel.findOne({ armyNo: personnelData.armyNo });
+    
     if (existingPersonnel) {
       if (existingPersonnel.status === "PENDING") {
         return res.status(400).json({ message: "Your application is pending approval by the CO." });
       }
-      return res.status(400).json({ message: "Personnel with this Army Number already exists." });
     }
 
     if (!personnelData.battalion) {
@@ -163,15 +168,8 @@ router.post("/", auth, async (req, res) => {
 
     await personnel.populate("battalion", "name");
 
-    // Return enhanced personnel data
-    const enhancedPersonnel = {
-      ...personnel.toObject(),
-      hasExamination: false,
-      dassScores: null,
-      examinationDate: null,
-    };
+    return res.status(200).json({ message: "Personnel created successfully", personnel });
 
-    res.status(201).json(enhancedPersonnel);
   } catch (error) {
     console.error("Error creating personnel:", error);
     res.status(500).json({ message: "Server error", error: error.message });

@@ -28,6 +28,10 @@ const UserRegister = ({ onRegister }) => {
   const [selectedSubBattalion, setSelectedSubBattalion] = useState('')
   const navigate = useNavigate()
 
+  
+
+
+
   useEffect(() => {
     fetchBattalions()
   }, [])
@@ -85,14 +89,7 @@ const UserRegister = ({ onRegister }) => {
 
       const data = await response.json()
 
-      if (!response.ok) {
-        if (data.message === "Your application is pending approval by the CO.") {
-          setError("Your application is pending approval by the CO.")
-        } else {
-          setError(data.message || "An error occurred.")
-        }
-        return
-      }
+      
 
       onRegister(data)
       navigate("/dashboard")

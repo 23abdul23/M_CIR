@@ -46,18 +46,27 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
       const response = await axios.get(`/api/personnel/army-no/${armyNo}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      
+
+      // If the response is successful, navigate to instructions
       if (response.data) {
         // Store army number for examination
         localStorage.setItem('currentArmyNo', armyNo)
         navigate('/instructions')
-      } else {
-        setError('Army Number not found in Database')
-        
       }
     } catch (error) {
-      setError('Army Number Not Valid, Register First')
-      setShowRegister(true) // Show the registration component
+      // Handle Axios error response
+      if (error.response && error.response.status === 400) {
+        const message = error.response.data.message
+        if (message === 'Your application is pending approval by the CO.') {
+          setError('Your application is pending approval by the CO.')
+        } else {
+          setError(message || 'An error occurred.')
+          return 
+        }
+      } else {
+        setError('Army Number Not Valid, Register First')
+        setShowRegister(true) // Show the registration component
+      }
     }
   }
 
