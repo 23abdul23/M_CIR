@@ -9,6 +9,7 @@ import "../styles/QuestionModal.css"
 
 const CODashboard = ({ currentUser, onLogout }) => {
   const [pendingBattalions, setPendingBattalions] = useState([])
+  const [allUsernmaes, setAllUsernames] = useState([])
   const [allBattalions, setAllBattalions] = useState([])
   const [selectedBattalion, setSelectedBattalion] = useState("")
   const [questions, setQuestions] = useState([])
@@ -23,12 +24,26 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    fetchAllUsernames()
     fetchAllBattalions()
     fetchQuestions()
     calculateStats()
     fetchPendingUsers()
   }, [])
 
+  const fetchAllUsernames = async () => {
+    try{
+      const responce = await axios.get("/api/personnel/allUsernames",{
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      
+      setAllUsernames(responce.data.data)
+    }
+
+    catch (error){
+      console.error("Error fetching usernames:",error)
+    }
+  }
   
 
   const fetchAllBattalions = async () => {
@@ -79,6 +94,33 @@ const CODashboard = ({ currentUser, onLogout }) => {
       })
     } catch (error) {
       console.error("Error calculating stats:", error)
+    }
+  }
+
+  const handleEditUser = async (armyNo, currentUsername, action) => {
+    try {
+      
+      if (action === "username"){
+        const newUsername = prompt("Enter New Username: ");
+        
+        console.log("ok usetrname")
+      }
+
+      if (action === "password"){
+        const pswd = prompt("Enter Your Password: ")
+        const pswdConfirm = prompt("Enter Your Password Again: ")
+
+        if (pswd !== pswdConfirm){
+          alert("PASSWROD DOES NOT MATCHES")
+          return
+        }
+
+        console.log("ok pswd")
+      }
+    }
+
+    catch (error){
+      console.log(error)
     }
   }
 
@@ -250,7 +292,12 @@ const CODashboard = ({ currentUser, onLogout }) => {
                 <div key={user._id} className="co-battalion-card">
                   <div className="co-battalion-header">
                     <h3 className="co-battalion-name">{user.name}</h3>
+            
+                    
                     <span className="co-battalion-status pending">PENDING</span>
+                  </div>
+                  <div>
+                    <h4 className="co-battalion-name">{user.armyNo}</h4>
                   </div>
                   <div className="co-battalion-info">
                     <div>
@@ -263,7 +310,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                     
                   </div>
                   <div className="co-battalion-actions">
-                    <button className="co-btn-approve" onClick={(e) => handleApproveUser(user.armyNo, "APPROVED")}>
+                    <button className="co-btn-approve" onClick={() => handleApproveUser(user.armyNo, "APPROVED")}>
                       APPROVE
                     </button>
                     <button className="co-btn-reject" onClick={() => handleApproveUser(user.armyNo, "REJECTED")}>
@@ -304,6 +351,29 @@ const CODashboard = ({ currentUser, onLogout }) => {
                   </div>
                 </div>
               ))}
+          </div>
+        </section>
+
+
+        {/* All Passwords and Usernames */}
+        <section className="co-recent-activity">
+          <h2 className="co-section-title">Usernames & Passwords</h2>
+          <button onClick={() => addNewUsername()}>Add New Username</button>
+          <div className="co-battalion-grid">
+            
+            {allUsernmaes.map((user, index) => (
+              <div key={index}>
+                <div>
+                  Username: {user.username}   
+                </div>
+                <div>
+                  Army No: {user.armyNo}
+                </div>
+
+                <button onClick={(e) => handleEditUser(user.armyNo, user.username, "username")}>Edit Username</button>
+                <button onClick={(e) => handleEditUser(user.armyNo, user.username, "password")}>Edit Password</button>
+              </div> 
+            ))}
           </div>
         </section>
 
