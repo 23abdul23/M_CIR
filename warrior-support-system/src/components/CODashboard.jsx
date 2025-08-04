@@ -97,13 +97,29 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
 
+  const addNewUsername = async () => {
+    try { 
+
+    }
+
+    catch (error){
+      console.log(error)
+    }
+
+  }
+
+
   const handleEditUser = async (armyNo, currentUsername, action) => {
     try {
       
       if (action === "username"){
         const newUsername = prompt("Enter New Username: ");
         
-        console.log("ok usetrname")
+        axios.post(`api/personnel/updateUser/${armyNo}`, {'currentUsername': currentUsername, 'newUsername' : newUsername, 'action':action},{
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+
+      window.location.reload();
       }
 
       if (action === "password"){
