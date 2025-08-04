@@ -5,6 +5,7 @@ import Header from './Header'
 import AddDataModal from './AddDataModal'
 import IndividualMonitoring from './IndividualMonitoring'
 import '../styles/DataTable.css'
+import { filter } from 'lodash'
 
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
@@ -16,6 +17,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [uniqueValues, setUniqueValues] = useState({})
   const [selectedPersonnel, setSelectedPersonnel] = useState(null)
   const [showIndividualMonitoring, setShowIndividualMonitoring] = useState(false)
+  const [filterSeverity, setFilterSeverity] = useState('')
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
 
@@ -214,6 +216,31 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     });
   });
 
+  const handleSuperFilter = () => {
+
+
+    const filtered = personnel.filter((person) => {
+      const resultEntry = results.find(r => r?.[1]?._id === person.battalion?._id);
+      const scores = resultEntry?.[0];
+
+      if (!scores || person.selfEvaluation !== 'COMPLETED') return false;
+
+      return (
+        scores.anxietySeverity?.toLowerCase() === filterSeverity.toLowerCase() ||
+        scores.depressionSeverity?.toLowerCase() === filterSeverity.toLowerCase() ||
+        scores.stressSeverity?.toLowerCase() === filterSeverity.toLowerCase()
+      );
+    });
+
+    setPersonnel(filtered);
+  };
+
+  useEffect(() => {
+    if (filterSeverity === '') {
+      fetchPersonnel();
+    }
+  }, [filterSeverity]);
+
   const canManageData = ['CO'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
 
@@ -228,7 +255,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       />
     )
   }
-  console.log(personnel)
 
   return (
     <div className="datatable-container">
@@ -262,6 +288,25 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
           accept=".csv"
           style={{ display: 'none' }}
         />
+
+        <div className="datatable-super-filter">
+          <select
+            value={filterSeverity}
+            onChange={(e) => setFilterSeverity(e.target.value)}
+            className="datatable-dropdown"
+          >
+            <option value="">All Data</option>
+            <option value="Extremely Severe">Extremely Severe</option>
+            <option value="Severe">Severe</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Mild">Mild</option>
+            <option value="Normal">Normal</option>
+
+          </select>
+          <button onClick={handleSuperFilter} className="datatable-btn datatable-btn-super-filter">
+            Apply Filter
+          </button>
+        </div>
 
         <div className="datatable-wrapper">
           {loading ? (

@@ -257,7 +257,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
 
   const handleContinue = () => {
     localStorage.removeItem("currentArmyNo")
-    navigate("/examination-complete")
+    navigate("/army-number-entry")
   }
 
   if (loading) {
@@ -287,80 +287,10 @@ const Questionnaire = ({ currentUser, onLogout }) => {
               <h2>EXAMINATION COMPLETED</h2>
               <p className="results-subtitle">Your mental health assessment results</p>
             </div>
-
-            <div className="dass-results">
-              <h3>DASS-42 Assessment Results</h3>
-              <div className="scores-grid">
-                <div
-                  className={`score-card depression ${finalScores.depressionSeverity.toLowerCase().replace(" ", "-")}`}
-                >
-                  <div className="score-header">
-                    <div className="score-icon">😔</div>
-                    <h4>Depression</h4>
-                  </div>
-                  <div className="score-value">{finalScores.depression}</div>
-                  <div className="score-severity">{finalScores.depressionSeverity}</div>
-                  <div className="score-description">
-                    {finalScores.depressionSeverity === "Normal"
-                      ? "No significant depression symptoms"
-                      : finalScores.depressionSeverity === "Mild"
-                        ? "Mild depression symptoms present"
-                        : finalScores.depressionSeverity === "Moderate"
-                          ? "Moderate depression - consider support"
-                          : finalScores.depressionSeverity === "Severe"
-                            ? "Severe depression - seek professional help"
-                            : "Extremely severe depression - immediate professional help recommended"}
-                  </div>
-                </div>
-
-                <div className={`score-card anxiety ${finalScores.anxietySeverity.toLowerCase().replace(" ", "-")}`}>
-                  <div className="score-header">
-                    <div className="score-icon">😰</div>
-                    <h4>Anxiety</h4>
-                  </div>
-                  <div className="score-value">{finalScores.anxiety}</div>
-                  <div className="score-severity">{finalScores.anxietySeverity}</div>
-                  <div className="score-description">
-                    {finalScores.anxietySeverity === "Normal"
-                      ? "No significant anxiety symptoms"
-                      : finalScores.anxietySeverity === "Mild"
-                        ? "Mild anxiety symptoms present"
-                        : finalScores.anxietySeverity === "Moderate"
-                          ? "Moderate anxiety - consider support"
-                          : finalScores.anxietySeverity === "Severe"
-                            ? "Severe anxiety - seek professional help"
-                            : "Extremely severe anxiety - immediate professional help recommended"}
-                  </div>
-                </div>
-
-                <div className={`score-card stress ${finalScores.stressSeverity.toLowerCase().replace(" ", "-")}`}>
-                  <div className="score-header">
-                    <div className="score-icon">😤</div>
-                    <h4>Stress</h4>
-                  </div>
-                  <div className="score-value">{finalScores.stress}</div>
-                  <div className="score-severity">{finalScores.stressSeverity}</div>
-                  <div className="score-description">
-                    {finalScores.stressSeverity === "Normal"
-                      ? "Normal stress levels"
-                      : finalScores.stressSeverity === "Mild"
-                        ? "Mild stress symptoms present"
-                        : finalScores.stressSeverity === "Moderate"
-                          ? "Moderate stress - consider stress management"
-                          : finalScores.stressSeverity === "Severe"
-                            ? "Severe stress - seek professional help"
-                            : "Extremely severe stress - immediate professional help recommended"}
-                  </div>
-                </div>
-              </div>
-
-              
-
-              <div className="results-actions">
-                <button onClick={handleContinue} className="continue-btn">
-                  CONTINUE
-                </button>
-              </div>
+            <div className="results-actions">
+              <button onClick={handleContinue} className="continue-btn">
+                CONTINUE
+              </button>
             </div>
           </div>
         </div>

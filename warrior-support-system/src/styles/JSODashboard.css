@@ -1,4 +1,4 @@
-/* JSO Dashboard Styles */
+/* Enhanced JSO Dashboard Styles */
 .jso-dashboard {
   min-height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -11,7 +11,7 @@
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   padding: 1rem 2rem;
-  border-bottom: 3px solid #1e4a73;
+  border-bottom: 3px solid #2c5530;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -40,7 +40,7 @@
 }
 
 .jso-subtitle {
-  color: #a8c8e8;
+  color: #a8d5a8;
   font-size: 1rem;
   margin: 0;
   font-weight: 500;
@@ -49,7 +49,7 @@
 .jso-user-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   color: #ffffff;
 }
 
@@ -59,15 +59,16 @@
 
 .jso-user-name {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin: 0;
 }
 
 .jso-user-role {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #a8c8e8;
   margin: 0;
 }
+
 
 .jso-logout-btn {
   background: #dc3545;
@@ -87,17 +88,17 @@
 }
 
 .jso-main-content {
+  color: black;
   padding: 2rem;
-  width: 1600px;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .jso-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .jso-stat-card {
@@ -105,14 +106,14 @@
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
 }
 
 .jso-stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 .jso-stat-header {
@@ -154,16 +155,16 @@
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .jso-section-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #1e4a73;
   margin-bottom: 1.5rem;
   font-weight: bold;
-  border-bottom: 2px solid #1e4a73;
+  border-bottom: 3px solid #1e4a73;
   padding-bottom: 0.5rem;
 }
 
@@ -173,35 +174,35 @@
   align-items: center;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .jso-search-filter {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
   flex-wrap: wrap;
 }
 
 .jso-search-input {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 0.9rem;
-  min-width: 200px;
+  font-size: 1rem;
+  min-width: 250px;
 }
 
 .jso-filter-select {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   background: white;
 }
 
 .jso-action-buttons {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
@@ -214,13 +215,13 @@
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .jso-btn-primary:hover {
   background: #143654;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(30, 74, 115, 0.3);
+  box-shadow: 0 5px 15px rgba(30, 74, 115, 0.3);
 }
 
 .jso-btn-secondary {

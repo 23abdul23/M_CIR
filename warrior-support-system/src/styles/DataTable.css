@@ -9,8 +9,6 @@
   margin-top: 50px;
   padding: 2rem;
   background-color: white;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 .datatable-header {
@@ -45,6 +43,13 @@
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+}
+
+.datatable-btn-super-filter{
+  background-color: rgb(72, 74, 68);
+  color: white;
+  margin-left: 25px;
+  margin-bottom: 10px;
 }
 
 /* Clickable row styles */
@@ -339,6 +344,7 @@
 @media (max-width: 768px) {
   .datatable-content {
     padding: 1rem;
+
   }
   
   .datatable-title {
