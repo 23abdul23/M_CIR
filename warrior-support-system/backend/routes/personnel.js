@@ -85,29 +85,29 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
   }
 })
 
+
 // Create personnel (CO)
 router.post("/", auth, async (req, res) => {
   try {
-
-    const personnelData = req.body
+    const personnelData = req.body;
 
     // Check if personnel with this army number already exists
-    const existingPersonnel = await Personnel.findOne({ armyNo: personnelData.armyNo })
+    const existingPersonnel = await Personnel.findOne({ armyNo: personnelData.armyNo });
     if (existingPersonnel) {
-      console.log("Army Men ALready Exists")
-      return res.status(400).json({ message: "Personnel with this Army Number already exists" })
+      if (existingPersonnel.status === "PENDING") {
+        return res.status(400).json({ message: "Your application is pending approval by the CO." });
+      }
+      return res.status(400).json({ message: "Personnel with this Army Number already exists." });
     }
+
     if (!personnelData.battalion) {
       delete personnelData.battalion;
     }
 
-    console.log(personnelData)
+    const personnel = new Personnel(personnelData);
+    await personnel.save();
 
-
-    const personnel = new Personnel(personnelData)
-    await personnel.save()
-
-    await personnel.populate("battalion", "name")
+    await personnel.populate("battalion", "name");
 
     // Return enhanced personnel data
     const enhancedPersonnel = {
@@ -115,12 +115,12 @@ router.post("/", auth, async (req, res) => {
       hasExamination: false,
       dassScores: null,
       examinationDate: null,
-    }
+    };
 
-    res.status(201).json(enhancedPersonnel)
+    res.status(201).json(enhancedPersonnel);
   } catch (error) {
-    console.error("Error creating personnel:", error)
-    res.status(500).json({ message: "Server error", error: error.message })
+    console.error("Error creating personnel:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 })
 

@@ -144,8 +144,47 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }, 3000)
   }
 
-  // console.log("Battalions: ", allBattalions)
-  // console.log('Pending Users: ', pendingUsers)
+  const handleAddBattalion = async () => {
+    try {
+      const battalionName = prompt("Enter the name of the new battalion:")
+      const subBty = prompt("ENter subBty Name:")
+
+      if (!battalionName && !subBty) return
+
+      await axios.post(
+        "/api/battalion",
+        {name: battalionName, postedStr: subBty},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        },
+      )
+
+      fetchAllBattalions()
+      
+      showNotification("Battalion added successfully", "success")
+    } catch (error) {
+      window.location.reload();
+      showNotification("Error adding battalion", "error")
+    }
+  }
+
+  const handleDeleteBattalion = async (battalionId) => {
+    if (window.confirm("Are you sure you want to delete this battalion?")) {
+      try {
+        await axios.delete(`/api/battalion/${battalionId}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+
+        fetchAllBattalions()
+        window.location.reload();
+        showNotification("Battalion deleted successfully", "success")
+      } catch (error) {
+        console.error("Error deleting battalion:", error)
+        showNotification("Error deleting battalion", "error")
+      }
+    }
+  }
+
   return (
     <div className="co-dashboard">
       {/* Header */}
@@ -281,6 +320,9 @@ const CODashboard = ({ currentUser, onLogout }) => {
         {/* All Approved Battalions */}
         <section className="co-recent-activity">
           <h2 className="co-section-title">Approved Battalions</h2>
+          <div className="co-actions">
+            <button className="co-action-btn co-btn-primary" onClick={handleAddBattalion}>ADD BATTALION</button>
+          </div>
           <div className="co-battalion-grid">
             {allBattalions
               .filter((battalion) => battalion.status === "APPROVED")
@@ -301,6 +343,9 @@ const CODashboard = ({ currentUser, onLogout }) => {
                       <strong>Approved:</strong>{" "}
                       {battalion.approvedAt ? new Date(battalion.approvedAt).toLocaleDateString() : "N/A"}
                     </div>
+                  </div>
+                  <div className="co-battalion-actions">
+                    <button className="co-btn-delete" onClick={() => handleDeleteBattalion(battalion._id)}>DELETE</button>
                   </div>
                 </div>
               ))}

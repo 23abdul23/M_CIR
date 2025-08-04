@@ -73,25 +73,35 @@ const UserRegister = ({ onRegister }) => {
     }
 
 
-
     try {
-    
-    formData = {...formData, 'addedBattalion' : newBattalion.name}
+      const response = await fetch("/api/personnel", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-    formData = {...formData, 'postedStr' : newBattalion.postedStr}
+      const data = await response.json()
 
-    // formData['battalion'] = formData['battalionId']
-    
-    await axios.post('/api/personnel', formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
-    } catch (error) {
-    console.error('Error adding personnel:', error)
+      if (!response.ok) {
+        if (data.message === "Your application is pending approval by the CO.") {
+          setError("Your application is pending approval by the CO.")
+        } else {
+          setError(data.message || "An error occurred.")
+        }
+        return
+      }
+
+      onRegister(data)
+      navigate("/dashboard")
+    } catch (err) {
+      setError("Failed to register. Please try again later.")
     } finally {
       setLoading(false)
-      navigate('/login')
     }
-  }
+  } 
 
   
   return (

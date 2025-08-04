@@ -205,6 +205,8 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     }));
   };
 
+  
+
   const filteredPersonnel = personnel.filter((person) => {
     return Object.entries(filters).every(([column, value]) => {
       if (!value) return true;
