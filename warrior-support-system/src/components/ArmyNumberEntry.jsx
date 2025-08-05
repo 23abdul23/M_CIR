@@ -12,6 +12,8 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
 
   const navigate = useNavigate()
 
+
+
   const handleLogout = () => {
     // Clear all stored data
     localStorage.removeItem('token')
@@ -43,13 +45,14 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
 
     try {
       // Verify if army number exists
-      const response = await axios.get(`/api/personnel/army-no/${armyNo}`, {
+      const response = await axios.get(`/api/examination/army-no/${armyNo}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
       // If the response is successful, navigate to instructions
       if (response.data) {
-        // Store army number for examination
+        
+        console.log(response.data.completedAt)
         localStorage.setItem('currentArmyNo', armyNo)
         navigate('/instructions')
       }

@@ -481,10 +481,23 @@ const CODashboard = ({ currentUser, onLogout }) => {
             </div>
           </div>
         </section>
+        
+        {/* Battalion Management */}
+        <section className="co-battalion-management">
+          <h2 className="co-section-title">Re Examination Requests</h2>
+          {pendingUsers.length > 0 ? (
+            <div className="co-battalion-grid">
+              
+            </div>
+          ) : (
+            <p className="text-center">No Re Examination Requests</p>
+          )}
+        </section>
+
 
         {/* Battalion Management */}
         <section className="co-battalion-management">
-          <h2 className="co-section-title">Battalion Management</h2>
+          <h2 className="co-section-title">User Management</h2>
           {pendingUsers.length > 0 ? (
             <div className="co-battalion-grid">
               {pendingUsers.map((user) => (
@@ -520,7 +533,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
               ))}
             </div>
           ) : (
-            <p className="text-center">No pending battalion requests</p>
+            <p className="text-center">No pending user requests</p>
           )}
         </section>
 

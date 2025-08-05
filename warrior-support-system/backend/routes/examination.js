@@ -49,15 +49,17 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
   try {
     const { armyNo } = req.params
 
-    // Role-based access control
-    if (req.user.role === "USER" && req.user.armyNo !== armyNo) {
-      return res.status(403).json({ message: "Access denied" })
-    }
-
-    const examination = await Examination.findOne({ armyNo }).populate("battalion", "name")
+    const examination = await Examination.findOne({ armyNo })
+  .populate("battalion", "name")
+  .sort({ completedAt: -1 });
 
     if (!examination) {
       return res.status(404).json({ message: "Examination not found" })
+    }
+
+    // Role-based access control
+    if (req.user.role === "USER") {
+      return res.status(200).json(examination)
     }
 
     // JSO can only see examinations from their battalion

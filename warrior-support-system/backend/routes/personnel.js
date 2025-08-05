@@ -27,41 +27,48 @@ router.get("/allUsernames", auth, async (req, res) => {
 })
 
 router.post("/updateUser/:armyNo", auth, async (req, res) => {
-  try{
-    const user = await User.findOne({armyNo: req.params.armyNo});
-    const {newUsername, newPassword, action} = req.body
+  try {
+    const user = await User.findOne({ armyNo: req.params.armyNo });
+    const { newUsername, newPassword, action } = req.body;
 
-    console.log('before', user)
+    console.log("before", user);
 
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(404).send("User not found");
     }
 
-    if (action === 'username'){
+    if (action === "password") {
+      const user = await User.findOne({ armyNo: req.params.armyNo });
+      
+      user.password = newPassword;
+      
+      await user.save();
+
+      return res.status(200).json({
+        message: "Password updated successfully",
+        data: user,
+      });
+    }
+
+    if (action === "username") {
       user.username = newUsername;
-    }
-   
-    if (action === 'password') {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(newPassword, salt);
-      user.password = hashedPassword;
-    }
-
-    await user.save();
-
-    console.log('after',user)
-
-
-    if (action === 'delete'){
-      await User.deleteOne({armyNo: req.params.armyNo});
+      await user.save();
+      console.log("after", user);
+      return res.status(200).json({
+        message: "User updated successfully",
+        data: user,
+      });
     }
 
-    return res.status(200).json({ message: 'User updated successfully', data: user });
-    
-  }
-  catch (error){
-    console.log(error)
-    res.status(500).json({ message: "Server error", error: error.message })
+    if (action === "delete") {
+      await User.deleteOne({ armyNo: req.params.armyNo });
+      return res.status(200).json({ message: "User deleted successfully" });
+    }
+
+    return res.status(400).json({ message: "Invalid action" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 })
 
@@ -371,8 +378,8 @@ router.put("/approve-user/:id", auth, async (req, res) => {
 
     res.json({ message: "User approved successfully", user })
   } catch (error) {
-    console.error("Error approving user:", error)
-    res.status(500).json({ message: "Server error", error: error.message })
+    console.error("Error approving user:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 })
 
