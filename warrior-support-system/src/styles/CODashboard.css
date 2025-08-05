@@ -580,3 +580,52 @@ form button:hover {
     opacity: 1;
   }
 }
+
+.set-reexam-period {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.set-reexam-period .co-section-title {
+  font-size: 1.5rem;
+  color: #2c5530;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  border-bottom: 2px solid #2c5530;
+  padding-bottom: 0.5rem;
+}
+
+.set-reexam-period .co-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.set-reexam-period .period-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.set-reexam-period .co-action-btn {
+  background: #2c5530;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.set-reexam-period .co-action-btn:hover {
+  background: #1e3a21;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 85, 48, 0.3);
+}

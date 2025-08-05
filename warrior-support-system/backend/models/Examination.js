@@ -58,12 +58,12 @@ const examinationSchema = new mongoose.Schema({
   battalion: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Battalion",
-  },
+  }
 })
 
 // Index for efficient queries
-examinationSchema.index({ armyNo: 1 })
 examinationSchema.index({ completedAt: -1 })
+examinationSchema.index({ armyNo: 1 })
 examinationSchema.index({ battalion: 1 })
 
 module.exports = mongoose.model("Examination", examinationSchema)

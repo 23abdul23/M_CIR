@@ -223,6 +223,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
         },
         battalion : localStorage.getItem('selectedBattalion'),
         completedAt: new Date(),
+        
       }
 
       console.log(examinationData)
@@ -234,16 +235,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       })
       
       console.log('Examination submitted successfully:', response.data)
-      // // Update personnel self-evaluation status
-      // await axios.put(
-      //   `/api/personnel/army-no/${armyNo}`,
-      //   {
-      //     selfEvaluation: "COMPLETED",
-      //   },
-      //   {
-      //     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      //   },
-      // )
+      
 
       setFinalScores(scores)
       setShowResults(true)

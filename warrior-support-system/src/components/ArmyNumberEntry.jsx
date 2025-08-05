@@ -12,8 +12,6 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
 
   const navigate = useNavigate()
 
-
-
   const handleLogout = () => {
     // Clear all stored data
     localStorage.removeItem('token')
@@ -44,17 +42,35 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
     }
 
     try {
-      // Verify if army number exists
-      const response = await axios.get(`/api/examination/army-no/${armyNo}`, {
+      // Fetch the CO's set date for the exam period
+      const coDateResponse = await axios.get('/api/examination/co-set-date', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
-      // If the response is successful, navigate to instructions
+      const coSetPeriod = (coDateResponse.data.setPeriod)
+
+      // Verify if army number exists
+      const response = await axios.get(`/api/personnel/army-no/${armyNo}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+
       if (response.data) {
-        
-        console.log(response.data.completedAt)
-        localStorage.setItem('currentArmyNo', armyNo)
-        navigate('/instructions')
+
+        const completedAt = new Date(response.data.updatedAt).getTime();
+        const currentDate = Date.now();
+
+        console.log(coSetPeriod)
+        // Calculate difference in days
+        const diffInDays = (currentDate - completedAt) / (1000 * 60 * 60 * 24);
+
+        // console.log("Days difference:", Math.round(diffInDays+1));
+
+        if (diffInDays > coSetPeriod || isNaN(completedAt)) {
+          localStorage.setItem('currentArmyNo', armyNo);
+          navigate('/instructions');
+        } else {
+          setError(`You can't give the test until the CO approves or the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day.`);
+        }
       }
     } catch (error) {
       // Handle Axios error response
@@ -67,6 +83,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
           return 
         }
       } else {
+        console.log(error)
         setError('Army Number Not Valid, Register First')
         setShowRegister(true) // Show the registration component
       }

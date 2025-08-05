@@ -3,6 +3,7 @@ const Examination = require("../models/Examination")
 const Personnel = require("../models/Personnel")
 const User = require("../models/User")
 const auth = require("../middleware/auth")
+const ReExamPeriod= require("../models/ReExam")
 
 const router = express.Router()
 
@@ -26,7 +27,7 @@ router.post("/submit", auth, async (req, res) => {
     await examination.save()
 
     // Update personnel self-evaluation status
-    await Personnel.findOneAndUpdate({ armyNo }, { selfEvaluation: "COMPLETED" })
+    await Personnel.findOneAndUpdate({ armyNo }, { selfEvaluation: "COMPLETED", updatedAt : new Date()})
 
     res.status(201).json({
       message: "Examination submitted successfully",
@@ -58,8 +59,9 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
     }
 
     // Role-based access control
-    if (req.user.role === "USER") {
-      return res.status(200).json(examination)
+    if (req.user.role === "USER" && req.user.status === 'PENDING') {
+      console.log("Form here")
+      return res.status(400).json({'message': "Your application is pending approval by the CO.", examination})
     }
 
     // JSO can only see examinations from their battalion
@@ -257,5 +259,110 @@ router.get("/all", auth, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message })
   }
 })
+
+// Add a route to fetch the CO's set date for the exam period
+router.get("/co-set-date", auth, async (req, res) => {
+  try {
+    
+    // Fetch the CO's set date from the database or configuration
+    const coSetDate = await ReExamPeriod.findOne({});
+
+    if (!coSetDate) {
+      return res.status(404).json({ message: "CO set date not found." });
+    }
+
+    res.json({ setPeriod: coSetDate.period });
+  } catch (error) {
+    console.error("Error fetching CO set date:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Add a route to set the CO's re-examination period
+router.post("/set-reexam-period", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "CO") {
+      return res.status(403).json({ message: "Access denied. CO access required." });
+    }
+
+    const { period } = req.body;
+
+    if ( isNaN(period) || period < 0) {
+      return res.status(400).json({ message: "Valid period in days is required." });
+    }
+
+    // Save or update the re-examination period in the database
+    let reExamPeriod = await ReExamPeriod.findOneAndUpdate(
+      {},
+      { period, setDate: new Date() },
+      { new: true, upsert: true }
+    );
+
+    res.json({ message: "Re-examination period set successfully.", period: reExamPeriod.period });
+  } catch (error) {
+    console.error("Error setting re-examination period:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Add a route to request re-examination approval
+router.post("/request-reexam", auth, async (req, res) => {
+  try {
+    const { armyNo } = req.body;
+
+    if (!armyNo) {
+      return res.status(400).json({ message: "Army number is required." });
+    }
+
+    const user = await User.findOne({ armyNo });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Create a re-examination request
+    const request = new Examination({
+      type: "RE_EXAM_REQUEST",
+      armyNo,
+      status: "PENDING",
+    });
+
+    await request.save();
+
+    res.json({ message: "Re-examination request submitted successfully." });
+  } catch (error) {
+    console.error("Error submitting re-examination request:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Add a route for CO to approve re-examination requests
+router.post("/approve-reexam", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "CO") {
+      return res.status(403).json({ message: "Access denied. CO access required." });
+    }
+
+    const { requestId } = req.body;
+
+    if (!requestId) {
+      return res.status(400).json({ message: "Request ID is required." });
+    }
+
+    const request = await Examination.findById(requestId);
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found." });
+    }
+
+    request.status = "APPROVED";
+    await request.save();
+
+    res.json({ message: "Re-examination request approved successfully." });
+  } catch (error) {
+    console.error("Error approving re-examination request:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
 
 module.exports = router

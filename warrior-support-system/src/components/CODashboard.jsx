@@ -17,7 +17,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const [showQuestionsView, setShowQuestionsView] = useState(false)
   const [showPasswordPop, setPasswordPop] =  useState(false)
   const [passwordPopup, setPasswordPopup] = useState(null)
-
+  const [reExamDate, setReExamDate] = useState("")
+  const [reExamPeriod, setReExamPeriod] = useState(10)
 
   const [stats, setStats] = useState({
     totalBattalions: 0,
@@ -387,6 +388,28 @@ const CODashboard = ({ currentUser, onLogout }) => {
     document.body.insertAdjacentHTML("beforeend", formHtml);
   };
 
+
+  const handleSetReExamPeriod = async () => {
+    if (reExamPeriod < 0 || isNaN(reExamPeriod)) {
+      alert("Please enter a valid number of days.");
+      return;
+    }
+
+
+    try {
+      await axios.post(
+        "/api/examination/set-reexam-period",
+        { period: reExamPeriod },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      );
+
+      alert("Re-examination period set successfully.");
+    } catch (error) {
+      console.error("Error setting re-examination period:", error);
+      alert("Failed to set re-examination period.");
+    }
+  };
+
   return (
     <div className="co-dashboard">
       {/* Header */}
@@ -608,6 +631,22 @@ const CODashboard = ({ currentUser, onLogout }) => {
             allBattalions={allBattalions}
           />
         )}
+
+        {/* Set Re-Examination Period */}
+        <section className="set-reexam-period">
+          <h2 className="co-section-title">Set Re-Examination Period (in days)</h2>
+          <div className="co-actions">
+            <input
+              type="number"
+              value={reExamPeriod}
+              onChange={(e) => setReExamPeriod(Number(e.target.value))}
+              className="period-input"
+            />
+            <button className="co-action-btn" onClick={handleSetReExamPeriod}>
+              Set Period
+            </button>
+          </div>
+        </section>
       </main>
 
       {/* Add Question Modal */}
