@@ -181,10 +181,6 @@ const Login = ({ onLogin }) => {
           </div>
 
           <div className="login-footer">
-            <p>
-              Don't have an account? 
-              <Link to="/register" className="register-link"> Register here</Link>
-            </p>
             <div className="system-info">
               <small>Warrior Support System v2.0 | Secure Military Portal</small>
             </div>

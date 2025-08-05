@@ -15,6 +15,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const [questions, setQuestions] = useState([])
   const [showQuestionModal, setShowQuestionModal] = useState(false)
   const [showQuestionsView, setShowQuestionsView] = useState(false)
+  const [showPasswordPop, setPasswordPop] =  useState(false)
+  const [passwordPopup, setPasswordPopup] = useState(null)
+
+
   const [stats, setStats] = useState({
     totalBattalions: 0,
     pendingApprovals: 0,
@@ -103,7 +107,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
     try {
       
       if (action === "delete"){
-         axios.post(`api/personnel/updateUser/${armyNo}`, {'currentUsername': "", 'newUsername' : "", 'action':action},{
+         axios.post(`api/personnel/updateUser/${armyNo}`, {'newUsername' : "",password : "", 'action':action},{
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
 
@@ -113,7 +117,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
       if (action === "username"){
         const newUsername = prompt("Enter New Username: ");
         
-        axios.post(`api/personnel/updateUser/${armyNo}`, {'currentUsername': currentUsername, 'newUsername' : newUsername, 'action':action},{
+        axios.post(`api/personnel/updateUser/${armyNo}`, {'newUsername' : newUsername, password: "", 'action':action},{
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
 
@@ -121,15 +125,60 @@ const CODashboard = ({ currentUser, onLogout }) => {
       }
 
       if (action === "password"){
-        const pswd = prompt("Enter Your Password: ")
-        const pswdConfirm = prompt("Enter Your Password Again: ")
+        const passwordPopup = document.createElement("div");
+        passwordPopup.className = "password-popup";
+        passwordPopup.style.position = "fixed";
+        passwordPopup.style.top = "50%";
+        passwordPopup.style.left = "50%";
+        passwordPopup.style.transform = "translate(-50%, -50%)";
+        passwordPopup.style.background = "#fff";
+        passwordPopup.style.padding = "20px";
+        passwordPopup.style.borderRadius = "8px";
+        passwordPopup.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)";
+        passwordPopup.style.zIndex = "1000";
 
-        if (pswd !== pswdConfirm){
-          alert("PASSWROD DOES NOT MATCHES")
-          return
-        }
+        passwordPopup.innerHTML = `
+          <div class="popup-content">
+            <h3>Change Password</h3>
+            <input type="password" id="new-password" placeholder="Enter New Password" style="margin-bottom: 10px; width: 100%; padding: 8px;" />
+            <input type="password" id="confirm-password" placeholder="Confirm New Password" style="margin-bottom: 10px; width: 100%; padding: 8px;" />
+            <div class="popup-buttons" style="display: flex; justify-content: space-between;">
+              <button id="cancel-btn" style="padding: 8px 16px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+              <button id="submit-btn" style="padding: 8px 16px; background: #28a745; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
+            </div>
+          </div>
+        `;
 
-        console.log("ok pswd")
+        document.body.appendChild(passwordPopup);
+
+        document.getElementById("cancel-btn").addEventListener("click", () => {
+          document.body.removeChild(passwordPopup);
+        });
+
+        document.getElementById("submit-btn").addEventListener("click", async () => {
+          const newPassword = document.getElementById("new-password").value;
+          const confirmPassword = document.getElementById("confirm-password").value;
+
+          if (newPassword !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+          }
+
+          try {
+            await axios.post(`api/personnel/updateUser/${armyNo}`, {
+              action,
+              newPassword,
+            }, {
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
+
+            alert("Password updated successfully");
+            document.body.removeChild(passwordPopup);
+          } catch (error) {
+            console.error("Error updating password:", error);
+            alert("Failed to update password. Please try again.");
+          }
+        });
       }
     }
 
@@ -527,6 +576,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
                 </div>
 
                 <div  style={buttonStyles.container}>
+
+                  {showPasswordPop && passwordPopup}
                   <button className="edit-btn" style={{ ...buttonStyles.button, ...buttonStyles.editButton }} onClick={(e) => handleEditUser(user.armyNo, user.username, "username")}>Edit Username</button>
                   <button className="edit-btn" style={{ ...buttonStyles.button, ...buttonStyles.editButton }} onClick={(e) => handleEditUser(user.armyNo, user.username, "password")}>Edit Password</button>
                   <button className="delete-btn" style={{ ...buttonStyles.button, ...buttonStyles.deleteButton }} onClick={(e) => handleEditUser(user.armyNo, user.username, "delete")}>Delete User</button>

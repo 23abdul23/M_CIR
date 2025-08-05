@@ -1,7 +1,6 @@
 .register-container {
   min-height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/src/assets/mountain-background.jpg") center
-    / cover;
+  
   display: flex;
   align-items: center;
   justify-content: center;

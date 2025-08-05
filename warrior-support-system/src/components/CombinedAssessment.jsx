@@ -454,11 +454,8 @@ const CombinedAssessment = () => {
       
       setAssessmentComplete(true);
       
-      // Navigate to completion page after delay to show results
-      setTimeout(() => {
-        navigate('/examination-complete');
-      }, 5000); // Increased delay to show facial results
       
+
     } catch (error) {
       console.error('Submission error:', error);
     } finally {
@@ -515,7 +512,9 @@ const CombinedAssessment = () => {
               <div>Voice Analysis: Complete</div>
               {facialFrameCount > 0 && <div>Facial Frames Captured: {facialFrameCount}</div>}
             </div>
+            <button onClick={() => navigate('/examination-complete')}>Proceed</button>
           </div>
+          
         </div>
       </div>
     );
@@ -811,15 +810,7 @@ const CombinedAssessment = () => {
           </div>
         </div>
         
-        <div className="progress-item">
-          <span>Facial Analysis: {facialIntervalRef.current ? 'Recording' : facialResults ? 'Complete' : 'Ready'} ({facialFrameCount} frames)</span>
-          <div className="progress-bar">
-            <div 
-              className="progress-fill facial" 
-              style={{ width: `${facialProgress}%` }}
-            />
-          </div>
-        </div>
+        
       </div>
     </div>
   );

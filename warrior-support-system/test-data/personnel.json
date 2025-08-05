@@ -1,117 +1,61 @@
 [{
   "_id": {
-    "$oid": "6884001a23e9000000000021"
+    "$oid": "688a3ebdaef527b48b879e04"
   },
-  "armyNo": "IC96010Q",
-  "rank": "Maj",
-  "name": "AVINASH SINGH",
-  "subBty": "ECHO PL",
-  "service": "9 yrs",
+  "armyNo": "123456VK",
+  "rank": "Sub",
+  "name": "abcd",
+  "subBty": "Q Bty",
+  "service": "6",
   "dateOfInduction": {
-    "$date": "2015-08-25T00:00:00.000Z"
+    "$date": "2025-07-03T00:00:00.000Z"
   },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "16 DAYS",
+  "medCat": "B2",
+  "leaveAvailed": "2",
   "maritalStatus": "MARRIED",
-  "selfEvaluation": "EXAM_APPEARED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "createdAt": {
-    "$date": "2024-03-12T10:05:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6884001a23e9000000000022"
-  },
-  "armyNo": "SS53321M",
-  "rank": "LNk",
-  "name": "SURESH YADAV",
-  "subBty": "B PL",
-  "service": "7 yrs",
-  "dateOfInduction": {
-    "$date": "2017-02-10T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "5 DAYS",
-  "maritalStatus": "UNMARRIED",
   "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "createdAt": {
-    "$date": "2024-01-19T09:45:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6884001a23e9000000000023"
-  },
-  "armyNo": "16500231Z",
-  "rank": "Sep",
-  "name": "ROHIT MEENA",
-  "subBty": "WING 3",
-  "service": "3 yrs",
-  "dateOfInduction": {
-    "$date": "2021-09-15T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 2",
-  "leaveAvailed": "20 DAYS",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "EXAM_APPEARED",
   "peerEvaluation": {
     "status": "EVALUATED",
     "evaluatedBy": {
       "$oid": "6883152ffa5537a2db906434"
     },
     "evaluatedAt": {
-      "$date": "2025-07-26T07:14:00.900Z"
+      "$date": "2025-08-01T18:16:20.103Z"
     },
     "answers": [
       {
-        "questionId": "68846058f930628dd5e90a86",
-        "answer": "3",
+        "questionId": "688a1b3d0dd525c2129c0169",
+        "answer": "8",
         "_id": {
-          "$oid": "6884803858c6d7152d09ccb3"
+          "$oid": "688d0474e283dc5b99f944f0"
         }
       },
       {
-        "questionId": "68846058f930628dd5e90a87",
-        "answer": "5",
+        "questionId": "688a1b3d0dd525c2129c016a",
+        "answer": "7",
         "_id": {
-          "$oid": "6884803858c6d7152d09ccb4"
+          "$oid": "688d0474e283dc5b99f944f1"
         }
       },
       {
-        "questionId": "68846058f930628dd5e90a88",
-        "answer": "4",
+        "questionId": "688a1b3d0dd525c2129c016b",
+        "answer": "6",
         "_id": {
-          "$oid": "6884803858c6d7152d09ccb5"
+          "$oid": "688d0474e283dc5b99f944f2"
         }
       },
       {
-        "questionId": "68846058f930628dd5e90a89",
-        "answer": "2",
+        "questionId": "688a1b3d0dd525c2129c016c",
+        "answer": "10",
         "_id": {
-          "$oid": "6884803858c6d7152d09ccb6"
+          "$oid": "688d0474e283dc5b99f944f3"
         }
       },
       {
-        "questionId": "68846058f930628dd5e90a8a",
-        "answer": "1",
+        "questionId": "688a1b3d0dd525c2129c016d",
+        "answer": "8",
         "_id": {
-          "$oid": "6884803858c6d7152d09ccb7"
+          "$oid": "688d0474e283dc5b99f944f4"
         }
       }
     ]
@@ -119,360 +63,128 @@
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
   },
-  "createdAt": {
-    "$date": "2024-04-01T13:15:00.000Z"
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-07-30T15:48:13.027Z"
   },
-  "__v": 0
+  "createdAt": {
+    "$date": "2025-07-30T15:48:13.027Z"
+  },
+  "__v": 0,
+  "addedBattalion": ""
 },
 {
   "_id": {
-    "$oid": "6884001a23e9000000000024"
+    "$oid": "688a3eec0089aace3be35f4c"
   },
-  "armyNo": "IC88210G",
-  "rank": "Capt",
-  "name": "TARUN PANDEY",
-  "subBty": "C SQN",
-  "service": "5 yrs",
-  "dateOfInduction": {
-    "$date": "2019-03-12T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "10 DAYS",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "createdAt": {
-    "$date": "2024-01-25T11:10:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6884001a23e9000000000025"
-  },
-  "armyNo": "19764521T",
-  "rank": "Hav",
-  "name": "MOHD SHOAIB",
-  "subBty": "MT PL",
-  "service": "14 yrs",
-  "dateOfInduction": {
-    "$date": "2010-10-17T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 2",
-  "leaveAvailed": "28 DAYS",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "COMPLETED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "createdAt": {
-    "$date": "2024-02-05T09:50:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6884001a23e9000000000026"
-  },
-  "armyNo": "16234352T",
-  "rank": "Cfn",
-  "name": "ANUJ SHARMA",
-  "subBty": "ENGR PL",
-  "service": "11 yrs",
-  "dateOfInduction": {
-    "$date": "2013-07-22T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "15 DAYS",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "EXAM_APPEARED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "createdAt": {
-    "$date": "2024-02-07T08:20:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "64a1b2c3d4e5f678901234a1"
-  },
-  "armyNo": "SSS1782K",
-  "rank": "Capt",
-  "name": "Karan Thakare",
-  "subBty": "184 FD Bty",
-  "service": "03",
-  "dateOfInduction": {
-    "$date": "2022-07-30T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "39",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "COMPLETED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "createdAt": {
-    "$date": "2024-01-15T10:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "64a1b2c3d4e5f678901234a2"
-  },
-  "armyNo": "IC69763F",
-  "rank": "Maj",
-  "name": "Ketan Gowda",
-  "subBty": "AWG Band Camp",
-  "service": "8 yrs",
-  "dateOfInduction": {
-    "$date": "2022-01-06T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "05 days PAL",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "EXAM_APPEARED",
-  "peerEvaluation": {
-    "status": "EVALUATED",
-    "evaluatedBy": {
-      "$oid": "64a1b2c3d4e5f6789012345b"
-    },
-    "evaluatedAt": {
-      "$date": "2024-01-18T15:30:00.000Z"
-    },
-    "answers": [
-      {
-        "questionId": "1",
-        "answer": "Good - Demonstrates solid leadership abilities",
-        "_id": {
-          "$oid": "6883df7bf4ee48a5c77ce1c5"
-        }
-      },
-      {
-        "questionId": "2",
-        "answer": "Works well with others",
-        "_id": {
-          "$oid": "6883df7bf4ee48a5c77ce1c6"
-        }
-      }
-    ]
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "createdAt": {
-    "$date": "2024-01-15T10:15:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "64a1b2c3d4e5f678901234a3"
-  },
-  "armyNo": "14570938M",
-  "rank": "Hav",
-  "name": "J DHARMAN",
-  "subBty": "VH PL",
-  "service": "14 yrs",
-  "dateOfInduction": {
-    "$date": "2022-03-04T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "24 DAYS",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "createdAt": {
-    "$date": "2024-01-15T10:30:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "64a1b2c3d4e5f678901234a4"
-  },
-  "armyNo": "17944391P",
-  "rank": "Sep",
-  "name": "SAROJ SINGH",
-  "subBty": "MT",
+  "armyNo": "123456VKL",
+  "rank": "Sub",
+  "name": "abcd",
+  "subBty": "Q Bty",
   "service": "6",
   "dateOfInduction": {
-    "$date": "2022-03-13T00:00:00.000Z"
+    "$date": "2025-07-03T00:00:00.000Z"
   },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "30 DAYS",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "EXAM_APPEARED",
-  "peerEvaluation": {
-    "status": "EVALUATED",
-    "evaluatedBy": {
-      "$oid": "6883152ffa5537a2db90642f"
-    },
-    "evaluatedAt": {
-      "$date": "2025-07-26T05:32:55.512Z"
-    },
-    "answers": [
-      {
-        "questionId": "68846058f930628dd5e90a86",
-        "answer": "3",
-        "_id": {
-          "$oid": "68846887822d90f477c845cd"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a87",
-        "answer": "5",
-        "_id": {
-          "$oid": "68846887822d90f477c845ce"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a88",
-        "answer": "3",
-        "_id": {
-          "$oid": "68846887822d90f477c845cf"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a89",
-        "answer": "3",
-        "_id": {
-          "$oid": "68846887822d90f477c845d0"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a8a",
-        "answer": "5",
-        "_id": {
-          "$oid": "68846887822d90f477c845d1"
-        }
-      }
-    ]
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "createdAt": {
-    "$date": "2024-01-15T10:45:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "64a1b2c3d4e5f678901234a5"
-  },
-  "armyNo": "17932623W",
-  "rank": "Cfn",
-  "name": "PANKAJ KUMAR",
-  "subBty": "VH PL",
-  "service": "12",
-  "dateOfInduction": {
-    "$date": "2022-11-17T00:00:00.000Z"
-  },
-  "medCat": "SHAPE 1",
-  "leaveAvailed": "NIL",
+  "medCat": "B2",
+  "leaveAvailed": "2",
   "maritalStatus": "MARRIED",
   "selfEvaluation": "NOT_ATTEMPTED",
   "peerEvaluation": {
-    "status": "EVALUATED",
-    "evaluatedBy": {
-      "$oid": "6883152ffa5537a2db90642f"
-    },
-    "evaluatedAt": {
-      "$date": "2025-07-26T05:32:34.289Z"
-    },
-    "answers": [
-      {
-        "questionId": "undefined",
-        "answer": "1",
-        "_id": {
-          "$oid": "68846872822d90f477c84550"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a86",
-        "answer": "4",
-        "_id": {
-          "$oid": "68846872822d90f477c84551"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a87",
-        "answer": "3",
-        "_id": {
-          "$oid": "68846872822d90f477c84552"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a88",
-        "answer": "5",
-        "_id": {
-          "$oid": "68846872822d90f477c84553"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a89",
-        "answer": "3",
-        "_id": {
-          "$oid": "68846872822d90f477c84554"
-        }
-      },
-      {
-        "questionId": "68846058f930628dd5e90a8a",
-        "answer": "4",
-        "_id": {
-          "$oid": "68846872822d90f477c84555"
-        }
-      }
-    ]
+    "status": "PENDING",
+    "answers": []
   },
   "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-07-30T15:49:00.261Z"
   },
   "createdAt": {
-    "$date": "2024-01-15T11:00:00.000Z"
+    "$date": "2025-07-30T15:49:00.261Z"
   },
-  "__v": 0
+  "__v": 0,
+  "addedBattalion": ""
 },
 {
   "_id": {
-    "$oid": "68846935822d90f477c846ca"
+    "$oid": "688a4032b80ee98cad85e2c3"
   },
-  "armyNo": "123456V",
-  "rank": "Capt",
-  "name": "Shon",
+  "armyNo": "123456GLK",
+  "rank": "Nk",
+  "name": "abdef",
   "subBty": "Q Bty",
+  "service": "6",
+  "dateOfInduction": {
+    "$date": "2025-07-25T00:00:00.000Z"
+  },
+  "medCat": "C1",
+  "leaveAvailed": "14",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "status": "APPROVED",
+  "battalion": {
+    "$oid": "688a4032b80ee98cad85e2c4"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T15:54:26.273Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T15:54:26.273Z"
+  },
+  "__v": 0,
+  "addedBattalion": ""
+},
+{
+  "_id": {
+    "$oid": "688a43b2175e869c09fb9d0b"
+  },
+  "armyNo": "123456VOK",
+  "rank": "2Lt",
+  "name": "Abdul Azeem Ansari ",
+  "subBty": "R Bty",
   "service": "24",
   "dateOfInduction": {
-    "$date": "2018-03-14T00:00:00.000Z"
+    "$date": "2025-07-11T00:00:00.000Z"
   },
-  "medCat": "A2",
+  "medCat": "B1",
+  "leaveAvailed": "2",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-07-30T16:09:22.592Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T16:09:22.592Z"
+  },
+  "__v": 0,
+  "addedBattalion": ""
+},
+{
+  "_id": {
+    "$oid": "688a4d21eb15ce838fd1e509"
+  },
+  "armyNo": "123456ABC",
+  "rank": "Maj",
+  "name": "Admin try ",
+  "subBty": "HQ Bty",
+  "service": "6",
+  "dateOfInduction": {
+    "$date": "2025-07-19T00:00:00.000Z"
+  },
+  "medCat": "B2",
   "leaveAvailed": "5",
   "maritalStatus": "MARRIED",
   "selfEvaluation": "NOT_ATTEMPTED",
@@ -480,11 +192,214 @@
     "status": "PENDING",
     "answers": []
   },
+  "addedBattalion": "yes ",
+  "status": "APPROVED",
   "battalion": {
-    "$oid": "688468f9822d90f477c8468f"
+    "$oid": "688a4d21eb15ce838fd1e50a"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T16:49:37.407Z"
   },
   "createdAt": {
-    "$date": "2025-07-26T05:35:49.200Z"
+    "$date": "2025-07-30T16:49:37.407Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a5a7e1331c7849f38dcb5"
+  },
+  "armyNo": "advadv",
+  "rank": "Maj",
+  "name": "test1",
+  "subBty": "R Bty",
+  "service": "6",
+  "dateOfInduction": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "medCat": "B2",
+  "leaveAvailed": "14",
+  "maritalStatus": "UNMARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "addedBattalion": "TESTBTY3",
+  "status": "APPROVED",
+  "battalion": {
+    "$oid": "688a5a7e1331c7849f38dcb6"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T17:46:38.654Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T17:46:38.654Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a5c28ec3b2c50aa3bc5a5"
+  },
+  "armyNo": "SSS1rt782K",
+  "rank": "Capt",
+  "name": "test345",
+  "subBty": "Q Bty",
+  "service": "61",
+  "dateOfInduction": {
+    "$date": "2025-07-25T00:00:00.000Z"
+  },
+  "medCat": "B1",
+  "leaveAvailed": "50",
+  "maritalStatus": "UNMARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "addedBattalion": "testfinal",
+  "status": "APPROVED",
+  "battalion": {
+    "$oid": "688a5c28ec3b2c50aa3bc5a6"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T17:53:44.246Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T17:53:44.246Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a5fd4564a98dfe5561ba7"
+  },
+  "armyNo": "123456ATER",
+  "rank": "Capt",
+  "name": "xyz",
+  "subBty": "Q Bty",
+  "service": "61",
+  "dateOfInduction": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "medCat": "B1",
+  "leaveAvailed": "5",
+  "maritalStatus": "UNMARRIED",
+  "selfEvaluation": "COMPLETED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-07-30T18:09:24.917Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T18:09:24.917Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688cff8ce283dc5b99f93e8a"
+  },
+  "armyNo": "123456Abcde",
+  "rank": "Nk",
+  "name": "Rajma",
+  "subBty": "R Bty",
+  "service": "6",
+  "dateOfInduction": {
+    "$date": "2025-08-22T00:00:00.000Z"
+  },
+  "medCat": "B1",
+  "leaveAvailed": "14",
+  "maritalStatus": "UNMARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-01T17:55:24.792Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-01T17:55:24.792Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688cffe6e283dc5b99f93f45"
+  },
+  "armyNo": "123456Atdgghedc",
+  "rank": "Lt",
+  "name": "Rajma2",
+  "subBty": "R Bty",
+  "service": "61",
+  "dateOfInduction": {
+    "$date": "2025-08-11T00:00:00.000Z"
+  },
+  "medCat": "B1",
+  "leaveAvailed": "12",
+  "maritalStatus": "UNMARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "addedBattalion": "nEW bASTTALION",
+  "status": "APPROVED",
+  "battalion": {
+    "$oid": "688cffe6e283dc5b99f93f46"
+  },
+  "updatedAt": {
+    "$date": "2025-08-01T17:56:54.822Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-01T17:56:54.822Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6890e9f8457fae0ecf63a484"
+  },
+  "armyNo": "SSS1782KOKO",
+  "rank": "Maj",
+  "name": "test",
+  "subBty": "R Bty",
+  "service": "61",
+  "dateOfInduction": {
+    "$date": "2025-08-27T00:00:00.000Z"
+  },
+  "medCat": "B2",
+  "leaveAvailed": "14",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-04T17:12:24.597Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-04T17:12:24.597Z"
   },
   "__v": 0
 }]

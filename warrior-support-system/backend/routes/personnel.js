@@ -4,7 +4,7 @@ const Battalion = require('../models/Battalion')
 const Examination = require("../models/Examination")
 const auth = require("../middleware/auth")
 const User = require("../models/User")
-const bycrypt = require("bcrypt")
+const bcrypt = require("bcrypt")
 
 const router = express.Router()
 
@@ -29,7 +29,9 @@ router.get("/allUsernames", auth, async (req, res) => {
 router.post("/updateUser/:armyNo", auth, async (req, res) => {
   try{
     const user = await User.findOne({armyNo: req.params.armyNo});
-    const {newUsername, password, action} = req.body
+    const {newUsername, newPassword, action} = req.body
+
+    console.log('before', user)
 
     if (!user) {
       return res.status(404).send('User not found');
@@ -38,18 +40,16 @@ router.post("/updateUser/:armyNo", auth, async (req, res) => {
     if (action === 'username'){
       user.username = newUsername;
     }
-      
-  
-    if(action === 'password'){
-      if (action === 'password') {
+   
+    if (action === 'password') {
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
       user.password = hashedPassword;
-      await user.save();
-    }
     }
 
     await user.save();
+
+    console.log('after',user)
 
 
     if (action === 'delete'){

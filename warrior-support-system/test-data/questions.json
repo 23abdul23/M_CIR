@@ -184,29 +184,7 @@
   },
   "questionId": 7,
   "questionText": "How was the Test overall?",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "1",
-      "optionText": ""
-    },
-    {
-      "optionId": "2",
-      "optionText": ""
-    },
-    {
-      "optionId": "3",
-      "optionText": ""
-    },
-    {
-      "optionId": "4",
-      "optionText": ""
-    },
-    {
-      "optionId": "5",
-      "optionText": ""
-    }
-  ],
+  "questionType": "TEXT",
   "isActive": true,
   "order": 7,
   "createdAt": {
