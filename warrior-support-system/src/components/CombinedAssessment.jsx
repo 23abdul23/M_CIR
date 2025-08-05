@@ -26,6 +26,7 @@ const CombinedAssessment = () => {
   const [voiceTranscript, setVoiceTranscript] = useState('');
   const [voiceLoading, setVoiceLoading] = useState(false);
   const [manualInput, setManualInput] = useState('');
+  const [isProcessingAudio, setIsProcessingAudio] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioStreamRef = useRef(null);
@@ -55,10 +56,23 @@ const CombinedAssessment = () => {
   // Initialize component
   useEffect(() => {
     initializeAssessment();
+
+    // Prevent accidental page reload during audio processing
+    const handleBeforeUnload = (e) => {
+      if (isProcessingAudio) {
+        e.preventDefault();
+        e.returnValue = 'Audio is being processed. Are you sure you want to leave?';
+        return 'Audio is being processed. Are you sure you want to leave?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     return () => {
       cleanup();
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []);
+  }, [isProcessingAudio]);
   
   const initializeAssessment = async () => {
     await Promise.all([
@@ -314,24 +328,45 @@ const CombinedAssessment = () => {
   
   const startVoiceRecording = async () => {
     try {
+      console.log('🎙️ Starting voice recording...');
       setVoiceLoading(false);
       resetTranscript();
-      
-      if (!selectedAudioDevice) return;
-      
+      setVoiceTranscript(''); // Clear previous transcript
+
+      if (!selectedAudioDevice) {
+        console.warn('⚠️ No audio device selected');
+        alert('Please select an audio device first.');
+        return;
+      }
+
+      console.log(`🎤 Using audio device: ${selectedAudioDevice}`);
+
       const constraints = {
         audio: {
           deviceId: { exact: selectedAudioDevice },
           echoCancellation: false,
           noiseSuppression: false,
           autoGainControl: false,
+          sampleRate: 16000, // Optimal for Whisper
         },
       };
-      
+
+      console.log('🔊 Requesting microphone access...');
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       audioStreamRef.current = stream;
-      
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+
+      // Check if WebM is supported, fallback to other formats
+      let mimeType = 'audio/webm';
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = 'audio/mp4';
+        if (!MediaRecorder.isTypeSupported(mimeType)) {
+          mimeType = 'audio/wav';
+        }
+      }
+
+      console.log(`📹 Using MIME type: ${mimeType}`);
+
+      const mediaRecorder = new MediaRecorder(stream, { mimeType });
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
       
@@ -342,56 +377,127 @@ const CombinedAssessment = () => {
       };
       
       mediaRecorder.onstop = async () => {
+        console.log('🎙️ Recording stopped, processing audio...');
+
         if (audioChunksRef.current.length > 0) {
           const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-          const formData = new FormData();
-          formData.append('audio', audioBlob);
+          console.log(`📊 Audio blob created: ${audioBlob.size} bytes, type: ${audioBlob.type}`);
 
-          console.log("Recorded ASuidio Data", audioBlob)
-          
+          const formData = new FormData();
+          formData.append('audio', audioBlob, 'recording.webm');
+
           try {
             setVoiceLoading(true);
-            const response = await axios.post('http://localhost:8000/api/translate', formData, {
+            setIsProcessingAudio(true);
+            console.log('📤 Sending audio to backend for transcription...');
+
+            const response = await axios.post('http://localhost:8001/api/translate', formData, {
               headers: { 'Content-Type': 'multipart/form-data' },
+              timeout: 30000, // 30 second timeout
             });
-            
+
+            console.log('✅ Transcription response received:', response.data);
+
             const transcript = response.data.transcript;
-            setVoiceTranscript(transcript);
-            
-            // Update answer
-            updateAnswer(transcript);
+            const voiceAnalysis = response.data.voice_analysis;
+            const aiEnhanced = response.data.ai_enhanced;
+
+            if (transcript) {
+              setVoiceTranscript(transcript);
+              console.log(`📝 Transcript: "${transcript}"`);
+
+              // Create enhanced answer object if AI analysis is available
+              const answerData = aiEnhanced && voiceAnalysis ? {
+                transcript: transcript,
+                voice_analysis: voiceAnalysis,
+                ai_enhanced: true,
+                timestamp: new Date().toISOString()
+              } : transcript;
+
+              console.log('💾 Saving answer data:', answerData);
+
+              // Update answer
+              updateAnswer(answerData);
+
+              if (aiEnhanced) {
+                console.log('🤖 AI analysis included in response');
+              }
+            } else {
+              console.error('❌ No transcript received from backend');
+              alert('Transcription failed. Please try recording again.');
+            }
+
           } catch (error) {
-            console.error('Voice transcription error:', error);
+            console.error('❌ Voice transcription error:', error);
+
+            if (error.code === 'ECONNABORTED') {
+              alert('Transcription timed out. Please try with a shorter recording.');
+            } else if (error.response) {
+              console.error('Backend error response:', error.response.data);
+              alert(`Transcription failed: ${error.response.data.error || 'Unknown error'}`);
+            } else {
+              alert('Network error. Please check your connection and try again.');
+            }
           } finally {
             setVoiceLoading(false);
+            setIsProcessingAudio(false);
+            console.log('🏁 Transcription process completed');
           }
+        } else {
+          console.warn('⚠️ No audio data recorded');
+          alert('No audio was recorded. Please try again.');
         }
       };
       
       mediaRecorder.start();
       setIsRecording(true);
-      
+      console.log('✅ Recording started successfully');
+
       // Start browser speech recognition as backup
       if (browserSupportsSpeechRecognition) {
         SpeechRecognition.startListening({ continuous: true });
+        console.log('🎤 Browser speech recognition started as backup');
       }
-      
+
     } catch (error) {
-      console.error('Recording error:', error);
+      console.error('❌ Recording error:', error);
+
+      if (error.name === 'NotAllowedError') {
+        alert('Microphone access denied. Please allow microphone access and try again.');
+      } else if (error.name === 'NotFoundError') {
+        alert('No microphone found. Please connect a microphone and try again.');
+      } else if (error.name === 'NotReadableError') {
+        alert('Microphone is being used by another application. Please close other applications and try again.');
+      } else {
+        alert(`Recording failed: ${error.message}`);
+      }
+
+      setIsRecording(false);
     }
   };
   
   const stopVoiceRecording = () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-      mediaRecorderRef.current.stop();
+    console.log('🛑 Stopping voice recording...');
+
+    try {
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop();
+        console.log('📹 MediaRecorder stopped');
+      }
+
+      if (audioStreamRef.current) {
+        audioStreamRef.current.getTracks().forEach(track => track.stop());
+        console.log('🔇 Audio stream tracks stopped');
+      }
+
+      SpeechRecognition.stopListening();
+      setIsRecording(false);
+      console.log('✅ Recording stopped successfully');
+
+    } catch (error) {
+      console.error('❌ Error stopping recording:', error);
+      setIsRecording(false);
     }
-    
-    if (audioStreamRef.current) {
-      audioStreamRef.current.getTracks().forEach(track => track.stop());
-    }
-    
-    SpeechRecognition.stopListening();
-    setIsRecording(false);
   };
   
   const updateAnswer = (answerText) => {
@@ -405,6 +511,12 @@ const CombinedAssessment = () => {
   };
   
   const handleNext = () => {
+    // Prevent navigation during audio processing
+    if (isProcessingAudio) {
+      console.log('⚠️ Cannot navigate while processing audio');
+      return;
+    }
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
       setVoiceTranscript('');
@@ -433,12 +545,97 @@ const CombinedAssessment = () => {
       
       // Submit questionnaire answers
       const armyNo = localStorage.getItem('currentArmyNo');
+
+      // Collect all voice analysis results from transcripts
+      const allVoiceAnalysis = [];
+      const allTranscripts = Object.values(answers);
+
+      // Check if we have any AI-enhanced transcripts with voice analysis
+      for (const transcript of allTranscripts) {
+        if (transcript && typeof transcript === 'object' && transcript.voice_analysis) {
+          allVoiceAnalysis.push(transcript.voice_analysis);
+        }
+      }
+
+      // Calculate average AI scores if we have voice analysis data
+      let aiAssessmentData = null;
+      if (allVoiceAnalysis.length > 0) {
+        const avgScores = {
+          depression: 0,
+          anxiety: 0,
+          stress: 0,
+          confidence: 0
+        };
+
+        // Calculate averages
+        allVoiceAnalysis.forEach(analysis => {
+          if (analysis.depression) avgScores.depression += analysis.depression.score || 0;
+          if (analysis.anxiety) avgScores.anxiety += analysis.anxiety.score || 0;
+          if (analysis.stress) avgScores.stress += analysis.stress.score || 0;
+          avgScores.confidence += 0.8; // Default confidence
+        });
+
+        const count = allVoiceAnalysis.length;
+        avgScores.depression /= count;
+        avgScores.anxiety /= count;
+        avgScores.stress /= count;
+        avgScores.confidence /= count;
+
+        // Determine severity levels (DASS-21 compatible)
+        const getSeverity = (score, type) => {
+          if (type === 'depression') {
+            if (score <= 9) return 'normal';
+            if (score <= 13) return 'mild';
+            if (score <= 20) return 'moderate';
+            if (score <= 27) return 'severe';
+            return 'extremely_severe';
+          } else if (type === 'anxiety') {
+            if (score <= 7) return 'normal';
+            if (score <= 9) return 'mild';
+            if (score <= 14) return 'moderate';
+            if (score <= 19) return 'severe';
+            return 'extremely_severe';
+          } else { // stress
+            if (score <= 14) return 'normal';
+            if (score <= 18) return 'mild';
+            if (score <= 25) return 'moderate';
+            if (score <= 33) return 'severe';
+            return 'extremely_severe';
+          }
+        };
+
+        aiAssessmentData = {
+          depression: avgScores.depression,
+          depression_severity: getSeverity(avgScores.depression, 'depression'),
+          anxiety: avgScores.anxiety,
+          anxiety_severity: getSeverity(avgScores.anxiety, 'anxiety'),
+          stress: avgScores.stress,
+          stress_severity: getSeverity(avgScores.stress, 'stress'),
+          overall_risk: Math.max(avgScores.depression, avgScores.anxiety, avgScores.stress) > 20 ? 'high' : 'moderate',
+          confidence: avgScores.confidence
+        };
+
+        // Save AI assessment to backend
+        try {
+          await axios.post('http://localhost:8001/api/save-ai-assessment', {
+            armyNo,
+            aiScores: aiAssessmentData,
+            assessmentType: 'AI_VOICE_ENHANCED'
+          });
+          console.log('✅ AI assessment saved successfully');
+        } catch (error) {
+          console.error('⚠️ Failed to save AI assessment:', error);
+        }
+      }
+
       const submissionData = {
         armyNo,
         answers,
         completedAt: new Date().toISOString(),
         voiceAnalysis: {
-          transcripts: Object.values(answers),
+          transcripts: allTranscripts,
+          aiEnhanced: allVoiceAnalysis.length > 0,
+          aiScores: aiAssessmentData,
           completed: true
         },
         facialAnalysis: {
@@ -453,11 +650,10 @@ const CombinedAssessment = () => {
       console.log('Submitting combined assessment:', submissionData);
       
       setAssessmentComplete(true);
-      
-      // Navigate to completion page after delay to show results
-      setTimeout(() => {
-        navigate('/examination-complete');
-      }, 5000); // Increased delay to show facial results
+
+      // Don't auto-navigate - let user stay on the page to see results
+      // User can manually navigate when ready
+      console.log('✅ Assessment completed successfully - staying on current page');
       
     } catch (error) {
       console.error('Submission error:', error);
@@ -639,7 +835,12 @@ const CombinedAssessment = () => {
           <div className="camera-controls">
             {!cameraStarted ? (
               <button
-                onClick={() => startCamera()}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  startCamera();
+                }}
                 className="camera-control-btn start"
                 disabled={!selectedCamera}
               >
@@ -647,7 +848,10 @@ const CombinedAssessment = () => {
               </button>
             ) : (
               <button
-                onClick={() => {
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
                   if (streamRef.current) {
                     streamRef.current.getTracks().forEach(track => track.stop());
                   }
@@ -700,7 +904,12 @@ const CombinedAssessment = () => {
                 <div className="voice-controls">
                   {!isRecording ? (
                     <button
-                      onClick={startVoiceRecording}
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        startVoiceRecording();
+                      }}
                       className="voice-btn start-recording"
                       disabled={voiceLoading}
                     >
@@ -708,7 +917,12 @@ const CombinedAssessment = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={stopVoiceRecording}
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        stopVoiceRecording();
+                      }}
                       className="voice-btn stop-recording"
                     >
                       ⏹️ Stop Recording
@@ -718,7 +932,21 @@ const CombinedAssessment = () => {
                   {voiceLoading && (
                     <div className="voice-loading">
                       <div className="loading-spinner small"></div>
-                      Processing audio...
+                      Processing audio... (Please wait, do not navigate)
+                    </div>
+                  )}
+
+                  {isProcessingAudio && (
+                    <div className="processing-warning" style={{
+                      backgroundColor: '#fff3cd',
+                      border: '1px solid #ffeaa7',
+                      borderRadius: '4px',
+                      padding: '8px',
+                      marginTop: '8px',
+                      fontSize: '12px',
+                      color: '#856404'
+                    }}>
+                      ⚠️ Audio processing in progress. Please wait before navigating.
                     </div>
                   )}
                 </div>
@@ -754,11 +982,17 @@ const CombinedAssessment = () => {
                 
                 
                 <button
-                  onClick={handleNext}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleNext();
+                  }}
                   disabled={
-                    currentQuestion.questionType === 'MCQ'
+                    isProcessingAudio ||
+                    (currentQuestion.questionType === 'MCQ'
                       ? !currentAnswer.trim()
-                      : !displayAnswer.trim()
+                      : !displayAnswer.trim())
                   }
                   className="nav-btn next"
                 >

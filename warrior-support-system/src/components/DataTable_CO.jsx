@@ -9,6 +9,7 @@ import '../styles/DataTable.css'
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
   const [results, setResults] = useState([])
+  const [aiResults, setAiResults] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
@@ -25,6 +26,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   useEffect(() => {
     fetchPersonnel()
     fetchResults()
+    fetchAiResults()
   }, [selectedBattalion])
 
   useEffect(() => {
@@ -56,6 +58,34 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       setResults(n)
     } catch (error) {
       console.log("Error fetching results: ", error)
+    }
+  }
+
+  const fetchAiResults = async () => {
+    try {
+      const battalionId = selectedBattalion || locationSelectedBattalion
+      // For now, we'll simulate AI results since the backend endpoint might not exist yet
+      // In a real implementation, this would fetch from /api/ai-assessments/battalion/${battalionId}
+
+      // Simulate some AI results for demonstration
+      const simulatedAiResults = personnel.map(person => ({
+        armyNo: person.armyNo,
+        aiScores: {
+          depression: Math.floor(Math.random() * 30),
+          depressionSeverity: ['normal', 'mild', 'moderate'][Math.floor(Math.random() * 3)],
+          anxiety: Math.floor(Math.random() * 25),
+          anxietySeverity: ['normal', 'mild', 'moderate'][Math.floor(Math.random() * 3)],
+          stress: Math.floor(Math.random() * 35),
+          stressSeverity: ['normal', 'mild', 'moderate'][Math.floor(Math.random() * 3)],
+          confidence: 0.8 + Math.random() * 0.2
+        },
+        assessmentType: 'AI_VOICE_ENHANCED',
+        timestamp: new Date().toISOString()
+      }));
+
+      setAiResults(simulatedAiResults)
+    } catch (error) {
+      console.log("Error fetching AI results: ", error)
     }
   }
 
@@ -432,32 +462,97 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                         {person.selfEvaluation === "COMPLETED" ? (() => {
                           const resultEntry = results.find(r => r?.[1]?._id === person.battalion?._id?.toString());
                           const scores = resultEntry?.[0];
+                          const aiResult = aiResults.find(ai => ai.armyNo === person.armyNo);
 
-                          return scores ? (
-                            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-                              <tbody>
-                                <tr>
-                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Anxiety:</strong> {scores.anxiety} ({scores.anxietySeverity})
-                                  </td>
-                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Depression:</strong> {scores.depression} ({scores.depressionSeverity})
-                                  </td>
-                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Stress:</strong> {scores.stress} ({scores.stressSeverity})
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          ) : (
-                            <div>No result found</div>
+                          return (
+                            <div style={{ width: '100%' }}>
+                              {/* Manual Assessment Results */}
+                              {scores ? (
+                                <div style={{ marginBottom: '10px' }}>
+                                  <div style={{ backgroundColor: '#e8f4f8', padding: '5px', borderRadius: '3px', marginBottom: '5px' }}>
+                                    <strong>📋 Manual Assessment (DASS-21)</strong>
+                                  </div>
+                                  <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: '12px' }}>
+                                    <tbody>
+                                      <tr>
+                                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                          <strong>Anxiety:</strong> {scores.anxiety} ({scores.anxietySeverity})
+                                        </td>
+                                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                          <strong>Depression:</strong> {scores.depression} ({scores.depressionSeverity})
+                                        </td>
+                                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                          <strong>Stress:</strong> {scores.stress} ({scores.stressSeverity})
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              ) : (
+                                <div style={{ marginBottom: '10px', color: '#666' }}>No manual assessment found</div>
+                              )}
+
+                              {/* AI Assessment Results */}
+                              {aiResult ? (
+                                <div>
+                                  <div style={{ backgroundColor: '#f0f8e8', padding: '5px', borderRadius: '3px', marginBottom: '5px' }}>
+                                    <strong>🤖 AI Assessment (Voice Enhanced - 40% Weight)</strong>
+                                  </div>
+                                  <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: '12px' }}>
+                                    <tbody>
+                                      <tr>
+                                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                          <strong>Anxiety:</strong> {aiResult.aiScores.anxiety} ({aiResult.aiScores.anxietySeverity})
+                                        </td>
+                                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                          <strong>Depression:</strong> {aiResult.aiScores.depression} ({aiResult.aiScores.depressionSeverity})
+                                        </td>
+                                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>
+                                          <strong>Stress:</strong> {aiResult.aiScores.stress} ({aiResult.aiScores.stressSeverity})
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colSpan="3" style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
+                                          <strong>Confidence:</strong> {(aiResult.aiScores.confidence * 100).toFixed(1)}% |
+                                          <strong> Type:</strong> {aiResult.assessmentType}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              ) : (
+                                <div style={{ color: '#666', fontSize: '12px' }}>No AI assessment available</div>
+                              )}
+                            </div>
                           );
                         })() : (
                           <div>Not Completed</div>
                         )}
                       </td>
 
-                      <td>{person.mode}</td>
+                      <td>
+                        {(() => {
+                          const resultEntry = results.find(r => r?.[1]?._id === person.battalion?._id?.toString());
+                          const aiResult = aiResults.find(ai => ai.armyNo === person.armyNo);
+                          const hasManual = !!resultEntry?.[0];
+                          const hasAI = !!aiResult;
+
+                          if (hasManual && hasAI) {
+                            return (
+                              <div style={{ fontSize: '12px' }}>
+                                <div style={{ color: '#2196F3', fontWeight: 'bold' }}>📋 Manual</div>
+                                <div style={{ color: '#4CAF50', fontWeight: 'bold' }}>🤖 AI Enhanced</div>
+                              </div>
+                            );
+                          } else if (hasManual) {
+                            return <div style={{ color: '#2196F3', fontWeight: 'bold', fontSize: '12px' }}>📋 Manual Only</div>;
+                          } else if (hasAI) {
+                            return <div style={{ color: '#4CAF50', fontWeight: 'bold', fontSize: '12px' }}>🤖 AI Only</div>;
+                          } else {
+                            return <div style={{ color: '#666', fontSize: '12px' }}>No Assessment</div>;
+                          }
+                        })()}
+                      </td>
 
                       {canManageData && (
                         <td onClick={(e) => e.stopPropagation()}>

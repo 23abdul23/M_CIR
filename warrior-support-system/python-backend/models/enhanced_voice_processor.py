@@ -196,17 +196,19 @@ class EnhancedVoiceProcessor:
             # Transcribe with Whisper
             logger.info("🔄 Transcribing audio with Whisper...")
             
-            # Use language detection for better results
+            # Force Hindi language for Hinglish transcription
             result = self.whisper_model.transcribe(
                 temp_path,
-                language=language_hint if language_hint != "auto" else None,
+                language="hi",  # Force Hindi for better Hinglish support
                 task="transcribe",  # Always transcribe (not translate)
                 fp16=GPU_AVAILABLE,  # Use FP16 for GPU acceleration
-                verbose=False
+                verbose=False,
+                word_timestamps=False,  # Disable word timestamps for faster processing
+                condition_on_previous_text=False  # Disable context for more accurate short audio
             )
             
-            # Clean up temporary file
-            os.unlink(temp_path)
+            # Don't delete the file here - let the caller handle cleanup
+            # os.unlink(temp_path)
             
             # Extract transcription
             transcribed_text = result.get("text", "").strip()
