@@ -69,7 +69,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
           localStorage.setItem('currentArmyNo', armyNo);
           navigate('/instructions');
         } else {
-          setError(`You can't give the test until the CO approves or the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day.`);
+          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day.`);
         }
       }
     } catch (error) {
