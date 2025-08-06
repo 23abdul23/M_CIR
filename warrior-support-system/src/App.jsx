@@ -9,6 +9,7 @@ import BattalionSelection from './components/BattalionSelection'
 import MainMenu from './components/MainMenu'
 import DataTable from './components/DataTable'
 import ArmyNumberEntry from './components/ArmyNumberEntry'
+import AI_ArmyNumberEntry from './components/AI_ArmyNumberEntry'
 import Instructions from './components/Instructions'
 import Questionnaire from './components/Questionnaire'
 import ExaminationComplete from './components/ExaminationComplete'
@@ -275,6 +276,19 @@ function App() {
             element={
               <ProtectedRoute>
                 <ArmyNumberEntry 
+                  currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Examination Routes (All authenticated users) */}
+          <Route 
+            path="/ai-army-number-entry" 
+            element={
+              <ProtectedRoute>
+                <AI_ArmyNumberEntry 
                   currentUser={currentUser}
                   onLogout={handleLogout}
                 />

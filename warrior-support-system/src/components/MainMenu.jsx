@@ -35,7 +35,7 @@ const MainMenu = ({ selectedBattalion, currentUser, onLogout }) => {
           </button>
           <button 
             className="menu-btn combined-assessment"
-            onClick={() => navigate('/combined-assessment')}
+            onClick={() => navigate('/ai-army-number-entry')}
           >
             AI<br/>EXAMINATION
           </button>

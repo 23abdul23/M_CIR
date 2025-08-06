@@ -5,7 +5,7 @@ import Header from './Header'
 import '../styles/ArmyNumberEntry.css'
 import UserRegister from './User_registeration'
 
-const ArmyNumberEntry = ({ currentUser, onLogout }) => {
+const AI_ArmyNumberEntry = ({ currentUser, onLogout }) => {
   const [armyNo, setArmyNo] = useState('SSS1782K')
   const [error, setError] = useState('')
   const [showRegister, setShowRegister] = useState(false)
@@ -70,7 +70,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
           localStorage.setItem('currentArmyNo', armyNo);
           navigate('/instructions');
         } else {
-          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day and ${Math.round(diffInHours % 24)} Hours.}.`);
+          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day and ${24 - Math.round(diffInHours)} Hours.`);
         }
       }
     } catch (error) {
@@ -125,4 +125,4 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
   )
 }
 
-export default ArmyNumberEntry
+export default AI_ArmyNumberEntry

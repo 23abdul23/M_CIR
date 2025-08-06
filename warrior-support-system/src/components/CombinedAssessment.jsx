@@ -32,6 +32,8 @@ const CombinedAssessment = () => {
   const audioStreamRef = useRef(null);
   const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
   
+  //Voice Scores
+  const [voiceScores, setVoiceScores] = useState({'depression' : [], 'anxiety' : [], 'stress' : []});
   // Questionnaire States
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -267,6 +269,29 @@ const CombinedAssessment = () => {
     }, 300);
   };
   
+  // Determine severity levels (DASS-21 compatible)
+  const getSeverity = (score, type) => {
+    if (type === 'depression') {
+      if (score <= 9) return 'Normal';
+      if (score <= 13) return 'Mild';
+      if (score <= 20) return 'Moderate';
+      if (score <= 27) return 'Severe';
+      return 'Extremely Severe';
+    } else if (type === 'anxiety') {
+      if (score <= 7) return 'Normal';
+      if (score <= 9) return 'Mild';
+      if (score <= 14) return 'Moderate';
+      if (score <= 19) return 'Severe';
+      return 'Extremely Severe';
+    } else { // stress
+      if (score <= 14) return 'Normal';
+      if (score <= 18) return 'Mild';
+      if (score <= 25) return 'Moderate';
+      if (score <= 33) return 'Severe';
+      return 'Extremely Severe';
+    }
+  };
+
   const startFacialAnalysis = () => {
     if (!videoRef.current || !canvasRef.current || facialIntervalRef.current) return;
 
@@ -392,7 +417,7 @@ const CombinedAssessment = () => {
 
             const response = await axios.post('http://localhost:8000/api/translate', formData, {
               headers: { 'Content-Type': 'multipart/form-data' },
-              timeout: 30000, // 30 second timeout
+              
             });
 
             console.log('✅ Transcription response received:', response.data);
@@ -400,11 +425,19 @@ const CombinedAssessment = () => {
             const transcript = response.data.transcript;
             const voiceAnalysis = response.data.voice_analysis;
             const aiEnhanced = response.data.ai_enhanced;
+            
+            const scores = response.data.weighted_assessment.final_scores
+
+            setVoiceScores((prevScores) => ({
+              depression: [...prevScores.depression, scores.depression],
+              anxiety: [...prevScores.anxiety, scores.anxiety],
+              stress: [...prevScores.stress, scores.stress],
+            }));
+
+
 
             if (transcript) {
-              setVoiceTranscript(transcript);
-              console.log(`📝 Transcript: "${transcript}"`);
-
+              setVoiceTranscript(transcript)
               // Create enhanced answer object if AI analysis is available
               const answerData = aiEnhanced && voiceAnalysis ? {
                 transcript: transcript,
@@ -416,7 +449,7 @@ const CombinedAssessment = () => {
               console.log('💾 Saving answer data:', answerData);
 
               // Update answer
-              updateAnswer(answerData);
+              updateAnswer(answerData.transcript);
 
               if (aiEnhanced) {
                 console.log('🤖 AI analysis included in response');
@@ -521,19 +554,12 @@ const CombinedAssessment = () => {
       setVoiceTranscript('');
       setManualInput('');
       resetTranscript();
-    } else {
+    } 
+    else {
       handleSubmit();
     }
   };
 
-  const handleBack = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
-      setVoiceTranscript('');
-      setManualInput('');
-      resetTranscript();
-    }
-  };
   
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -545,108 +571,67 @@ const CombinedAssessment = () => {
       // Submit questionnaire answers
       const armyNo = localStorage.getItem('currentArmyNo');
 
-      // Collect all voice analysis results from transcripts
-      const allVoiceAnalysis = [];
-      const allTranscripts = Object.values(answers);
-
-      // Check if we have any AI-enhanced transcripts with voice analysis
-      for (const transcript of allTranscripts) {
-        if (transcript && typeof transcript === 'object' && transcript.voice_analysis) {
-          allVoiceAnalysis.push(transcript.voice_analysis);
-        }
-      }
-
+      
       // Calculate average AI scores if we have voice analysis data
       let aiAssessmentData = null;
-      if (allVoiceAnalysis.length > 0) {
-        const avgScores = {
+      const avgScores = {
           depression: 0,
           anxiety: 0,
           stress: 0,
           confidence: 0
         };
 
-        // Calculate averages
-        allVoiceAnalysis.forEach(analysis => {
-          if (analysis.depression) avgScores.depression += analysis.depression.score || 0;
-          if (analysis.anxiety) avgScores.anxiety += analysis.anxiety.score || 0;
-          if (analysis.stress) avgScores.stress += analysis.stress.score || 0;
-          avgScores.confidence += 0.8; // Default confidence
-        });
+      const count = voiceScores.depression.length; // all arrays should have the same length if updated together
+      if (count > 0) {
+        avgScores.depression = voiceScores.depression.reduce((sum, val) => sum + val, 0) / count;
+        avgScores.anxiety = voiceScores.anxiety.reduce((sum, val) => sum + val, 0) / count;
+        avgScores.stress = voiceScores.stress.reduce((sum, val) => sum + val, 0) / count;
+      }
 
-        const count = allVoiceAnalysis.length;
-        avgScores.depression /= count;
-        avgScores.anxiety /= count;
-        avgScores.stress /= count;
-        avgScores.confidence /= count;
-
-        // Determine severity levels (DASS-21 compatible)
-        const getSeverity = (score, type) => {
-          if (type === 'depression') {
-            if (score <= 9) return 'normal';
-            if (score <= 13) return 'mild';
-            if (score <= 20) return 'moderate';
-            if (score <= 27) return 'severe';
-            return 'extremely_severe';
-          } else if (type === 'anxiety') {
-            if (score <= 7) return 'normal';
-            if (score <= 9) return 'mild';
-            if (score <= 14) return 'moderate';
-            if (score <= 19) return 'severe';
-            return 'extremely_severe';
-          } else { // stress
-            if (score <= 14) return 'normal';
-            if (score <= 18) return 'mild';
-            if (score <= 25) return 'moderate';
-            if (score <= 33) return 'severe';
-            return 'extremely_severe';
-          }
-        };
-
-        aiAssessmentData = {
+      aiAssessmentData = {
           depression: avgScores.depression,
-          depression_severity: getSeverity(avgScores.depression, 'depression'),
+          depressionSeverity: getSeverity(avgScores.depression, 'depression'),
           anxiety: avgScores.anxiety,
-          anxiety_severity: getSeverity(avgScores.anxiety, 'anxiety'),
+          anxietySeverity: getSeverity(avgScores.anxiety, 'anxiety'),
           stress: avgScores.stress,
-          stress_severity: getSeverity(avgScores.stress, 'stress'),
-          overall_risk: Math.max(avgScores.depression, avgScores.anxiety, avgScores.stress) > 20 ? 'high' : 'moderate',
-          confidence: avgScores.confidence
+          stressSeverity: getSeverity(avgScores.stress, 'stress'),
         };
 
+        console.log("this was the data", aiAssessmentData)
+        
+
+        // Prepare examination data with scores
+      const examinationData = {
+        armyNo: armyNo,
+        answers: Object.keys(answers).map((questionId) => ({
+          questionId,
+          answer: answers[questionId],
+        })),
+        dassScores: aiAssessmentData,
+        battalion : localStorage.getItem('selectedBattalion'),
+        completedAt: new Date(),
+        mode : "AI"
+        
+      }
+
+      console.log("I am here: " , examinationData)
         // Save AI assessment to backend
         try {
-          await axios.post('http://localhost:8001/api/save-ai-assessment', {
-            armyNo,
-            aiScores: aiAssessmentData,
-            assessmentType: 'AI_VOICE_ENHANCED'
-          });
-          console.log('✅ AI assessment saved successfully');
+          const response = await axios.post("/api/examination/submit", examinationData, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          })
+          
+          console.log('Examination submitted successfully:', response.data)
+          
+          setAssessmentComplete(true);
+
+          // Don't auto-navigate - let user stay on the page to see results
+          // User can manually navigate when ready
+          console.log('Assessment completed successfully - staying on current page');
         } catch (error) {
           console.error('⚠️ Failed to save AI assessment:', error);
         }
-      }
-
-      const submissionData = {
-        armyNo,
-        answers,
-        completedAt: new Date().toISOString(),
-        voiceAnalysis: {
-          transcripts: allTranscripts,
-          aiEnhanced: allVoiceAnalysis.length > 0,
-          aiScores: aiAssessmentData,
-          completed: true
-        },
-        facialAnalysis: {
-          sessionId: facialSessionId,
-          frameCount: facialFrameCount,
-          results: facialResults,
-          completed: !!facialResults
-        }
-      };
-      
-      // You can submit to your backend here
-      console.log('Submitting combined assessment:', submissionData);
+    
       
       setAssessmentComplete(true);
 
@@ -993,8 +978,8 @@ const CombinedAssessment = () => {
                   disabled={
                     isProcessingAudio ||
                     (currentQuestion.questionType === 'MCQ'
-                      ? !currentAnswer.trim()
-                      : !displayAnswer.trim())
+                      ? !(typeof currentAnswer === 'string' ? currentAnswer.trim() : currentAnswer)
+                      : !(typeof displayAnswer === 'string' ? displayAnswer.trim() : displayAnswer))
                   }
                   className="nav-btn next"
                 >
