@@ -130,7 +130,6 @@ const CombinedAssessment = () => {
       });
 
       const Q = response.data.slice(0, response.data.length-1);
-      console.log(Q)
       setQuestions(Q);
     } catch (error) {
       console.error('Error loading questions:', error);
@@ -391,7 +390,7 @@ const CombinedAssessment = () => {
             setIsProcessingAudio(true);
             console.log('📤 Sending audio to backend for transcription...');
 
-            const response = await axios.post('http://localhost:8001/api/translate', formData, {
+            const response = await axios.post('http://localhost:8000/api/translate', formData, {
               headers: { 'Content-Type': 'multipart/form-data' },
               timeout: 30000, // 30 second timeout
             });

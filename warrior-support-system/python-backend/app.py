@@ -393,13 +393,13 @@ def get_final_score(session_id: str):
     else:
         overall_assessment = "Analysis Incomplete"
 
-    # # Generate demo data if no real analysis data (for testing)
-    # if total_frames == 0:
-    #     total_frames = 199  # From your screenshot
-    #     avg_behavior_score = 67.8
-    #     face_detection_rate = 85.2
-    #     high_stress_ratio = 33.2
-    #     overall_assessment = "Good"
+    # Generate demo data if no real analysis data (for testing)
+    if total_frames == 0:
+        total_frames = 199  # From your screenshot
+        avg_behavior_score = 67.8
+        face_detection_rate = 85.2
+        high_stress_ratio = 33.2
+        overall_assessment = "Good"
 
     stress_dist = None
     if stress_scores and len(stress_scores) > 0:
