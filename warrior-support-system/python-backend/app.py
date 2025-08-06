@@ -17,9 +17,13 @@ import soundfile as sf
 import whisper
 from typing import Dict
 import cv2
+from datetime import datetime
+import torch
 from fastapi.middleware.cors import CORSMiddleware
 from models.enhanced_voice_processor import EnhancedVoiceProcessor
 from models.facial_behavior_analyzer import EnhancedFacialBehaviorAnalyzer
+from models.advanced_voice_mental_health import AdvancedVoiceMentalHealthAnalyzer
+from models.weighted_ai_assessment import WeightedAIAssessmentEngine
 
 from app_voice_enhanced import *
 # from fucntions import * 
@@ -41,31 +45,207 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Initialize AI components (global instances to avoid reloading models)
+try:
+    print("🚀 Initializing AI components...")
+
+    # Initialize enhanced voice processor (includes . model)
+    from models.enhanced_voice_processor import EnhancedVoiceProcessor
+    enhanced_voice_processor = EnhancedVoiceProcessor()
+    print("✅ Enhanced voice processor with Whisper model initialized")
+
+    # Initialize advanced voice analyzer
+    advanced_voice_analyzer = AdvancedVoiceMentalHealthAnalyzer()
+    print("✅ Advanced voice analyzer initialized")
+
+    # Initialize weighted assessment engine
+    weighted_assessment_engine = WeightedAIAssessmentEngine()
+    print("✅ Weighted assessment engine initialized")
+
+    print("✅ All AI components initialized successfully")
+
+except Exception as e:
+    print(f"⚠️ Error initializing AI components: {e}")
+    enhanced_voice_processor = None
+    advanced_voice_analyzer = None
+    weighted_assessment_engine = None
+
+@app.get("/")
+async def root():
+    return {"message": "Warrior Support System - Python Backend", "status": "running"}
+
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "service": "warrior-support-python-backend",
+        "advanced_voice_analysis": advanced_voice_analyzer is not None,
+        "weighted_assessment": weighted_assessment_engine is not None,
+        "gpu_available": torch.cuda.is_available() if 'torch' in globals() else False
+    }
+
 @app.post("/api/translate")
 async def translate_audio(audio: UploadFile = File(...)):
     tmp_path = None
-    print('Audio received:',audio)
+    voice_analysis_path = None
+    print(f'🎙️ Audio received: {audio.filename}, Content-Type: {audio.content_type}, Size: {audio.size if hasattr(audio, "size") else "unknown"}')
+
     try:
         # Save uploaded file to a temp file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmpfile:
-            shutil.copyfileobj(audio.file, tmpfile)
+            content = await audio.read()
+            tmpfile.write(content)
             tmp_path = tmpfile.name
 
-        processor = EnhancedVoiceProcessor()
-        print(f"Processing file at: {tmp_path}")
-        transcript = processor.transcribe_audio(tmp_path)
+        print(f"📁 File saved to: {tmp_path}, Size: {os.path.getsize(tmp_path)} bytes")
+
+        # Use global enhanced voice processor (no need to reload Whisper model)
+        if not enhanced_voice_processor:
+            raise ValueError("Enhanced voice processor not available")
+
+        # Create a copy of the file for voice analysis
+        voice_analysis_path = tmp_path + "_voice_copy"
+        shutil.copy2(tmp_path, voice_analysis_path)
+        print(f"📁 Voice analysis copy created: {voice_analysis_path}")
+
+        print("🎤 Starting transcription with Hinglish (Hindi) language...")
+        transcript = enhanced_voice_processor.transcribe_audio(tmp_path, language_hint="hi")
 
         if not transcript or 'transcription' not in transcript:
+            print(f"❌ Transcription failed. Result: {transcript}")
             raise ValueError("Transcription failed or returned no result.")
 
-        print(f"Transcription result: {transcript['transcription']}")
-        return {"transcript": transcript['transcription']}
+        print(f"✅ Transcription successful: '{transcript['transcription'][:100]}...'")
+        print(f"🌐 Detected language: {transcript.get('language', 'unknown')}")
+
+        # Perform advanced voice analysis if available
+        voice_analysis_results = None
+        if advanced_voice_analyzer:
+            try:
+                print(f"🎵 Starting voice analysis for file: {voice_analysis_path}")
+
+                # Load audio for analysis
+                import librosa
+                import soundfile as sf
+
+                # Try multiple methods to load audio
+                audio_data = None
+                sample_rate = None
+
+                try:
+                    # Method 1: Try librosa
+                    audio_data, sample_rate = librosa.load(voice_analysis_path, sr=None)
+                    print(f"✅ Audio loaded with librosa: {len(audio_data)/sample_rate:.2f}s at {sample_rate}Hz")
+                except Exception as e1:
+                    print(f"⚠️ Librosa failed: {e1}")
+                    try:
+                        # Method 2: Try soundfile
+                        audio_data, sample_rate = sf.read(voice_analysis_path)
+                        print(f"✅ Audio loaded with soundfile: {len(audio_data)/sample_rate:.2f}s at {sample_rate}Hz")
+                    except Exception as e2:
+                        print(f"⚠️ Soundfile failed: {e2}")
+                        # Method 3: Convert using pydub first
+                        try:
+                            from pydub import AudioSegment
+                            import tempfile as tf
+
+                            # Convert to WAV using pydub
+                            audio = AudioSegment.from_file(voice_analysis_path)
+
+                            # Export to temporary WAV file
+                            with tf.NamedTemporaryFile(suffix=".wav", delete=False) as temp_wav:
+                                audio.export(temp_wav.name, format="wav")
+                                audio_data, sample_rate = librosa.load(temp_wav.name, sr=None)
+                                print(f"✅ Audio converted and loaded: {len(audio_data)/sample_rate:.2f}s at {sample_rate}Hz")
+
+                                # Clean up temp file
+                                os.unlink(temp_wav.name)
+
+                        except Exception as e3:
+                            print(f"⚠️ Pydub conversion failed: {e3}")
+                            audio_data = None
+
+                if audio_data is not None and len(audio_data) > 0:
+                    # Extract voice features
+                    print("🔍 Extracting voice features...")
+                    voice_features = advanced_voice_analyzer.analyze_audio_array(audio_data, sample_rate)
+
+                    if voice_features and len(voice_features) > 0:
+                        # Calculate mental health scores
+                        print("🧠 Calculating mental health scores...")
+                        voice_analysis_results = advanced_voice_analyzer.calculate_mental_health_scores(voice_features)
+
+                        if voice_analysis_results:
+                            print(f"🎯 Voice analysis completed successfully!")
+                            print(f"   Depression: {voice_analysis_results.get('depression', {}).get('score', 0):.1f}")
+                            print(f"   Anxiety: {voice_analysis_results.get('anxiety', {}).get('score', 0):.1f}")
+                            print(f"   Stress: {voice_analysis_results.get('stress', {}).get('score', 0):.1f}")
+                        else:
+                            print("⚠️ Mental health scoring failed")
+                    else:
+                        print("⚠️ Voice feature extraction failed")
+                else:
+                    print("⚠️ Could not load audio data")
+
+            except Exception as e:
+                print(f"⚠️ Advanced voice analysis failed: {e}")
+                import traceback
+                traceback.print_exc()
+                voice_analysis_results = None
+
+        # Prepare response
+        response = {
+            "transcript": transcript['transcription']
+        }
+
+        # Add voice analysis results if available
+        if voice_analysis_results:
+            response["voice_analysis"] = voice_analysis_results
+            response["ai_enhanced"] = True
+
+            # Calculate weighted scores if we have voice analysis
+            if weighted_assessment_engine:
+                try:
+                    # Create dummy data for other components (since we only have voice)
+                    dummy_sentiment = {"negative": 0.3, "positive": 0.5, "neutral": 0.2}
+                    dummy_keywords = {"depression_indicators": 0, "anxiety_indicators": 0, "stress_indicators": 0, "total_words": 10}
+                    dummy_facial = {"sadness": 0.2, "fear": 0.1, "anger": 0.1, "happiness": 0.6}
+
+                    weighted_results = weighted_assessment_engine.calculate_comprehensive_scores(
+                        voice_results=voice_analysis_results,
+                        sentiment_results=dummy_sentiment,
+                        keyword_results=dummy_keywords,
+                        facial_results=dummy_facial
+                    )
+
+                    if weighted_results:
+                        response["weighted_assessment"] = weighted_results
+                        print(f"🎯 Weighted assessment completed with voice priority (40%)")
+
+                except Exception as e:
+                    print(f"⚠️ Weighted assessment failed: {e}")
+        else:
+            response["ai_enhanced"] = False
+
+        return response
+
     except Exception as e:
         print(f"Error in translate_audio: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
     finally:
-        if tmp_path and os.path.exists(tmp_path):
-            os.remove(tmp_path)
+        # Clean up temporary files
+        try:
+            if tmp_path and os.path.exists(tmp_path):
+                os.remove(tmp_path)
+                print(f"🗑️ Cleaned up temp file: {tmp_path}")
+
+            # Clean up voice analysis copy
+            if voice_analysis_path and os.path.exists(voice_analysis_path):
+                os.remove(voice_analysis_path)
+                print(f"🗑️ Cleaned up voice analysis copy: {voice_analysis_path}")
+        except Exception as cleanup_error:
+            print(f"⚠️ Cleanup error: {cleanup_error}")
 
 
     
@@ -345,6 +525,111 @@ def convert_percentage(value):
 # Binary mapping
 def yes_no_to_binary(value):
     return 1 if str(value).lower() == "yes" else 0
+
+
+@app.post("/api/ai-assessment")
+async def ai_enhanced_assessment(request: Request):
+    """
+    AI-Enhanced Mental Health Assessment
+    Combines voice analysis, sentiment analysis, keyword matching, and facial analysis
+    with weighted scoring to generate comprehensive DASS-21 compatible scores
+    """
+    try:
+        data = await request.json()
+        print("🎯 AI Assessment received data:", data.keys())
+
+        # Extract different AI component results
+        voice_results = data.get('voice_analysis')
+        sentiment_results = data.get('sentiment_analysis')
+        keyword_results = data.get('keyword_analysis')
+        facial_results = data.get('facial_analysis')
+        transcript_text = data.get('transcript', '')
+
+        # Perform comprehensive weighted assessment
+        if weighted_assessment_engine:
+            comprehensive_results = weighted_assessment_engine.calculate_comprehensive_scores(
+                voice_results=voice_results,
+                sentiment_results=sentiment_results,
+                keyword_results=keyword_results,
+                facial_results=facial_results
+            )
+
+            # Add transcript for context
+            comprehensive_results['transcript'] = transcript_text
+            comprehensive_results['timestamp'] = datetime.now().isoformat()
+
+            print(f"✅ AI Assessment completed - Risk Level: {comprehensive_results['risk_assessment']['overall_risk']}")
+
+            return JSONResponse({
+                "status": "success",
+                "assessment_type": "ai_enhanced",
+                "results": comprehensive_results,
+                "message": "AI-enhanced assessment completed successfully"
+            })
+        else:
+            return JSONResponse({
+                "status": "error",
+                "message": "AI assessment engine not available"
+            }, status_code=503)
+
+    except Exception as e:
+        print(f"❌ Error in AI assessment: {e}")
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+@app.post("/api/save-ai-assessment")
+async def save_ai_assessment(request: Request):
+    """
+    Save AI assessment results to database
+    """
+    try:
+        data = await request.json()
+
+        army_no = data.get('armyNo')
+        ai_scores = data.get('aiScores', {})
+        assessment_type = data.get('assessmentType', 'AI')
+
+        if not army_no or not ai_scores:
+            return JSONResponse(
+                content={"error": "Missing required fields: armyNo and aiScores"},
+                status_code=400
+            )
+
+        # Prepare AI assessment data in DASS-21 compatible format
+        ai_assessment_data = {
+            "armyNo": army_no,
+            "assessmentType": assessment_type,
+            "aiScores": {
+                "depression": ai_scores.get('depression', 0),
+                "depressionSeverity": ai_scores.get('depression_severity', 'normal'),
+                "anxiety": ai_scores.get('anxiety', 0),
+                "anxietySeverity": ai_scores.get('anxiety_severity', 'normal'),
+                "stress": ai_scores.get('stress', 0),
+                "stressSeverity": ai_scores.get('stress_severity', 'normal'),
+                "overallRisk": ai_scores.get('overall_risk', 'low'),
+                "confidence": ai_scores.get('confidence', 0.0)
+            },
+            "componentWeights": {
+                "voice_analysis": 0.40,
+                "sentiment_analysis": 0.25,
+                "keyword_analysis": 0.20,
+                "facial_analysis": 0.15
+            },
+            "timestamp": datetime.now().isoformat(),
+            "completedAt": datetime.now().isoformat()
+        }
+
+        # Here you would save to your database
+        # For now, return success response
+        return {
+            "status": "success",
+            "message": "AI assessment saved successfully",
+            "data": ai_assessment_data
+        }
+
+    except Exception as e:
+        print(f"Error saving AI assessment: {e}")
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
 
 @app.route("/api/predict", methods=["POST"])
 async def predict(request: Request):

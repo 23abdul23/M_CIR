@@ -31,8 +31,8 @@ python-backend/models/*
 !python-backend/models/*.py
 
 __pycache__/
-*.py[cod]
-
+*.pyc
+*.pyo
 
 venv-new
 abdul

@@ -5,3 +5,8 @@ DaTA
 logos
 financial_app.zip
 financial_app
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
