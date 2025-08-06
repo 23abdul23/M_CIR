@@ -54,7 +54,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       const response = await axios.get(`/api/examination/battalion/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      const n = response.data.map((e) => [e.dassScores, e.battalion])
+      const n = response.data.map((e) => [e.dassScores, e.battalion, e.armyNo])
       setResults(n)
     } catch (error) {
       console.log("Error fetching results: ", error)
@@ -220,7 +220,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
 
     const filtered = personnel.filter((person) => {
-      const resultEntry = results.find(r => r?.[1]?._id === person.battalion?._id);
+      const resultEntry = results.find(r => r?.[2] === person.armyNo);
       const scores = resultEntry?.[0];
 
       if (!scores || person.selfEvaluation !== 'COMPLETED') return false;
@@ -477,7 +477,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                       
                       <td>
                         {person.selfEvaluation === "COMPLETED" ? (() => {
-                          const resultEntry = results.find(r => r?.[1]?._id === person.battalion?._id?.toString());
+                          const resultEntry = results.find(r => r?.[2] === person.armyNo);
                           const scores = resultEntry?.[0];
 
                           return scores ? (
@@ -485,13 +485,13 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                               <tbody>
                                 <tr>
                                   <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Anxiety:</strong> {scores.anxiety} ({scores.anxietySeverity})
+                                    <strong>Anxiety:</strong> {Number(scores.anxiety).toFixed(2)} ({scores.anxietySeverity})
                                   </td>
                                   <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Depression:</strong> {scores.depression} ({scores.depressionSeverity})
+                                    <strong>Depression:</strong> {Number(scores.depression).toFixed(2)} ({scores.depressionSeverity})
                                   </td>
                                   <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Stress:</strong> {scores.stress} ({scores.stressSeverity})
+                                    <strong>Stress:</strong> {Number(scores.stress).toFixed(2)} ({scores.stressSeverity})
                                   </td>
                                 </tr>
                               </tbody>

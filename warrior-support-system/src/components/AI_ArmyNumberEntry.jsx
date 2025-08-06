@@ -56,6 +56,7 @@ const AI_ArmyNumberEntry = ({ currentUser, onLogout }) => {
 
       if (response.data) {
 
+        const examTaken = response.data.selfEvaluation
         const completedAt = new Date(response.data.updatedAt).getTime();
         const currentDate = Date.now();
 
@@ -66,9 +67,9 @@ const AI_ArmyNumberEntry = ({ currentUser, onLogout }) => {
 
         // console.log("Days difference:", Math.round(diffInDays+1));
 
-        if (diffInDays > coSetPeriod || isNaN(completedAt)) {
+        if (diffInDays > coSetPeriod || examTaken == "NOT_ATTEMPTED") {
           localStorage.setItem('currentArmyNo', armyNo);
-          navigate('/instructions');
+          navigate('/combined-assessment');
         } else {
           setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day and ${24 - Math.round(diffInHours)} Hours.`);
         }

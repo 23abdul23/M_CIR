@@ -31,7 +31,6 @@ router.post("/updateUser/:armyNo", auth, async (req, res) => {
     const user = await User.findOne({ armyNo: req.params.armyNo });
     const { newUsername, newPassword, action } = req.body;
 
-    console.log("before", user);
 
     if (!user) {
       return res.status(404).send("User not found");
@@ -53,7 +52,6 @@ router.post("/updateUser/:armyNo", auth, async (req, res) => {
     if (action === "username") {
       user.username = newUsername;
       await user.save();
-      console.log("after", user);
       return res.status(200).json({
         message: "User updated successfully",
         data: user,

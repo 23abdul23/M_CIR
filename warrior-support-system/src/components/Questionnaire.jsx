@@ -183,12 +183,6 @@ const Questionnaire = ({ currentUser, onLogout }) => {
     }
   }
 
-  const handleBack = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1)
-      setError("")
-    }
-  }
 
   const handleSubmitExamination = async () => {
     const validationError = validateAnswers()
