@@ -71,7 +71,7 @@ const AI_ArmyNumberEntry = ({ currentUser, onLogout }) => {
           localStorage.setItem('currentArmyNo', armyNo);
           navigate('/combined-assessment');
         } else {
-          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day and ${24 - Math.round(diffInHours)} Hours.`);
+          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day.`);
         }
       }
     } catch (error) {

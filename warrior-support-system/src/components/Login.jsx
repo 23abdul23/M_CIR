@@ -4,6 +4,7 @@ import axios from 'axios'
 import '../styles/Login.css'
 
 const Login = ({ onLogin }) => {
+  const [selectedRole, setSelectedRole] = useState(null)
   const [formData, setFormData] = useState({
     username: '',
     password: '123456'
@@ -17,6 +18,29 @@ const Login = ({ onLogin }) => {
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleRoleSelect = (role) => {
+    if (role === 'USER') {
+      // Direct login for users without credentials
+      handleDirectLogin('USER')
+    } else {
+      setSelectedRole(role)
+      setError('')
+    }
+  }
+
+  const handleDirectLogin = async (role) => {
+    const userCredentials = { username: 'user_army', password: '123456' }
+    
+    try {
+      const response = await axios.post('/api/auth/login', userCredentials)
+      const { user, token } = response.data
+      onLogin(user, token)
+      navigate('/battalion-selection')
+    } catch (error) {
+      setError('Login failed. Please try again.')
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -38,9 +62,6 @@ const Login = ({ onLogin }) => {
         case 'JSO':
           navigate('/jso-dashboard')
           break
-        case 'USER':
-          navigate('/battalion-selection')
-          break
         default:
           navigate('/')
       }
@@ -51,38 +72,10 @@ const Login = ({ onLogin }) => {
     }
   }
 
-  // Demo login functions for testing
-  const handleDemoLogin = async (role) => {
-    const demoCredentials = {
-      CO: { username: 'co_admin', password: '123456' },
-      JSO: { username: 'jso_allahabad', password: '123456' },
-      USER: { username: 'user_army', password: '123456' }
-    }
-
-    const credentials = demoCredentials[role]
-    setFormData(credentials)
-    
-    try {
-      const response = await axios.post('/api/auth/login', credentials)
-      const { user, token } = response.data
-      onLogin(user, token)
-      
-      switch (user.role) {
-        case 'CO':
-          navigate('/co-dashboard')
-          break
-        case 'JSO':
-          navigate('/jso-dashboard')
-          break
-        case 'USER':
-          navigate('/battalion-selection')
-          break
-        default:
-          navigate('/')
-      }
-    } catch (error) {
-      setError('Demo login failed. Please use manual login.')
-    }
+  const handleBackToRoles = () => {
+    setSelectedRole(null)
+    setFormData({ username: '', password: '123456' })
+    setError('')
   }
 
   return (
@@ -101,84 +94,86 @@ const Login = ({ onLogin }) => {
         </div>
 
         <div className="login-form-container">
-          <form onSubmit={handleSubmit} className="login-form">
-            <h2>LOGIN</h2>
-            
-            {error && <div className="error-message">{error}</div>}
-            
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                placeholder="Enter your username"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder="Enter your password"
-              />
-            </div>
-
-            <button type="submit" className="login-btn" disabled={loading}>
-              {loading ? 'LOGGING IN...' : 'LOGIN'}
-            </button>
-          </form>
-
-          <div className="demo-section">
-            <h3>Demo Login Options</h3>
-            <p>Quick access for testing different user roles:</p>
-            
-            <div className="demo-buttons">
-              <button 
-                onClick={() => handleDemoLogin('CO')} 
-                className="demo-btn co-btn"
-                disabled={loading}
-              >
-                <span className="role-icon">👨‍💼</span>
-                <div>
-                  <strong>CO (Admin)</strong>
-                  <small>Full system access</small>
+          {!selectedRole ? (
+            // Role selection cards
+            <div className="role-selection">
+              <h2>Select Your Role</h2>
+              <p className="role-subtitle">Choose your access level to continue</p>
+              
+              <div className="role-cards">
+                <div 
+                  className="role-card co-card"
+                  onClick={() => handleRoleSelect('CO')}
+                >
+                  <span className="role-icon">👨‍💼</span>
+                  <h3>CO</h3>
+                  
                 </div>
+                
+                <div 
+                  className="role-card jso-card"
+                  onClick={() => handleRoleSelect('JSO')}
+                >
+                  <span className="role-icon">👨‍✈️</span>
+                  <h3>JCO</h3>
+                </div>
+                
+                <div 
+                  className="role-card user-card"
+                  onClick={() => handleRoleSelect('USER')}
+                >
+                  <span className="role-icon">👨</span>
+                  <h3>User</h3>
+                </div>
+              </div>
+            </div>
+          ) : (
+            // Login form for selected role
+            <div className="login-form-section">
+              <button className="back-btn" onClick={handleBackToRoles}>
+                ← Back to Role Selection
               </button>
               
-              <button 
-                onClick={() => handleDemoLogin('JSO')} 
-                className="demo-btn jso-btn"
-                disabled={loading}
-              >
-                <span className="role-icon">👨‍✈️</span>
-                <div>
-                  <strong>JSO (Officer)</strong>
-                  <small>Battalion management</small>
+              <form onSubmit={handleSubmit} className="login-form">
+                <h2>{selectedRole} LOGIN</h2>
+                <p className="login-description">
+                  {selectedRole === 'CO' ? 'Enter your administrative credentials' : 'Enter your officer credentials'}
+                </p>
+                
+                {error && <div className="error-message">{error}</div>}
+                
+                <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your username"
+                  />
                 </div>
-              </button>
-              
-              <button 
-                onClick={() => handleDemoLogin('USER')} 
-                className="demo-btn user-btn"
-                disabled={loading}
-              >
-                <span className="role-icon">👨</span>
-                <div>
-                  <strong>USER (Soldier)</strong>
-                  <small>Basic access</small>
+
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your password"
+                  />
                 </div>
-              </button>
+
+                <button type="submit" className="login-btn" disabled={loading}>
+                  {loading ? 'LOGGING IN...' : 'LOGIN'}
+                </button>
+              </form>
             </div>
-          </div>
+          )}
 
           <div className="login-footer">
             <div className="system-info">
