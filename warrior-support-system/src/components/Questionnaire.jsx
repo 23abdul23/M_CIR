@@ -364,7 +364,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
                     disabled={isSubmitting}
                   />
                   <span className="option-text">
-                    {option.optionId}. {option.optionText}
+                    {option.optionText}
                   </span>
                 </label>
               ))}

@@ -92,7 +92,7 @@ async def health_check():
 @app.post("/api/translate")
 async def translate_audio(audio: UploadFile = File(...)):
     if not WHISPER_AVAILABLE:
-        return JSONResponse(
+        return JSONResponse(कर थीक से किसी से बात nahi डर पाता और mai उडाज मेंसूझ करता हूं।
             content={"error": "Speech recognition not available - Whisper not installed"}, 
             status_code=503
         )

@@ -137,7 +137,7 @@ def download_ai4bharat_models():
 
 def download_additional_hindi_models():
     """Download additional Hindi NLP models"""
-    
+    don't have a local directory with the same name. Otherwise, make sure 'facebook/wav2vec2-large-xlsr-53' is the correct path to a directory containing all relevant files for a Wav2Vec2CTCTokenizer tokenizer.
     print("\n🔄 Downloading Additional Hindi Models")
     print("=" * 60)
     
