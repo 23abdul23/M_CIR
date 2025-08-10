@@ -611,8 +611,8 @@ const CombinedAssessment = () => {
         dassScores: aiAssessmentData,
         battalion : localStorage.getItem('selectedBattalion'),
         completedAt: new Date(),
-        mode : "AI"
-        
+        mode : "AI",
+        // examAI_taken : True
       }
 
       console.log("I am here: " , examinationData)

@@ -1,7 +1,9 @@
 import React from 'react';
+import { useState , useEffect} from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import '../styles/GraphicalAnalysis.css';
+import { filter } from 'lodash';
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const severityCategories = [
@@ -12,9 +14,10 @@ const severityCategories = [
   'Extremely Severe'
 ];
 
+
 function getSeverityCounts(filteredPersonnel, results, type, mode) {
   // type: 'anxiety', 'depression', 'stress'; mode: 'MANUAL' or 'AI'
-
+  
   const counts = {
     'Normal': 0,
     'Mild': 0,
@@ -37,8 +40,18 @@ function getSeverityCounts(filteredPersonnel, results, type, mode) {
   return severityCategories.map(cat => counts[cat]);
 }
 
+
 const GraphicalAnalysis = ({ filteredPersonnel, results }) => {
   // Manual graphs
+  const [Bty, setBty] = useState([])
+
+
+  useEffect(() => {
+  const X = new Set(filteredPersonnel.map(p => p.subBty));
+  setBty([...X]);
+}, [filteredPersonnel]);
+
+  
   const manualAnxietyData = {
     labels: severityCategories,
     datasets: [
@@ -134,6 +147,7 @@ const GraphicalAnalysis = ({ filteredPersonnel, results }) => {
 
   return (
     <div className="graph-analysis-container">
+      <h1>Graphical Analysis: {(Bty.length > 1 ? "Overall Analysis": Bty[0])}</h1>
       <div className="graph-section">
         <h2 className="graph-section-title">Manual</h2>
         <div className="graph-charts-row graph-charts-row-single">

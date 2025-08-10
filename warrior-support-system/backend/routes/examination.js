@@ -18,6 +18,8 @@ router.post("/submit", auth, async (req, res) => {
       return res.status(404).json({ message: "Personnel not found" })
     }
 
+    console.log(req.body)
+
     // Create new examination
     const examination = new Examination({
       ...req.body,
@@ -41,6 +43,40 @@ router.post("/submit", auth, async (req, res) => {
   
   catch (error) {
     console.error("Error submitting examination:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+})
+
+// Get examination by army number
+router.get("/all/army-no/:armyNo", auth, async (req, res) => {
+  try {
+    const { armyNo } = req.params
+
+    const examination = await Examination.find({ armyNo })
+  .populate("battalion", "name")
+  .sort({ completedAt: -1 });
+
+    if (!examination) {
+      return res.status(404).json({ message: "Examination not found" })
+    }
+
+    // Role-based access control
+    if (req.user.role === "USER" && req.user.status === 'PENDING') {
+      console.log("Form here")
+      return res.status(400).json({'message': "Your application is pending approval by the CO.", examination})
+    }
+
+    // JSO can only see examinations from their battalion
+    if (req.user.role === "JSO") {
+      const user = await User.find({ armyNo: req.user.armyNo })
+      if (examination.battalion._id.toString() !== user.battalion.toString()) {
+        return res.status(403).json({ message: "Access denied" })
+      }
+    }
+
+    res.json(examination)
+  } catch (error) {
+    console.error("Error fetching examination:", error)
     res.status(500).json({ message: "Server error", error: error.message })
   }
 })

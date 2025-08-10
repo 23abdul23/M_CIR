@@ -662,7 +662,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
               onClick={() => setShowGraph(false)}
               title="Close Graphical Analysis"
             >✖</button>
-            <h2 style={{textAlign:'center', marginTop:'2rem'}}>Graphical Analysis</h2>
             <GraphicalAnalysis filteredPersonnel={filteredPersonnel} results={results} />
           </div>
         </div>

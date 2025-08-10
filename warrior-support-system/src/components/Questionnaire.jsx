@@ -217,6 +217,8 @@ const Questionnaire = ({ currentUser, onLogout }) => {
         },
         battalion : localStorage.getItem('selectedBattalion'),
         completedAt: new Date(),
+        mode : "MANUAL",
+        // examManual_taken : True
         
       }
 
