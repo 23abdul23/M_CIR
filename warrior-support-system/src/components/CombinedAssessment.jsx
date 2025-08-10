@@ -127,7 +127,7 @@ const CombinedAssessment = () => {
   const fetchQuestions = async () => {
     try {
       setQuestionsLoading(true);
-      const response = await axios.get('/api/questions', {
+      const response = await axios.get('/api/questions/ai', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
 
@@ -858,7 +858,7 @@ const CombinedAssessment = () => {
             <div className="question-container">
               <div className="question-header">
                 <h3>Question {currentQuestion.questionId}</h3>
-                <div className="question-type">{currentQuestion.questionType}</div>
+                
               </div>
               
               <div className="question-text">

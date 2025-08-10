@@ -11,6 +11,7 @@ const Personnel = require(path.join(__dirname, '../models/Personnel'))
 const Question = require(path.join(__dirname, '../models/Question'))
 const QuestionPeer = require(path.join(__dirname, '../models/Question_peer'))
 const Examination = require(path.join(__dirname, '../models/Examination'))
+const ReExam = require(path.join(__dirname, '../models/ReExam'))
 
 
 require('dotenv').config({ path: path.join(__dirname, '../.env') })
@@ -53,7 +54,7 @@ async function initializeDatabase() {
     console.log('🚀 Starting database initialization...')
     
     // Connect to MongoDB with updated database name
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questionnaire_user'
+    const mongoUri = process.env.MONGODB_URI
     await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -72,7 +73,7 @@ async function initializeDatabase() {
 
     // Create Questions first
     console.log('📝 Creating questions...')
-    const questionsData = readTestData('questions.json')
+    const questionsData = readTestData('daas41_questions.json')
     const processedQuestions = questionsData.map(q => convertDates(q))
     const questions = await Question.insertMany(processedQuestions)
     console.log(`✅ Created ${questions.length} questions`)
@@ -115,7 +116,7 @@ async function initializeDatabase() {
     console.log('\n🎉 === DATABASE INITIALIZATION COMPLETED ===')
     console.log('\n📊 Summary:')
     console.log(`   Questions: ${questions.length}`)
-    console.log(`   Peer Questions: ${peer_mongoquestions.length}`)
+    console.log(`   Peer Questions: ${peer_questions.length}`)
     console.log(`   Users: ${users.length}`)
     console.log(`   Battalions: ${battalions.length}`)
     console.log(`   Personnel: ${personnel.length}`)

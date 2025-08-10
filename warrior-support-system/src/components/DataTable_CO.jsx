@@ -207,7 +207,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     }));
   };
 
-  
+
 
   const filteredPersonnel = personnel.filter((person) => {
     return Object.entries(filters).every(([column, value]) => {
@@ -247,7 +247,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   // If showing individual monitoring, render that component
   if (showIndividualMonitoring && selectedPersonnel) {
     return (
-      <IndividualMonitoring 
+      <IndividualMonitoring
         armyNo={selectedPersonnel.armyNo}
         currentUser={currentUser}
         onLogout={onLogout}
@@ -263,7 +263,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       <div className="datatable-content">
         <div className="datatable-header">
           <h2 className="datatable-title">WARRIOR SUPPORT SYSTEM</h2>
-          <p className="datatable-subtitle">{}</p>
+          <p className="datatable-subtitle">{ }</p>
         </div>
 
         <div className="datatable-actions">
@@ -452,8 +452,8 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                 </thead>
                 <tbody>
                   {filteredPersonnel.map((person) => (
-                    <tr 
-                      key={person._id} 
+                    <tr
+                      key={person._id}
                       className="clickable-row"
                       onClick={() => handleRowClick(person)}
                       title="Click to view individual monitoring"
@@ -474,7 +474,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                               person.selfEvaluation || 'Not Set'}
                         </span>
                       </td>
-                      
+
                       <td>
                         {person.selfEvaluation === "COMPLETED" ? (() => {
                           const resultEntry = results.find(r => r?.[2] === person.armyNo);

@@ -1,13 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const Question = require('../models/Question')
-const auth = require('../middleware/auth')
+const QuestionAI = require('../models/QuestionAI')
 const QuestionPeer = require('../models/Question_peer')
+const auth = require('../middleware/auth')
 
 // Get all active questions
 router.get('/', auth, async (req, res) => {
   try {
     const questions = await Question.find({ isActive: true })
+      .sort({ order: 1 })
+      .select('-__v')
+    
+    res.json(questions)
+  } catch (error) {
+    console.error('Error fetching questions:', error)
+    res.status(500).json({ message: 'Error fetching questions' })
+  }
+})
+
+// Get all active questions
+router.get('/ai', auth, async (req, res) => {
+  try {
+    const questions = await QuestionAI.find({ isActive: true })
       .sort({ order: 1 })
       .select('-__v')
     
