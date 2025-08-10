@@ -109,7 +109,7 @@ const UserRegister = ({ onRegister }) => {
             <div className="logo-placeholder">🇮🇳</div>
             <div className="logo-placeholder">⚔️</div>
           </div>
-          <h1>WARRIOR SUPPORT SYSTEM</h1>
+          <h1>SOLDIER SUPPORT SYSTEM</h1>
           <p className="register-subtitle">Register YourSelf</p>
         </div>
 

@@ -1,7 +1,7 @@
-# Warrior Support System
+# SOLDIER SUPPORT SYSTEM
 
 ## Overview
-The Warrior Support System is a comprehensive platform designed to manage personnel, battalions, and examinations for military operations. It provides a Commanding Officer (CO) dashboard for managing approvals, viewing statistics, and handling personnel data efficiently.
+The SOLDIER SUPPORT SYSTEM is a comprehensive platform designed to manage personnel, battalions, and examinations for military operations. It provides a Commanding Officer (CO) dashboard for managing approvals, viewing statistics, and handling personnel data efficiently.
 
 ## Features
 - **Personnel Management**: Add, update, and delete personnel records.

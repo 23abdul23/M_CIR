@@ -1,5 +1,5 @@
 """
-Weighted AI Assessment Engine for Warrior Support System
+Weighted AI Assessment Engine for SOLDIER SUPPORT SYSTEM
 Combines voice analysis, sentiment analysis, keyword matching, and facial analysis
 with proper weightings to generate comprehensive mental health scores
 """

@@ -222,7 +222,7 @@ class VoiceAnalysisAPI:
 def create_voice_analysis_endpoints(app: FastAPI):
     """
     Create FastAPI endpoints for voice analysis
-    Integrates with existing warrior support system
+    Integrates with existing SOLDIER SUPPORT SYSTEM
     """
     voice_api = VoiceAnalysisAPI()
     

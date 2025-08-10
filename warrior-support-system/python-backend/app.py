@@ -73,7 +73,7 @@ except Exception as e:
 
 @app.get("/")
 async def root():
-    return {"message": "Warrior Support System - Python Backend", "status": "running"}
+    return {"message": "SOLDIER SUPPORT SYSTEM - Python Backend", "status": "running"}
 
 @app.get("/health")
 async def health_check():

@@ -1,3 +1,38 @@
+.graph-charts-row-single {
+  flex-wrap: nowrap !important;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
+}
+/* Graphical Analysis Improved Styles */
+.graph-analysis-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.graph-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+.graph-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10001;
+}
 /* Flex header for legend and title alignment */
 .datatable-header-flex {
   display: flex;
@@ -215,6 +250,10 @@
   border-bottom: 1px solid #ecf0f1;
   vertical-align: middle;
   text-align: center;
+  height: 100%;
+  display: table-cell;
+  justify-content: center;
+  align-items: center;
 }
 
 .datatable-table tr:hover {

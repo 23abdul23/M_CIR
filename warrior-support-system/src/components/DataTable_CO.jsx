@@ -5,7 +5,13 @@ import Header from './Header'
 import AddDataModal from './AddDataModal'
 import IndividualMonitoring from './IndividualMonitoring'
 import '../styles/DataTable.css'
+import '../styles/GraphicalAnalysis.css';
 import { filter } from 'lodash'
+
+// this is the updated one 
+
+
+import GraphicalAnalysis from './GraphicalAnalysis';
 
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
@@ -14,6 +20,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
+  const [showGraph, setShowGraph] = useState(false)
   const [filters, setFilters] = useState({})
   const [uniqueValues, setUniqueValues] = useState({})
   const [selectedPersonnel, setSelectedPersonnel] = useState(null)
@@ -55,25 +62,17 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       const response = await axios.get(`/api/examination/battalion/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      const n = response.data.map((e) => [e.dassScores, e.battalion, e.armyNo, e.mode])
-      setResults(n)
+      
+      const n = response.data
+        .map((e) => [e.dassScores, e.battalion, e.armyNo, e.mode, e.completedAt])
+        .sort((a, b) => new Date(b[4]) - new Date(a[4])); // index 4 is completedAt
+
+      setResults(n);
     } catch (error) {
       console.log("Error fetching results: ", error)
     }
   }
 
-  const fetchJCOResults = async () => {
-    try {
-      const battalionId = selectedBattalion || locationSelectedBattalion
-      const response = await axios.get(`/api/examination/jco/${battalionId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      const n = response.data.map((e) => [e.dassScores, e.battalion, e.armyNo, e.mode])
-      setjcoresults(n)
-    } catch (error) {
-      console.log("Error fetching JCO results: ", error)
-    }
-  }
 
   const fetchPersonnel = async () => {
     setLoading(true)
@@ -138,7 +137,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     }
   }
 
-
   const handleFileUpload = async (event) => {
     const file = event.target.files[0]
     if (!file) return
@@ -167,6 +165,32 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     event.target.value = ''
   }
 
+  const mapPerformance = (score) => {
+  let label = "";
+  let range = "";
+
+  if (score >= 8.1 && score <= 10) {
+    range = "(81 - 100)";
+    label = "Outstanding";
+  } else if (score >= 6.1 && score <= 8) {
+    range = "(61 - 80)";
+    label = "Commendable";
+  } else if (score >= 4.1 && score <= 6) {
+    range = "(41 - 60)";
+    label = "Satisfactory";
+  } else if (score >= 2.1 && score <= 4) {
+    range = "(21 - 40)";
+    label = "Needs Improvement";
+  } else {
+    label = "Unsatisfactory";
+    range = "(0 - 20)";
+  }
+
+  return <span>{range} {label}</span>;
+};
+
+
+
   const handleEdit = (person) => {
     setEditingPersonnel(person)
     setShowAddModal(true)
@@ -183,10 +207,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         console.error('Error deleting person:', error)
       }
     }
-  }
-
-  const handleReview = (personnelId) => {
-    navigate(`/peer-evaluation/${personnelId}`)
   }
 
   const handleRowClick = (person) => {
@@ -222,6 +242,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   };
 
 
+  
 
   const filteredPersonnel = personnel.filter((person) => {
     return Object.entries(filters).every(([column, value]) => {
@@ -287,6 +308,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
             <>
               {/* <button onClick={handleImport} className="datatable-btn datatable-btn-import">IMPORT</button> */}
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">EXPORT</button>
+              <button onClick={() => setShowGraph(true)} className="datatable-btn datatable-btn-graph">Graphical Analysis</button>
             </>
           )}
           {canManageData && (
@@ -490,18 +512,30 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                               person.selfEvaluation || 'Not Set'}
                         </span>
                       </td>
-                      <td></td>
+
+                      <td>
+                        {person.peerEvaluation.status === "EVALUATED"
+                          ? mapPerformance(person.peerEvaluation.finalScore)
+                          : <span>Not Evaluated Yet</span>
+                        }
+                      </td>
+
+
                       <td>
                         {person.selfEvaluation === "COMPLETED" ? (() => {
                           // Find latest manual and AI results for this person
                           const resultEntries = results.filter(r => r?.[2] === person.armyNo);
                           let manualResult = null;
                           let aiResult = null;
-                          resultEntries.forEach(r => {
-                            if (r[3] === 'MANUAL') manualResult = r[0];
-                            if (r[3] === 'AI') aiResult = r[0];
-                          });
-
+                          for (const r of resultEntries) {
+                            if (!manualResult && r[3] === 'MANUAL') {
+                              manualResult = r[0];
+                            }
+                            if (!aiResult && r[3] === 'AI') {
+                              aiResult = r[0];
+                            }
+                            if (manualResult && aiResult) break; // stop early once both found
+                          }
                           // Helper to get color class
                           const getSeverityClass = (severity) => {
                             if (!severity) return '';
@@ -521,16 +555,17 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                         <tbody>
                                           <tr>
-                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
                                             <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Depression</td>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
                                             <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Stress</td>
                                           </tr>
                                           <tr>
-                                            <td className={getSeverityClass(manualResult.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
-                                              {Number(manualResult.anxiety).toFixed(2)} ({manualResult.anxietySeverity})
-                                            </td>
+                                            
                                             <td className={getSeverityClass(manualResult.depressionSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
                                               {Number(manualResult.depression).toFixed(2)} ({manualResult.depressionSeverity})
+                                            </td>
+                                            <td className={getSeverityClass(manualResult.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(manualResult.anxiety).toFixed(2)} ({manualResult.anxietySeverity})
                                             </td>
                                             <td className={getSeverityClass(manualResult.stressSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
                                               {Number(manualResult.stress).toFixed(2)} ({manualResult.stressSeverity})
@@ -550,16 +585,17 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                         <tbody>
                                           <tr>
-                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
                                             <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Depression</td>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
                                             <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Stress</td>
                                           </tr>
                                           <tr>
-                                            <td className={getSeverityClass(aiResult.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
-                                              {Number(aiResult.anxiety).toFixed(2)} ({aiResult.anxietySeverity})
-                                            </td>
+                                            
                                             <td className={getSeverityClass(aiResult.depressionSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
                                               {Number(aiResult.depression).toFixed(2)} ({aiResult.depressionSeverity})
+                                            </td>
+                                            <td className={getSeverityClass(aiResult.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(aiResult.anxiety).toFixed(2)} ({aiResult.anxietySeverity})
                                             </td>
                                             <td className={getSeverityClass(aiResult.stressSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
                                               {Number(aiResult.stress).toFixed(2)} ({aiResult.stressSeverity})
@@ -576,7 +612,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                             </table>
                           );
                         })() : (
-                          <div>Not Completed</div>
+                          <td>Not Completed</td>
                         )}
                       </td>
 
@@ -616,6 +652,20 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
           battalionId={locationSelectedBattalion || currentUser.battalion}
           editData={editingPersonnel}
         />
+      )}
+
+      {showGraph && (
+        <div className="graph-modal-overlay-ga">
+          <div className="graph-modal-content-ga">
+            <button
+              className="graph-modal-close-ga"
+              onClick={() => setShowGraph(false)}
+              title="Close Graphical Analysis"
+            >✖</button>
+            <h2 style={{textAlign:'center', marginTop:'2rem'}}>Graphical Analysis</h2>
+            <GraphicalAnalysis filteredPersonnel={filteredPersonnel} results={results} />
+          </div>
+        </div>
       )}
     </div>
   )

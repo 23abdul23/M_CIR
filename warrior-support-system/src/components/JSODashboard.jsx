@@ -100,7 +100,6 @@ const JSODashboard = ({ currentUser, onLogout }) => {
     )
   }
 
-  console.log(currentUser.battalion )
 
   return (
     <div className="jso-dashboard">
@@ -109,7 +108,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
         <div className="jso-header-content">
           <div className="jso-title-section">
             <div>
-              <h1 className="jso-title">WARRIOR SUPPORT SYSTEM</h1>
+              <h1 className="jso-title">SOLDIER SUPPORT SYSTEM</h1>
               <p className="jso-subtitle">JSO Dashboard - {battalionInfo?.name || 'Battalion'}</p>
             </div>
           </div>

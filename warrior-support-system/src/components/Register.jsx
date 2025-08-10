@@ -130,7 +130,7 @@ const Register = ({ onRegister }) => {
             <div className="logo-placeholder">🇮🇳</div>
             <div className="logo-placeholder">⚔️</div>
           </div>
-          <h1>WARRIOR SUPPORT SYSTEM</h1>
+          <h1>SOLDIER SUPPORT SYSTEM</h1>
           <p className="register-subtitle">Create New Account</p>
         </div>
 
@@ -271,7 +271,7 @@ const Register = ({ onRegister }) => {
               </Link>
             </p>
             <div className="system-info">
-              <small>Warrior Support System v2.0 | Secure Military Portal</small>
+              <small>SOLDIER SUPPORT SYSTEM v2.0 | Secure Military Portal</small>
             </div>
           </div>
         </div>

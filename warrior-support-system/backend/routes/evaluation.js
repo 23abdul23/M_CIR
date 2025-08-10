@@ -15,7 +15,9 @@ router.post('/submit', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied' })
     }
 
-    const { personnelId, answers , eval, Score} = req.body
+    console.log(req.body)
+    const { personnelId, answers, finalScore} = req.body
+    
 
     const personnel = await Personnel.findById(personnelId)
     if (!personnel) {
@@ -27,16 +29,13 @@ router.post('/submit', auth, async (req, res) => {
     if (personnel.battalion.toString() !== user.battalion.toString()) {
       return res.status(403).json({ message: 'Access denied - different battalion' })
     }
-
-    
     // Update personnel with peer evaluation
     personnel.peerEvaluation = {
       status: 'EVALUATED',
       evaluatedBy: req.user.userId,
       evaluatedAt: new Date(),
       answers: answers,
-      evaluation: eval,
-      finalScore: Score
+      finalScore: finalScore
     }
 
     await personnel.save()

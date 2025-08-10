@@ -417,7 +417,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
         <div className="co-header-content">
           <div className="co-title-section">
             <div>
-              <h1 className="co-title">WARRIOR SUPPORT SYSTEM</h1>
+              <h1 className="co-title">SOLDIER SUPPORT SYSTEM</h1>
               <p className="co-subtitle">Commanding Officer Dashboard</p>
             </div>
           </div>

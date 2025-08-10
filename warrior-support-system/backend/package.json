@@ -1,7 +1,7 @@
 {
   "name": "warrior-support-system-backend",
   "version": "1.0.0",
-  "description": "Backend for Warrior Support System",
+  "description": "Backend for SOLDIER SUPPORT SYSTEM",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -34,7 +34,7 @@
     "nodejs",
     "mongodb"
   ],
-  "author": "Warrior Support System Team",
+  "author": "SOLDIER SUPPORT SYSTEM Team",
   "license": "MIT",
   "type": "commonjs"
 }

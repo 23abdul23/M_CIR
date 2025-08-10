@@ -1,5 +1,5 @@
 """
-Advanced Voice Mental Health Analyzer for Warrior Support System
+Advanced Voice Mental Health Analyzer for SOLDIER SUPPORT SYSTEM
 Integrates advanced voice analysis with existing assessment framework
 """
 
@@ -21,7 +21,7 @@ except ImportError:
 class AdvancedVoiceMentalHealthAnalyzer:
     """
     Advanced voice analyzer for mental health assessment
-    Integrates with existing warrior support system
+    Integrates with existing SOLDIER SUPPORT SYSTEM
     """
     
     def __init__(self, device: str = 'auto'):

@@ -89,7 +89,7 @@ const Login = ({ onLogin }) => {
             </div>
 
           </div>
-          <h1>WARRIOR SUPPORT SYSTEM</h1>
+          <h1>SOLDIER SUPPORT SYSTEM</h1>
           <p className="login-subtitle">Secure Authentication Portal</p>
         </div>
 
@@ -177,7 +177,7 @@ const Login = ({ onLogin }) => {
 
           <div className="login-footer">
             <div className="system-info">
-              <small>Warrior Support System v2.0 | Secure Military Portal</small>
+              <small>SOLDIER SUPPORT SYSTEM v2.0 | Secure Military Portal</small>
             </div>
           </div>
         </div>

@@ -41,7 +41,6 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
-      console.log(response.data)
       setQuestions(response.data)
       setLoading(false)
     } catch (error) {
@@ -55,8 +54,7 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
     const numericAnswers = Object.values(answers).map(a => parseInt(a, 10)).filter(a => !isNaN(a));
     const avg = numericAnswers.length > 0 ? (numericAnswers.reduce((sum, a) => sum + a, 0) / numericAnswers.length) : 0;
     setAvgScore(avg);
-    try {
-      await axios.post('/api/evaluation/submit', {
+    const peer_eval = {
         personnelId: personnelId,
         answers: Object.keys(answers).map(questionId => ({
           questionId,
@@ -64,7 +62,10 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
           eval: finalEvaluation
         })),
         finalScore: avg
-      }, {
+      }
+    try {
+      console.log(peer_eval)
+      await axios.post('/api/evaluation/submit', peer_eval, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
