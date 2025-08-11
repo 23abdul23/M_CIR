@@ -37,11 +37,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   }, [selectedBattalion])
 
   useEffect(() => {
-    fetchSeverePersonnel()
-  }, [results])
-
-
-  useEffect(() => {
     if (personnel.length > 0) {
       const unique = {}
       personnel.forEach((person) => {
@@ -63,7 +58,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const fetchSeverePersonnel = async () => {
     // Find all personnel with severe, or extremely severe in any result
     const severeLevels = ['Severe', 'Extremely Severe'];
-    const severePersonnels = personnel.filter(person => {
+    const severePersonnels = filteredPersonnel.filter(person => {
       if (person.selfEvaluation !== 'COMPLETED') return false;
 
       const resultEntry = results.find(r => r?.[2] === person.armyNo);
@@ -88,7 +83,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   }
 
   
-
   const fetchResults = async () => {
     try {
       const battalionId = selectedBattalion || locationSelectedBattalion
@@ -322,6 +316,16 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     )
   }
 
+  // Set Interviews button handler
+  const handleSetInterviews = async () => {
+    try {
+      await fetchSeverePersonnel();
+      alert('Interviews set up successfully!');
+    } catch (error) {
+      alert('Not successful!');
+    }
+  };
+
   return (
     <div className="datatable-container">
       <Header currentUser={currentUser} onLogout={handleLogout} />
@@ -340,6 +344,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
               {/* <button onClick={handleImport} className="datatable-btn datatable-btn-import">IMPORT</button> */}
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">EXPORT</button>
               <button onClick={() => setShowGraph(true)} className="datatable-btn datatable-btn-graph">Graphical Analysis</button>
+              <button onClick={handleSetInterviews} className="datatable-btn datatable-btn-interview" style={{marginLeft:'8px', backgroundColor: "skyblue"}}>Set Interviews</button>
             </>
           )}
           {canManageData && (

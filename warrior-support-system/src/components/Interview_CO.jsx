@@ -7,6 +7,24 @@ import '../styles/DataTable.css';
 const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     const [severePersonnel, setSeverePersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [interviewChecked, setInterviewChecked] = useState({});
+    const interviewDone = async (personId) => {
+        try {
+
+            console.log(personId)
+            await axios.post(`/api/severePersonnel/done/${personId}`, {}, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
+            fetchSeverePersonnel();
+            alert('Interview marked as done!');
+            setInterviewChecked((prev) => ({ ...prev, [personId]: false }));
+
+            window.location.reload();
+            
+        } catch (error) {
+            alert('Failed to mark interview as done.');
+        }
+    };
 
     const fetchSeverePersonnel = async () => {
         setLoading(true);
@@ -69,7 +87,8 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                     <th>Leave Availed</th>
                                     <th>Marital Status</th>
                                     <th>Self Evaluation</th>
-                                    <th>dassScores</th>
+                                    <th>Results</th>
+                                    <th>Interview</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -111,15 +130,29 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                                 <span>No Results found</span>
                                             )}
                                         </td>
+                                        <td>
+                                            <input
+                                                type="checkbox"
+                                                checked={!!interviewChecked[person._id]}
+                                                onChange={e => setInterviewChecked(prev => ({ ...prev, [person._id]: e.target.checked }))}
+                                            />
+                                            {interviewChecked[person._id] && (
+                                                <button
+                                                    className="interview-done-btn"
+                                                    style={{ marginLeft: '8px', padding: '4px 12px', borderRadius: '4px', background: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}
+                                                    onClick={() => interviewDone(person.armyNo)}
+                                                >
+                                                    Done
+                                                </button>
+                                            )}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
                 )}
-                <div className="interview-table-footer">
-                    {severePersonnel.length} Severe Personnel
-                </div>
+                
             </div>
         </>
     );

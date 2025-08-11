@@ -181,7 +181,44 @@ const handleFilterChange = (column, value) => {
   const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
   const canReview = currentUser.role === 'JSO'
- 
+  
+  const fetchSeverePersonnel = async () => {
+    // Find all personnel with severe, or extremely severe in any result
+    const severeLevels = ['Severe', 'Extremely Severe'];
+    const severePersonnels = personnel.filter(person => {
+      if (person.selfEvaluation !== 'COMPLETED') return false;
+
+      const resultEntry = results.find(r => r?.[2] === person.armyNo);
+      const scores = resultEntry?.[0];
+      if (!scores) return false;
+      return (
+        severeLevels.includes(scores.anxietySeverity) ||
+        severeLevels.includes(scores.depressionSeverity) ||
+        severeLevels.includes(scores.stressSeverity)
+      );
+    });
+
+    try {
+      const responce = await axios.post(`/api/severePersonnel`, severePersonnels,
+        {headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
+      )
+
+    }
+    catch (error){
+      console.error("Error fetching severe personnel:", error)
+    }
+  }
+    // Set Interviews button handler
+  const handleSetInterviews = async () => {
+    try {
+      await fetchSeverePersonnel();
+      alert('Interviews set up successfully!');
+    } catch (error) {
+      alert('Not successful!');
+    }
+  };
+
+
   return (
     <div className="datatable-container">
       
@@ -199,6 +236,8 @@ const handleFilterChange = (column, value) => {
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">
                 EXPORT DATA
               </button>
+              {/* <button onClick={handleSetInterviews} className="datatable-btn datatable-btn-interview" style={{marginLeft:'8px', backgroundColor: "skyblue"}}>Set Interviews</button>
+             */}
             </>
           )}
           

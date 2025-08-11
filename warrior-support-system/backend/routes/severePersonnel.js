@@ -4,6 +4,7 @@ const auth = require("../middleware/auth")
 const router = express.Router()
 
 
+
 router.get('/', auth, async (req, res) => {
   try{
     res.status(200).json({data: await SeverePersonnel.find({})})
@@ -60,5 +61,24 @@ router.post("/", auth , async (req, res) => {
     res.status(500).json({ error: "Error saving personnel", details: error.message });
   }
   })
+
+router.post("/done/:armyNo", auth, async (req, res) => {
+  try {
+    const armyNo = req.params.armyNo;
+
+    const result = await SeverePersonnel.deleteOne({ armyNo });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No personnel found with this army number" });
+    }
+
+    res.status(200).json({message : "Interview is Done"})
+  }
+  catch (error){
+    console.log("Error", error)
+    res.status(500)
+  }
+})
+
+
 
 module.exports = router

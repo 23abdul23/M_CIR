@@ -12,7 +12,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const [allUsernmaes, setAllUsernames] = useState([])
   const [allBattalions, setAllBattalions] = useState([])
   const [btys, setBtys] = useState([])
-  const [selectedBattalion, setSelectedBattalion] = useState("")
+  const [selectedBattalionData, setSelectedBattalionData] = useState("");
+  const [selectedBattalionInterview, setSelectedBattalionInterview] = useState("");
   const [questions, setQuestions] = useState([])
   const [showQuestionModal, setShowQuestionModal] = useState(false)
   const [showQuestionsView, setShowQuestionsView] = useState(false)
@@ -215,20 +216,18 @@ const CODashboard = ({ currentUser, onLogout }) => {
   }
 
   const handleViewData = () => {
-    if (selectedBattalion) {
+    if (selectedBattalionData) {
       navigate("/data-table-co", {
-        state: { selectedBattalion }
+        state: { selectedBattalion: selectedBattalionData }
       })
-
     }
   }
 
-  
   const handleInterviews = () => {
-      if (selectedBattalion) {
-        navigate("/interview-co", {
-          state: { selectedBattalion }
-        })
+    if (selectedBattalionInterview) {
+      navigate("/interview-co", {
+        state: { selectedBattalion: selectedBattalionInterview }
+      })
     }
   }
 
@@ -516,8 +515,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
               <h3 className="co-action-title">View Battalion Data</h3>
               <p className="co-action-description">View personnel data for selected battalion</p>
               <select
-                value={selectedBattalion}
-                onChange={(e) => setSelectedBattalion(e.target.value)}
+                value={selectedBattalionData}
+                onChange={(e) => setSelectedBattalionData(e.target.value)}
                 className="form-control mb-2"
               >
                 <option value="">Select Battalion</option>
@@ -529,7 +528,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                     </option>
                   ))}
               </select>
-              <button className="co-action-btn" onClick={handleViewData} disabled={!selectedBattalion}>
+              <button className="co-action-btn" onClick={handleViewData} disabled={!selectedBattalionData}>
                 VIEW DATA
               </button>
             </div>
@@ -539,8 +538,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
               <h3 className="co-action-title">Scheduled Interviews</h3>
               <p className="co-action-description">interview Personnels with Severity</p>
               <select
-                value={selectedBattalion}
-                onChange={(e) => setSelectedBattalion(e.target.value)}
+                value={selectedBattalionInterview}
+                onChange={(e) => setSelectedBattalionInterview(e.target.value)}
                 className="form-control mb-2"
               >
                 <option value="">Select Battalion</option>
@@ -553,7 +552,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                     </option>
                   ))}
               </select>
-              <button className="co-action-btn" onClick={handleInterviews} disabled={!selectedBattalion}>
+              <button className="co-action-btn" onClick={handleInterviews} disabled={!selectedBattalionInterview}>
                 VIEW DATA
               </button>
             </div>
