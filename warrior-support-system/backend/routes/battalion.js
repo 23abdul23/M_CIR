@@ -5,6 +5,28 @@ const auth = require('../middleware/auth')
 const router = express.Router()
 
 // Get all battalions (CO sees all, others see only approved)
+router.get('/subBty', async (req, res) => {
+  try {
+    
+
+    if (req.user && req.user.role === 'CO') {
+      // Only CO can see all battalions
+      query = {}
+    }
+
+    const battalions = await Battalion.find()
+      .sort({ createdAt: -1 })
+
+      
+    res.json(battalions)
+  } catch (error) {
+    console.log("Error: ", error)
+    res.status(500).json({ message: 'Server error', error: error.message })
+  }
+})
+
+
+// Get all battalions (CO sees all, others see only approved)
 router.get('/', async (req, res) => {
   try {
     let query = { status: 'APPROVED' } // default for public/unauthenticated
@@ -48,9 +70,9 @@ router.post('/', auth, async (req, res) => {
     const { name, postedStr } = req.body
 
     // Check if battalion already exists
-    const existingBattalion = await Battalion.findOne({ name })
+    const existingBattalion = await Battalion.findOne({ postedStr })
     if (existingBattalion) {
-      return res.status(400).json({ message: 'Battalion already exists' })
+      return res.status(400).json({ message: 'SubBty already exists' })
     }
 
     const battalionData = {

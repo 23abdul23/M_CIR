@@ -7,7 +7,8 @@ import '../styles/CombinedAssessment.css';
 
 const CombinedAssessment = () => {
   const navigate = useNavigate();
-  
+  const [personnelInfo, setPersonnelInfo] = useState(null)
+
   // Facial Analysis States
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -80,7 +81,8 @@ const CombinedAssessment = () => {
   const initializeAssessment = async () => {
     await Promise.all([
       requestPermissions(),
-      fetchQuestions()
+      fetchQuestions(),
+      fetchPersonnelInfo()
     ]);
   };
   
@@ -124,6 +126,23 @@ const CombinedAssessment = () => {
       console.error('Permission error:', error);
     }
   };
+
+  const fetchPersonnelInfo = async () => {
+    const armyNo = localStorage.getItem("currentArmyNo")
+    if (!armyNo) {
+      setError("No Army Number found. Please start from the beginning.")
+      navigate("/army-number-entry")
+      return
+    }
+    try {
+      const response = await axios.get(`/api/personnel/army-no/${armyNo}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      setPersonnelInfo(response.data)
+    } catch (error) {
+      setError("Error fetching personnel information")
+    }
+  }
   
   const fetchQuestions = async () => {
     try {
@@ -715,12 +734,29 @@ const CombinedAssessment = () => {
   
   return (
     <div className="combined-assessment-container">
-      <div className="assessment-header">
-        <h1>🧠 AI-Powered Comprehensive Assessment</h1>
-        <div className="progress-indicator">
-          Question {currentQuestionIndex + 1} of {questions.length}
+
+      <div className = "inner-container">
+        <Header/>
+      <div className="questionnaire-content">
+        <div className="personnel-info">
+          <div className="info-item">
+            <span>ARMY NO</span>
+            <span>{personnelInfo.armyNo}</span>
+          </div>
+          <div className="info-item">
+            <span>RANK</span>
+            <span>{personnelInfo.rank}</span>
+          </div>
+          <div className="info-item">
+            <span>NAME</span>
+            <span>{personnelInfo.name}</span>
+          </div>
+          <div className="info-item">
+            <span>COY/SQN/BTY</span>
+            <span>{personnelInfo.subBty}</span>
+          </div>
         </div>
-      </div>
+      </div>      
 
       <div className="assessment-layout">
         {/* Camera Section */}
@@ -1033,6 +1069,7 @@ const CombinedAssessment = () => {
         </div>
         
         
+      </div>
       </div>
     </div>
   );

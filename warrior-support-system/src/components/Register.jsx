@@ -17,6 +17,7 @@ const Register = ({ onRegister }) => {
     battalionId: "",
   })
   const [battalions, setBattalions] = useState([])
+  
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -24,6 +25,8 @@ const Register = ({ onRegister }) => {
   useEffect(() => {
     fetchBattalions()
   }, [])
+
+  
 
   const fetchBattalions = async () => {
     try {

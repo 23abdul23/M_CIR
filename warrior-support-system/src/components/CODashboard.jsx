@@ -11,6 +11,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const [pendingBattalions, setPendingBattalions] = useState([])
   const [allUsernmaes, setAllUsernames] = useState([])
   const [allBattalions, setAllBattalions] = useState([])
+  const [btys, setBtys] = useState([])
   const [selectedBattalion, setSelectedBattalion] = useState("")
   const [questions, setQuestions] = useState([])
   const [showQuestionModal, setShowQuestionModal] = useState(false)
@@ -35,7 +36,17 @@ const CODashboard = ({ currentUser, onLogout }) => {
     fetchQuestions()
     calculateStats()
     fetchPendingUsers()
+    fetchSubBtys()
   }, [])
+
+  const fetchSubBtys = async () => {
+    try {
+      const response = await axios.get("/api/battalion/subBty")
+      setBtys(response.data.map((b) => b.postedStr))    
+    } catch (error) {
+      console.error("Error fetching battalions:", error)
+    }
+  }
 
   const fetchAllUsernames = async () => {
     try{
@@ -51,13 +62,15 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
   
-
   const fetchAllBattalions = async () => {
     try {
       const response = await axios.get("/api/battalion", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
-      setAllBattalions(response.data)
+
+      const X = new Set(response.data)
+      
+      setAllBattalions([...X])
     } catch (error) {
       console.error("Error fetching battalions:", error)
     }
@@ -210,6 +223,15 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
 
+  
+  const handleInterviews = () => {
+      if (selectedBattalion) {
+        navigate("/interview-co", {
+          state: { selectedBattalion }
+        })
+    }
+  }
+
   const handleApproveUser = async (userId, action) => {
     try {
       await axios.put(
@@ -252,8 +274,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
   const handleAddBattalion = async () => {
     try {
-      const battalionName = prompt("Enter the name of the new battalion:")
-      const subBty = prompt("ENter subBty Name:")
+      const battalionName = prompt("Enter new Battalion Name:")
+      const subBty = prompt("Enter subBty Name:")
 
       if (!battalionName && !subBty) return
 
@@ -332,6 +354,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
       .map((battalion) => `<option value='${battalion._id}'>${battalion.name}</option>`)
       .join("");
 
+    const subBtyoptions = btys
+      .map((b) => `<option value='${battalion._id}'>${battalion.name}</option>`)
+      .join("");
+
     const formHtml = `
       <div class='modal-overlay'>
         <div class='modal-content'>
@@ -378,6 +404,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
             <select name='battalionId' onchange='(${handleChange})(event)'>
               <option value=''>Select Battalion</option>
               ${battalionOptions}
+            </select>
+            <select name='subBty' onchange='(${handleChange})(event)'>
+              <option value=''>Select SubBty</option>
+              ${subBtyoptions}
             </select>
             <button type='button' onclick='(${handleSubmit})()'>Submit</button>
           </form>
@@ -481,6 +511,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                 </button>
               </div>
             </div>
+
             <div className="co-action-card">
               <h3 className="co-action-title">View Battalion Data</h3>
               <p className="co-action-description">View personnel data for selected battalion</p>
@@ -502,10 +533,36 @@ const CODashboard = ({ currentUser, onLogout }) => {
                 VIEW DATA
               </button>
             </div>
+
+
+            <div className="co-action-card">
+              <h3 className="co-action-title">Scheduled Interviews</h3>
+              <p className="co-action-description">interview Personnels with Severity</p>
+              <select
+                value={selectedBattalion}
+                onChange={(e) => setSelectedBattalion(e.target.value)}
+                className="form-control mb-2"
+              >
+                <option value="">Select Battalion</option>
+
+                {allBattalions
+                  .filter((b) => b.status === "APPROVED")
+                  .map((battalion) => (
+                    <option key={battalion._id} value={battalion._id}>
+                      {battalion.name}
+                    </option>
+                  ))}
+              </select>
+              <button className="co-action-btn" onClick={handleInterviews} disabled={!selectedBattalion}>
+                VIEW DATA
+              </button>
+            </div>
           </div>
+
+          
         </section>
         
-        {/* Battalion Management */}
+        {/* Battalion Management
         <section className="co-battalion-management">
           <h2 className="co-section-title">Re Examination Requests</h2>
           {pendingUsers.length > 0 ? (
@@ -515,7 +572,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
           ) : (
             <p className="text-center">No Re Examination Requests</p>
           )}
-        </section>
+        </section> */}
 
 
         {/* Battalion Management */}

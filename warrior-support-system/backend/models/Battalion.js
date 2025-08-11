@@ -3,11 +3,12 @@ const mongoose = require('mongoose')
 const battalionSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   postedStr: {
-    type: String
+    type: String,
+    required: true,
+    unique: true
   },
   status: {
     type: String,

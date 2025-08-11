@@ -1,0 +1,70 @@
+.interview-table-container {
+  margin: 2rem auto;
+  max-width: 1200px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2rem;
+}
+.interview-table-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+.interview-table-legend {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+.interview-legend-box {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+.interview-legend-red {
+  background: #ff4d4d;
+}
+.interview-legend-orange {
+  background: #ffa500;
+}
+.interview-legend-yellow {
+  background: #fff700;
+}
+.interview-result-red {
+  background: #f16262 !important;
+  color: #333;
+}
+.interview-result-orange {
+  background: #ffa500 !important;
+  color: #333;
+}
+.interview-result-yellow {
+  background: #fff700 !important;
+  color: #333;
+}
+.interview-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.interview-table th, .interview-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+.interview-table th {
+  background: #f8f9fa;
+  font-weight: bold;
+}
+.interview-table-empty {
+  text-align: center;
+  margin: 2rem 0;
+}
+.interview-table-footer {
+  margin-top: 1rem;
+  text-align: right;
+  font-weight: 500;
+}

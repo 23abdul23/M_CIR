@@ -8,13 +8,12 @@ import '../styles/DataTable.css'
 import '../styles/GraphicalAnalysis.css';
 import { filter } from 'lodash'
 
-// this is the updated one 
-
-
 import GraphicalAnalysis from './GraphicalAnalysis';
 
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
+
+
   const [results, setResults] = useState([])
   const [jcoresults, setjcoresults] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
@@ -38,6 +37,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   }, [selectedBattalion])
 
   useEffect(() => {
+    fetchSeverePersonnel()
+  }, [results])
+
+
+  useEffect(() => {
     if (personnel.length > 0) {
       const unique = {}
       personnel.forEach((person) => {
@@ -55,6 +59,35 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       setUniqueValues(uniqueValuesObj)
     }
   }, [personnel])
+
+  const fetchSeverePersonnel = async () => {
+    // Find all personnel with severe, or extremely severe in any result
+    const severeLevels = ['Severe', 'Extremely Severe'];
+    const severePersonnels = personnel.filter(person => {
+      if (person.selfEvaluation !== 'COMPLETED') return false;
+
+      const resultEntry = results.find(r => r?.[2] === person.armyNo);
+      const scores = resultEntry?.[0];
+      if (!scores) return false;
+      return (
+        severeLevels.includes(scores.anxietySeverity) ||
+        severeLevels.includes(scores.depressionSeverity) ||
+        severeLevels.includes(scores.stressSeverity)
+      );
+    });
+
+    try {
+      const responce = await axios.post(`/api/severePersonnel`, severePersonnels,
+        {headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
+      )
+
+    }
+    catch (error){
+      console.error("Error fetching severe personnel:", error)
+    }
+  }
+
+  
 
   const fetchResults = async () => {
     try {
@@ -188,8 +221,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
   return <span>{range} {label}</span>;
 };
-
-
 
   const handleEdit = (person) => {
     setEditingPersonnel(person)

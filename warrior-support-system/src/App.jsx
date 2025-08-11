@@ -21,6 +21,7 @@ import DecideAsessment from './components/DecideAssessment'
 import FinancialForm from './components/FinancialForm'
 import IndividualMonitoring from './components/IndividualMonitoring'
 import CombinedAssessment from './components/CombinedAssessment'
+import Interview_CO from './components/Interview_CO'
 
 // Styles
 import './styles/App.css'
@@ -193,6 +194,20 @@ function App() {
               </ProtectedRoute>
             } 
           />
+
+          <Route 
+            path="/interview-co" 
+            element={
+              <ProtectedRoute allowedRoles={['CO']}>
+                <Interview_CO
+                  selectedBattalion={selectedBattalion}
+                  currentUser={currentUser}
+                  onLogout={handleLogout}
+                />
+              </ProtectedRoute>
+            } 
+          />
+
 
           {/* Individual Monitoring Route (CO and JSO only) */}
           <Route 
