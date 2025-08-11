@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Header from "./Header"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import '../styles/CombinedAssessment.css';
 
@@ -720,7 +721,7 @@ const CombinedAssessment = () => {
           Question {currentQuestionIndex + 1} of {questions.length}
         </div>
       </div>
-      
+
       <div className="assessment-layout">
         {/* Camera Section */}
         <div className="camera-section">
@@ -858,7 +859,6 @@ const CombinedAssessment = () => {
             <div className="question-container">
               <div className="question-header">
                 <h3>Question {currentQuestion.questionId}</h3>
-                
               </div>
               
               <div className="question-text">
@@ -916,12 +916,12 @@ const CombinedAssessment = () => {
                     </button>
                   )}
                   
-                  {voiceLoading && (
+                  {/* {voiceLoading && (
                     <div className="voice-loading">
                       <div className="loading-spinner small"></div>
                       Processing audio... (Please wait, do not navigate)
                     </div>
-                  )}
+                  )} */}
 
                   {isProcessingAudio && (
                     <div className="processing-warning" style={{

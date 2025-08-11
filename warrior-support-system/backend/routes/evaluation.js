@@ -5,6 +5,8 @@ const User = require('../models/User')
 
 const router = express.Router()
 
+
+
 // Submit peer evaluation
 router.post('/submit', auth, async (req, res) => {
   try {
@@ -13,7 +15,7 @@ router.post('/submit', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied' })
     }
 
-    const { personnelId, answers , eval} = req.body
+    const { personnelId, answers , eval, Score} = req.body
 
     const personnel = await Personnel.findById(personnelId)
     if (!personnel) {
@@ -26,13 +28,15 @@ router.post('/submit', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied - different battalion' })
     }
 
+    
     // Update personnel with peer evaluation
     personnel.peerEvaluation = {
       status: 'EVALUATED',
       evaluatedBy: req.user.userId,
       evaluatedAt: new Date(),
       answers: answers,
-      evaluation: eval
+      evaluation: eval,
+      finalScore: Score
     }
 
     await personnel.save()

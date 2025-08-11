@@ -10,6 +10,7 @@ import { filter } from 'lodash'
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
   const [results, setResults] = useState([])
+  const [jcoresults, setjcoresults] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
@@ -54,10 +55,23 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       const response = await axios.get(`/api/examination/battalion/${battalionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      const n = response.data.map((e) => [e.dassScores, e.battalion, e.armyNo])
+      const n = response.data.map((e) => [e.dassScores, e.battalion, e.armyNo, e.mode])
       setResults(n)
     } catch (error) {
       console.log("Error fetching results: ", error)
+    }
+  }
+
+  const fetchJCOResults = async () => {
+    try {
+      const battalionId = selectedBattalion || locationSelectedBattalion
+      const response = await axios.get(`/api/examination/jco/${battalionId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      const n = response.data.map((e) => [e.dassScores, e.battalion, e.armyNo, e.mode])
+      setjcoresults(n)
+    } catch (error) {
+      console.log("Error fetching JCO results: ", error)
     }
   }
 
@@ -261,9 +275,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       <Header currentUser={currentUser} onLogout={handleLogout} />
 
       <div className="datatable-content">
-        <div className="datatable-header">
-          <h2 className="datatable-title">WARRIOR SUPPORT SYSTEM</h2>
-          <p className="datatable-subtitle">{ }</p>
+        <div className="datatable-header datatable-header-flex">
+          <div className="datatable-header-title">
+            <h2 className="datatable-title">SOLDIER SUPPORT SYSTEM</h2>
+            <p className="datatable-subtitle">{ }</p>
+          </div>
         </div>
 
         <div className="datatable-actions">
@@ -290,22 +306,37 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         />
 
         <div className="datatable-super-filter">
-          <select
-            value={filterSeverity}
-            onChange={(e) => setFilterSeverity(e.target.value)}
-            className="datatable-dropdown"
-          >
-            <option value="">All Data</option>
-            <option value="Extremely Severe">Extremely Severe</option>
-            <option value="Severe">Severe</option>
-            <option value="Moderate">Moderate</option>
-            <option value="Mild">Mild</option>
-            <option value="Normal">Normal</option>
-
-          </select>
-          <button onClick={handleSuperFilter} className="datatable-btn datatable-btn-super-filter">
-            Apply Filter
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <select
+                value={filterSeverity}
+                onChange={(e) => setFilterSeverity(e.target.value)}
+                className="datatable-dropdown"
+              >
+                <option value="">All Data</option>
+                <option value="Extremely Severe">Extremely Severe</option>
+                <option value="Severe">Severe</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Mild">Mild</option>
+                <option value="Normal">Normal</option>
+              </select>
+              <button onClick={handleSuperFilter} className="datatable-btn datatable-btn-super-filter">
+                Apply Filter
+              </button>
+            </div>
+            <div className="datatable-legend">
+              <table style={{ borderCollapse: 'collapse', marginLeft: '10px' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: '2px 8px', fontWeight: 'bold', textAlign: 'right' }}></td>
+                    <td style={{ padding: '2px 8px' }}><span className="legend-box legend-red"></span> Red - Extremely Severe</td>
+                    <td style={{ padding: '2px 8px' }}><span className="legend-box legend-orange"></span> Orange - Severe</td>
+                    <td style={{ padding: '2px 8px' }}><span className="legend-box legend-yellow"></span> Yellow - Moderate</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         <div className="datatable-wrapper">
@@ -327,15 +358,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                   <tr>
                     <th>
                       ARMY NO.
-                      {/* <select
-                        onChange={(e) => handleFilterChange('armyNo', e.target.value)}
-                        value={filters.armyNo || ''}
-                      >
-                        <option value="">All</option>
-                        {uniqueValues.armyNo?.map((value) => (
-                          <option key={value} value={value}>{value}</option>
-                        ))}
-                      </select> */}
+                      
                     </th>
                     <th>
                       RANK
@@ -351,15 +374,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                     </th>
                     <th>
                       NAME
-                      {/* <select
-                        onChange={(e) => handleFilterChange('name', e.target.value)}
-                        value={filters.name || ''}
-                      >
-                        <option value="">All</option>
-                        {uniqueValues.name?.map((value) => (
-                          <option key={value} value={value}>{value}</option>
-                        ))}
-                      </select> */}
+                
                     </th>
                     <th>
                       COY/SQN/BTY
@@ -445,6 +460,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                         ))}
                       </select>
                     </th>
+                    <th>JCO Review</th>
                     <th>RESULTS</th>
                     <th>Mode</th>
                     {canManageData && <th>ACTION</th>}
@@ -474,30 +490,90 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                               person.selfEvaluation || 'Not Set'}
                         </span>
                       </td>
-
+                      <td></td>
                       <td>
                         {person.selfEvaluation === "COMPLETED" ? (() => {
-                          const resultEntry = results.find(r => r?.[2] === person.armyNo);
-                          const scores = resultEntry?.[0];
+                          // Find latest manual and AI results for this person
+                          const resultEntries = results.filter(r => r?.[2] === person.armyNo);
+                          let manualResult = null;
+                          let aiResult = null;
+                          resultEntries.forEach(r => {
+                            if (r[3] === 'MANUAL') manualResult = r[0];
+                            if (r[3] === 'AI') aiResult = r[0];
+                          });
 
-                          return scores ? (
+                          // Helper to get color class
+                          const getSeverityClass = (severity) => {
+                            if (!severity) return '';
+                            if (severity === 'Extremely Severe') return 'result-red';
+                            if (severity === 'Severe') return 'result-orange';
+                            if (severity === 'Moderate') return 'result-yellow';
+                            return '';
+                          };
+
+                          return (
                             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                               <tbody>
                                 <tr>
+                                  <td style={{ fontWeight: 'bold', background: '#f5f5f5', border: '1px solid #ccc', width: '80px', verticalAlign: 'top' }}>Manual:</td>
                                   <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Anxiety:</strong> {Number(scores.anxiety).toFixed(2)} ({scores.anxietySeverity})
+                                    {manualResult ? (
+                                      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <tbody>
+                                          <tr>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Depression</td>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Stress</td>
+                                          </tr>
+                                          <tr>
+                                            <td className={getSeverityClass(manualResult.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(manualResult.anxiety).toFixed(2)} ({manualResult.anxietySeverity})
+                                            </td>
+                                            <td className={getSeverityClass(manualResult.depressionSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(manualResult.depression).toFixed(2)} ({manualResult.depressionSeverity})
+                                            </td>
+                                            <td className={getSeverityClass(manualResult.stressSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(manualResult.stress).toFixed(2)} ({manualResult.stressSeverity})
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    ) : (
+                                      <span style={{ color: '#e74c3c' }}>No manual result found</span>
+                                    )}
                                   </td>
+                                </tr>
+                                <tr>
+                                  <td style={{ fontWeight: 'bold', background: '#f5f5f5', border: '1px solid #ccc', width: '80px', verticalAlign: 'top' }}>AI:</td>
                                   <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Depression:</strong> {Number(scores.depression).toFixed(2)} ({scores.depressionSeverity})
-                                  </td>
-                                  <td style={{ border: '1px solid #ccc', padding: '4px' }}>
-                                    <strong>Stress:</strong> {Number(scores.stress).toFixed(2)} ({scores.stressSeverity})
+                                    {aiResult ? (
+                                      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <tbody>
+                                          <tr>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Depression</td>
+                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Stress</td>
+                                          </tr>
+                                          <tr>
+                                            <td className={getSeverityClass(aiResult.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(aiResult.anxiety).toFixed(2)} ({aiResult.anxietySeverity})
+                                            </td>
+                                            <td className={getSeverityClass(aiResult.depressionSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(aiResult.depression).toFixed(2)} ({aiResult.depressionSeverity})
+                                            </td>
+                                            <td className={getSeverityClass(aiResult.stressSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                              {Number(aiResult.stress).toFixed(2)} ({aiResult.stressSeverity})
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    ) : (
+                                      <span style={{ color: '#e67e22' }}>No AI result found</span>
+                                    )}
                                   </td>
                                 </tr>
                               </tbody>
                             </table>
-                          ) : (
-                            <div>No result found</div>
                           );
                         })() : (
                           <div>Not Completed</div>

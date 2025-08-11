@@ -55,6 +55,7 @@
     "stress": 10,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-26T05:58:27.250Z"
   },
@@ -120,6 +121,7 @@
     "stress": 4,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-26T07:21:38.981Z"
   },
@@ -185,6 +187,7 @@
     "stress": 10,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-26T09:37:16.572Z"
   },
@@ -250,6 +253,7 @@
     "stress": 4,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-28T14:08:26.886Z"
   },
@@ -315,6 +319,7 @@
     "stress": 10,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-28T14:15:25.826Z"
   },
@@ -387,6 +392,7 @@
     "stress": 12,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-30T13:05:04.987Z"
   },
@@ -459,6 +465,7 @@
     "stress": 10,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-31T03:27:49.481Z"
   },
@@ -531,6 +538,7 @@
     "stress": 0,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-07-31T03:29:38.857Z"
   },
@@ -603,6 +611,7 @@
     "stress": 0,
     "stressSeverity": "Normal"
   },
+  "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-08-01T10:51:33.725Z"
   },
@@ -742,88 +751,15 @@
   ],
   "dassScores": {
     "depression": 2,
-    "depressionSeverity": "Normal",
+    "depressionSeverity": "Severe",
     "anxiety": 10,
     "anxietySeverity": "Moderate",
     "stress": 0,
-    "stressSeverity": "Normal"
+    "stressSeverity": "Extremely Severe"
   },
   "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-08-01T11:34:54.004Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6891098b052eda75d6821e77"
-  },
-  "armyNo": "123456VK",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891098b052eda75d6821e78"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891098b052eda75d6821e79"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891098b052eda75d6821e7a"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 0,
-      "_id": {
-        "$oid": "6891098b052eda75d6821e7b"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891098b052eda75d6821e7c"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891098b052eda75d6821e7d"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": "Test was okaish",
-      "_id": {
-        "$oid": "6891098b052eda75d6821e7e"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 12,
-    "depressionSeverity": "Mild",
-    "anxiety": null,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 10,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-04T19:27:07.023Z"
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
@@ -970,6 +906,65 @@
   "mode": "MANUAL",
   "completedAt": {
     "$date": "2025-08-05T11:44:40.939Z"
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68999e5ecd686e5ad319c7b9"
+  },
+  "armyNo": "123456ATER",
+  "answers": [
+    {
+      "questionId": "1",
+      "answer": "This is working ",
+      "_id": {
+        "$oid": "68999e5ecd686e5ad319c7ba"
+      }
+    },
+    {
+      "questionId": "2",
+      "answer": "this is alsoi working",
+      "_id": {
+        "$oid": "68999e5ecd686e5ad319c7bb"
+      }
+    },
+    {
+      "questionId": "3",
+      "answer": "this is alsoi working",
+      "_id": {
+        "$oid": "68999e5ecd686e5ad319c7bc"
+      }
+    },
+    {
+      "questionId": "4",
+      "answer": "this is alsoi working",
+      "_id": {
+        "$oid": "68999e5ecd686e5ad319c7bd"
+      }
+    },
+    {
+      "questionId": "5",
+      "answer": "this is alsoi working",
+      "_id": {
+        "$oid": "68999e5ecd686e5ad319c7be"
+      }
+    }
+  ],
+  "dassScores": {
+    "depression": 0,
+    "depressionSeverity": "Moderate",
+    "anxiety": 0,
+    "anxietySeverity": "Normal",
+    "stress": 0,
+    "stressSeverity": "Severe"
+  },
+  "mode": "AI",
+  "completedAt": {
+    "$date": "2025-08-11T07:40:14.641Z"
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"

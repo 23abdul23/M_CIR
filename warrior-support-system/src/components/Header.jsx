@@ -24,7 +24,7 @@ const Header = ({ currentUser, onLogout }) => {
       <div className="header-left">
         <div className="header-logo-placeholder logo1"></div>
         <div className="header-logo-placeholder logo2"></div>
-        <h1>WARRIOR SUPPORT SYSTEM</h1>
+        <h1>SOLDIER SUPPORT SYSTEM</h1>
       </div>
       <div className="header-right">
         {currentUser && (

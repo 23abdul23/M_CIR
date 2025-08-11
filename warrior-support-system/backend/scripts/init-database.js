@@ -80,7 +80,7 @@ async function initializeDatabase() {
 
     // Create Peer Questions first
     console.log('📝 Creating questions...')
-    const questionsPeerData = readTestData('peer_questions.json')
+    const questionsPeerData = readTestData('peer_question.json')
     const processedPeerQuestions = questionsPeerData.map(q => convertDates(q))
     const peer_questions = await QuestionPeer.insertMany(processedPeerQuestions)
     console.log(`✅ Created ${peer_questions.length} questions`)

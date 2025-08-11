@@ -14,6 +14,7 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [finalEvaluation, setFinalEvaluation] = useState("")
+  const [avgScore, setAvgScore] = useState(0)
   const { personnelId } = useParams()
   const navigate = useNavigate()
 
@@ -50,14 +51,19 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
   }
 
   const handleSubmitEvaluation = async () => {
+    // Calculate average score
+    const numericAnswers = Object.values(answers).map(a => parseInt(a, 10)).filter(a => !isNaN(a));
+    const avg = numericAnswers.length > 0 ? (numericAnswers.reduce((sum, a) => sum + a, 0) / numericAnswers.length) : 0;
+    setAvgScore(avg);
     try {
       await axios.post('/api/evaluation/submit', {
         personnelId: personnelId,
         answers: Object.keys(answers).map(questionId => ({
           questionId,
           answer: answers[questionId],
-          eval : finalEvaluation
-        }))
+          eval: finalEvaluation
+        })),
+        finalScore: avg
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
@@ -74,11 +80,11 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.removeItem('currentArmyNo')
-    
+
     if (onLogout) {
       onLogout()
     }
-    
+
     navigate('/login')
   }
 
@@ -117,22 +123,22 @@ const PeerEvaluation = ({ currentUser, onLogout }) => {
   }
 
   const peerEvaluationScale = [
-  { range: "0-20", rating: "Poor" },
-  { range: "21-40", rating: "Fair" },
-  { range: "41-60", rating: "Average" },
-  { range: "61-80", rating: "Good" },
-  { range: "81-100", rating: "Excellent" }
-];
+    { range: "0-20", rating: "Poor" },
+    { range: "21-40", rating: "Fair" },
+    { range: "41-60", rating: "Average" },
+    { range: "61-80", rating: "Good" },
+    { range: "81-100", rating: "Excellent" }
+  ];
 
-const calculateFinalEvaluation = () => {
-  const totalScore = Object.values(answers).reduce((sum, answer) => sum + parseInt(answer || 0, 10), 0)
-  const scale = peerEvaluationScale.find(({ range }) => {
-    const [min, max] = range.split("-").map(Number)
-    return totalScore >= min && totalScore <= max
-  })
+  const calculateFinalEvaluation = () => {
+    const totalScore = Object.values(answers).reduce((sum, answer) => sum + parseInt(answer || 0, 10), 0)
+    const scale = peerEvaluationScale.find(({ range }) => {
+      const [min, max] = range.split("-").map(Number)
+      return totalScore >= min && totalScore <= max
+    })
 
-  setFinalEvaluation(scale ? scale.rating : "Unknown")
-}
+    setFinalEvaluation(scale ? scale.rating : "Unknown")
+  }
 
 
 
@@ -167,8 +173,8 @@ const calculateFinalEvaluation = () => {
         <div className="question-progress">
           Question {currentQuestion + 1} of {questions.length}
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+            <div
+              className="progress-fill"
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
@@ -177,7 +183,7 @@ const calculateFinalEvaluation = () => {
         <h2>PEER EVALUATION</h2>
 
         <div className="question-section">
-          <h3>{currentQuestion + 1}. { _.startCase(_.toLower(personnel.name))} {question.questionText.toLowerCase()}</h3>
+          <h3>{currentQuestion + 1}. {_.startCase(_.toLower(personnel.name))} {question.questionText.toLowerCase()}</h3>
 
           {question.questionType === 'TEXT' ? (
             <textarea
@@ -193,7 +199,7 @@ const calculateFinalEvaluation = () => {
                 <div
                   key={index}
                   className="option-column"
-                  style={{ display: "inline-block", width: "45%"}}
+                  style={{ display: "inline-block", width: "45%" }}
                 >
                   <label className="option-label">
                     <input

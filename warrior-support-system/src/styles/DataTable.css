@@ -1,3 +1,49 @@
+/* Flex header for legend and title alignment */
+.datatable-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.datatable-header-title {
+  flex: 1;
+  text-align: center;
+}
+.datatable-legend {
+  text-align: right;
+  margin-right: 10px;
+}
+/* Severity result colors */
+.result-red {
+  background: #f16262 !important;
+  color: #333;
+}
+.result-orange {
+  background: #ffa500 !important;
+  color: #333;
+}
+.result-yellow {
+  background: #fff700 !important;
+  color: #333;
+}
+
+/* Legend box styles */
+.legend-box {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+.legend-red {
+  background: #ff4d4d;
+}
+.legend-orange {
+  background: #ffa500;
+}
+.legend-yellow {
+  background: #fff700;
+}
 /* DataTable Styles */
 .datatable-container {
   min-height: 100vh;

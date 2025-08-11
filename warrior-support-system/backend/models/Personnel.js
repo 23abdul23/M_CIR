@@ -62,7 +62,14 @@ const personnelSchema = new mongoose.Schema({
     }],
     evaluation: {
       answer: String
+    },
+    finalScore: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: 0
     }
+
   },
   battalion: {
     type: mongoose.Schema.Types.ObjectId,
