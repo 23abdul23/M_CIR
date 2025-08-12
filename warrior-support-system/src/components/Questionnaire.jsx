@@ -226,7 +226,7 @@ const Questionnaire = ({ currentUser, onLogout }) => {
       
       
       // Submit to backend
-      const response = await axios.post("/api/examination/submit", examinationData, {
+      const response = await axios.post(`/api/examination/submit/${localStorage.getItem('examModes')}`, examinationData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       

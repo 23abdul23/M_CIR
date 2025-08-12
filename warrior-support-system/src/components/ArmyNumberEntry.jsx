@@ -68,6 +68,8 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
         }
       }
 
+      localStorage.setItem('examModes', examModes.size)
+
 
       if (response.data) {
 
@@ -80,7 +82,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
         const diffInHours = (currentDate - completedAt) / (1000 * 60 * 60);
 
         // console.log("Days difference:", Math.round(diffInDays+1));
-        console.log(examModes)
+      
 
         if (diffInDays > coSetPeriod || examTaken == "NOT_ATTEMPTED") {
           localStorage.setItem('currentArmyNo', armyNo);

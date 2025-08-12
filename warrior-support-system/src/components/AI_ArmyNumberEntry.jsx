@@ -67,6 +67,8 @@ const AI_ArmyNumberEntry = ({ currentUser, onLogout }) => {
         }
       }
 
+      localStorage.setItem('examModes', examModes.size)
+
 
       if (response.data) {
 

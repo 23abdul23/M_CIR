@@ -8,9 +8,12 @@ const ReExamPeriod= require("../models/ReExam")
 const router = express.Router()
 
 // Submit examination
-router.post("/submit", auth, async (req, res) => {
+router.post("/submit/:examsGiven", auth, async (req, res) => {
   try {
+    const examModes = req.params.examsGiven
     const { armyNo, answers, dassScores } = req.body
+
+    console.log(examModes)
     
     // Get personnel details to associate battalion
     const personnel = await Personnel.findOne({ armyNo }).populate("battalion")
@@ -28,9 +31,26 @@ router.post("/submit", auth, async (req, res) => {
 
     await examination.save()
 
-    // Update personnel self-evaluation status
-    await Personnel.findOneAndUpdate({ armyNo }, { selfEvaluation: "COMPLETED", updatedAt : new Date()})
 
+    if (examModes == 2){
+      await Personnel.findOneAndUpdate(
+        { armyNo },
+        {
+          selfEvaluation: "COMPLETED",
+          updatedAt: new Date(),
+          peerEvaluation: {
+            status: 'PENDING',
+            finalScore: 0,
+            answers: []
+          }
+        }
+      );
+    }
+    else{
+    await Personnel.findOneAndUpdate({ armyNo }, { selfEvaluation: "COMPLETED", updatedAt : new Date()})
+    }
+
+    
     res.status(201).json({
       message: "Examination submitted successfully",
       examination: {
