@@ -264,7 +264,6 @@ const CombinedAssessment = () => {
         try {
           const result = await axios.get(`http://localhost:8000/api/final_score?session_id=${facialSessionId}`);
           setFacialResults(result.data);
-          setFacialImgData(result.data.image_base64);
           console.log('Facial analysis stopped and results retrieved');
         } catch (error) {
           console.error('Error getting facial results on stop:', error);
@@ -1044,12 +1043,6 @@ const CombinedAssessment = () => {
                     <li key={index}>{rec}</li>
                   ))}
                 </ul>
-              </div>
-            )}
-            
-            {facialImgData && (
-              <div className="analysis-chart">
-                <img src={`data:image/png;base64,${facialImgData}`} alt="Analysis Chart" />
               </div>
             )}
           </div>

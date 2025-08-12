@@ -90,6 +90,7 @@
   margin-top: 50px;
   padding: 2rem;
   background-color: white;
+  border-radius: 10px;
 }
 
 .datatable-header {
@@ -279,6 +280,12 @@
   background: linear-gradient(135deg, #d5f4e6, #a8e6cf);
   color: #27ae60;
   border: 1px solid #27ae60;
+}
+
+.datatable-status.interview {
+  background: linear-gradient(135deg, #f4e6d5, #e6c9a8);
+  color: #ae7827;
+  border: 1px solid #ae6827;
 }
 
 .datatable-status.not-attempted {

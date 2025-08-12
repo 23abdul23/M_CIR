@@ -457,35 +457,11 @@ def get_final_score(session_id: str):
             title="Stress Level Distribution"
         )
 
-        # Update layout for dark mode
-        fig_stress.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font_color='white',
-            title_font_color='white',
-            showlegend=True,
-            legend=dict(
-                font=dict(color='white')
-            ),
-            height=400
-        )
-
-        fig_stress.update_xaxes(color='white', gridcolor='#333')
-        fig_stress.update_yaxes(color='white', gridcolor='#333')
-
-        fig_stress.write_image("temp_plot.png")  # Saved on disk temporarily
-        print('image created')
-
-        with open("temp_plot.png", "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
-
-        os.remove("temp_plot.png")
-        print('image deleted')
+        
     return {
         "session_id": session_id,
         "frame_count": len(frame_paths),
         'results': results,
-        "image_base64": encoded_string
     }
 
 model = load("best_financial_model.pkl")

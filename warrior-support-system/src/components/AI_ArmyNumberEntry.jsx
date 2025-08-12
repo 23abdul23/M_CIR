@@ -89,7 +89,7 @@ const AI_ArmyNumberEntry = ({ currentUser, onLogout }) => {
           setError(`You have given this test, but can give the Manual test`);
         }
         else if (examModes.size == 2){
-          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day and ${Math.round(diffInHours % 24)} Hours.}.`);
+          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays)} Day`);
         }
         else{
           localStorage.setItem('currentArmyNo', armyNo);

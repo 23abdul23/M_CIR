@@ -80,7 +80,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
         const diffInHours = (currentDate - completedAt) / (1000 * 60 * 60);
 
         // console.log("Days difference:", Math.round(diffInDays+1));
-        console.log(examModes.size)
+        console.log(examModes)
 
         if (diffInDays > coSetPeriod || examTaken == "NOT_ATTEMPTED") {
           localStorage.setItem('currentArmyNo', armyNo);
@@ -90,7 +90,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
           setError(`You have given this test, but can give the AI test`);
         }
         else if (examModes.size == 2){
-          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays+1)} Day and ${Math.round(diffInHours % 24)} Hours.}.`);
+          setError(`You can't give the test until the time period is over in ${coSetPeriod -  Math.round(diffInDays)} Day}.`);
         }
       }
     } catch (error) {

@@ -14,6 +14,9 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
   const [filters, setFilters] = useState({})
   const [uniqueValues, setUniqueValues] = useState({})
 
+  const [interviewPersonnel, setInterviewPersonnel] = useState([])
+  const [severePersonnels, setSeverePersonnels] = useState([])
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -53,6 +56,7 @@ const handleFilterChange = (column, value) => {
 
   useEffect(() => {
     fetchPersonnel()
+    fetchSeverePersonnel()
   }, [selectedBattalion])
 
   const fetchPersonnel = async () => {
@@ -105,9 +109,6 @@ const handleFilterChange = (column, value) => {
     }
   }
 
-  const handleImport = () => {
-    fileInputRef.current.click()
-  }
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0]
@@ -159,64 +160,23 @@ const handleFilterChange = (column, value) => {
     navigate(`/peer-evaluation/${personnelId}`)
   }
 
-  const handleSaveAll = async () => {
-    console.log('Saving all data...')
-    alert('All data saved successfully!')
-  }
-
-  const handleRemoveAll = async () => {
-    if (window.confirm('Are you sure you want to remove all personnel data?')) {
-      try {
-        const battalionId = selectedBattalion || currentUser.battalion
-        await axios.delete(`/api/personnel/battalion/${battalionId}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        setPersonnel([])
-      } catch (error) {
-        console.error('Error removing all personnel:', error)
-      }
-    }
-  }
 
   const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
   const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
   const canReview = currentUser.role === 'JSO'
   
   const fetchSeverePersonnel = async () => {
-    // Find all personnel with severe, or extremely severe in any result
-    const severeLevels = ['Severe', 'Extremely Severe'];
-    const severePersonnels = personnel.filter(person => {
-      if (person.selfEvaluation !== 'COMPLETED') return false;
-
-      const resultEntry = results.find(r => r?.[2] === person.armyNo);
-      const scores = resultEntry?.[0];
-      if (!scores) return false;
-      return (
-        severeLevels.includes(scores.anxietySeverity) ||
-        severeLevels.includes(scores.depressionSeverity) ||
-        severeLevels.includes(scores.stressSeverity)
-      );
-    });
-
+    
     try {
-      const responce = await axios.post(`/api/severePersonnel`, severePersonnels,
+      const responce = await axios.get(`/api/severePersonnel`,
         {headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
       )
-
+      setInterviewPersonnel(responce.data.data)
     }
     catch (error){
       console.error("Error fetching severe personnel:", error)
     }
   }
-    // Set Interviews button handler
-  const handleSetInterviews = async () => {
-    try {
-      await fetchSeverePersonnel();
-      alert('Interviews set up successfully!');
-    } catch (error) {
-      alert('Not successful!');
-    }
-  };
 
 
   return (
@@ -236,8 +196,7 @@ const handleFilterChange = (column, value) => {
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">
                 EXPORT DATA
               </button>
-              {/* <button onClick={handleSetInterviews} className="datatable-btn datatable-btn-interview" style={{marginLeft:'8px', backgroundColor: "skyblue"}}>Set Interviews</button>
-             */}
+              
             </>
           )}
           
@@ -417,6 +376,55 @@ const handleFilterChange = (column, value) => {
           </span>
         </div>
       </div>
+
+      {/* Table for personnel being interviewed */}
+      <div className="datatable-wrapper" style={{marginTop: '2rem'}}>
+          <h2 className="datatable-title" style={{textAlign:'center'}}>Personnel Being Interviewed</h2>
+          <div className="datatable-scroll">
+            <table className="datatable-table">
+              <thead>
+                <tr>
+                  <th>ARMY NO.</th>
+                  <th>RANK</th>
+                  <th>NAME</th>
+                  <th>COY/SQN/BTY</th>
+                  <th>SERVICE</th>
+                  <th>DATE OF INDN</th>
+                  <th>MED CAT</th>
+                  <th>LEAVE AVAILED</th>
+                  <th>MARITAL STATUS</th>
+                  <th>Interview Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(interviewPersonnel) && interviewPersonnel.length === 0 ? (
+                  <tr><td colSpan={10} style={{textAlign:'center'}}>No personnel scheduled for interview</td></tr>
+                ) : (
+                  (Array.isArray(interviewPersonnel[0]) ? interviewPersonnel.flat() : interviewPersonnel).map((person) => (
+                    <tr key={person._id || person.armyNo || Math.random()}>
+                      <td>{person.armyNo}</td>
+                      <td>{person.rank}</td>
+                      <td>{person.name}</td>
+                      <td>{person.subBty}</td>
+                      <td>{person.service}</td>
+                      <td>{new Date(person.dateOfInduction).toLocaleDateString()}</td>
+                      <td>{person.medCat}</td>
+                      <td>{person.leaveAvailed || 'NIL'}</td>
+                      <td>{person.maritalStatus}</td>
+                      <td>
+                        <span className={`datatable-status interview`}>
+                          Interview Scheduled
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      
 
       {showAddModal && (
         <AddDataModal 
