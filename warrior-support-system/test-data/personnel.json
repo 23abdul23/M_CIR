@@ -1,80 +1,5 @@
 [{
   "_id": {
-    "$oid": "688a3ebdaef527b48b879e04"
-  },
-  "armyNo": "123456VK",
-  "rank": "Sub",
-  "name": "abcd",
-  "subBty": "Q Bty",
-  "service": "6",
-  "dateOfInduction": {
-    "$date": "2025-07-03T00:00:00.000Z"
-  },
-  "medCat": "B2",
-  "leaveAvailed": "2",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "EVALUATED",
-    "evaluatedBy": {
-      "$oid": "6883152ffa5537a2db906434"
-    },
-    "evaluatedAt": {
-      "$date": "2025-08-01T18:16:20.103Z"
-    },
-    "answers": [
-      {
-        "questionId": "688a1b3d0dd525c2129c0169",
-        "answer": "8",
-        "_id": {
-          "$oid": "688d0474e283dc5b99f944f0"
-        }
-      },
-      {
-        "questionId": "688a1b3d0dd525c2129c016a",
-        "answer": "7",
-        "_id": {
-          "$oid": "688d0474e283dc5b99f944f1"
-        }
-      },
-      {
-        "questionId": "688a1b3d0dd525c2129c016b",
-        "answer": "6",
-        "_id": {
-          "$oid": "688d0474e283dc5b99f944f2"
-        }
-      },
-      {
-        "questionId": "688a1b3d0dd525c2129c016c",
-        "answer": "10",
-        "_id": {
-          "$oid": "688d0474e283dc5b99f944f3"
-        }
-      },
-      {
-        "questionId": "688a1b3d0dd525c2129c016d",
-        "answer": "8",
-        "_id": {
-          "$oid": "688d0474e283dc5b99f944f4"
-        }
-      }
-    ]
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-07-30T15:48:13.027Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T15:48:13.027Z"
-  },
-  "__v": 0,
-  "addedBattalion": ""
-},
-{
-  "_id": {
     "$oid": "688a3eec0089aace3be35f4c"
   },
   "armyNo": "123456VKL",
@@ -88,23 +13,24 @@
   "medCat": "B2",
   "leaveAvailed": "2",
   "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
+  "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
   },
+  "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-07-30T15:49:00.261Z"
+    "$date": "2025-08-10T10:30:25.101Z"
   },
   "createdAt": {
     "$date": "2025-07-30T15:49:00.261Z"
   },
-  "__v": 0,
-  "addedBattalion": ""
+  "__v": 0
 },
 {
   "_id": {
@@ -124,20 +50,21 @@
   "selfEvaluation": "NOT_ATTEMPTED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
-  "status": "APPROVED",
   "battalion": {
     "$oid": "688a4032b80ee98cad85e2c4"
   },
+  "addedBattalion": "",
+  "status": "APPROVED",
   "updatedAt": {
     "$date": "2025-07-30T15:54:26.273Z"
   },
   "createdAt": {
     "$date": "2025-07-30T15:54:26.273Z"
   },
-  "__v": 0,
-  "addedBattalion": ""
+  "__v": 0
 },
 {
   "_id": {
@@ -154,23 +81,24 @@
   "medCat": "B1",
   "leaveAvailed": "2",
   "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
+  "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
   },
+  "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-07-30T16:09:22.592Z"
+    "$date": "2025-08-10T08:46:12.013Z"
   },
   "createdAt": {
     "$date": "2025-07-30T16:09:22.592Z"
   },
-  "__v": 0,
-  "addedBattalion": ""
+  "__v": 0
 },
 {
   "_id": {
@@ -190,13 +118,14 @@
   "selfEvaluation": "NOT_ATTEMPTED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
-  "addedBattalion": "yes ",
-  "status": "APPROVED",
   "battalion": {
     "$oid": "688a4d21eb15ce838fd1e50a"
   },
+  "addedBattalion": "yes ",
+  "status": "APPROVED",
   "updatedAt": {
     "$date": "2025-07-30T16:49:37.407Z"
   },
@@ -223,13 +152,14 @@
   "selfEvaluation": "NOT_ATTEMPTED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
-  "addedBattalion": "TESTBTY3",
-  "status": "APPROVED",
   "battalion": {
     "$oid": "688a5a7e1331c7849f38dcb6"
   },
+  "addedBattalion": "TESTBTY3",
+  "status": "APPROVED",
   "updatedAt": {
     "$date": "2025-07-30T17:46:38.654Z"
   },
@@ -256,13 +186,14 @@
   "selfEvaluation": "NOT_ATTEMPTED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
-  "addedBattalion": "testfinal",
-  "status": "APPROVED",
   "battalion": {
     "$oid": "688a5c28ec3b2c50aa3bc5a6"
   },
+  "addedBattalion": "testfinal",
+  "status": "APPROVED",
   "updatedAt": {
     "$date": "2025-07-30T17:53:44.246Z"
   },
@@ -288,8 +219,51 @@
   "maritalStatus": "UNMARRIED",
   "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
-    "status": "PENDING",
-    "answers": []
+    "status": "EVALUATED",
+    "evaluatedBy": {
+      "$oid": "6883152ffa5537a2db906434"
+    },
+    "evaluatedAt": {
+      "$date": "2025-08-11T02:58:50.682Z"
+    },
+    "answers": [
+      {
+        "questionId": "68995b979bff53b7ddf151ef",
+        "answer": "8",
+        "_id": {
+          "$oid": "68995c6afead3c51d637b7d0"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf151fa",
+        "answer": "7",
+        "_id": {
+          "$oid": "68995c6afead3c51d637b7d1"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf15205",
+        "answer": "10",
+        "_id": {
+          "$oid": "68995c6afead3c51d637b7d2"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf15210",
+        "answer": "6",
+        "_id": {
+          "$oid": "68995c6afead3c51d637b7d3"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf1521b",
+        "answer": "8",
+        "_id": {
+          "$oid": "68995c6afead3c51d637b7d4"
+        }
+      }
+    ],
+    "finalScore": 7.8
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
@@ -319,10 +293,11 @@
   "medCat": "B1",
   "leaveAvailed": "14",
   "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
+  "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
@@ -330,7 +305,7 @@
   "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-08-01T17:55:24.792Z"
+    "$date": "2025-08-10T10:28:33.524Z"
   },
   "createdAt": {
     "$date": "2025-08-01T17:55:24.792Z"
@@ -355,13 +330,14 @@
   "selfEvaluation": "NOT_ATTEMPTED",
   "peerEvaluation": {
     "status": "PENDING",
-    "answers": []
+    "answers": [],
+    "finalScore": 0
   },
-  "addedBattalion": "nEW bASTTALION",
-  "status": "APPROVED",
   "battalion": {
     "$oid": "688cffe6e283dc5b99f93f46"
   },
+  "addedBattalion": "nEW bASTTALION",
+  "status": "APPROVED",
   "updatedAt": {
     "$date": "2025-08-01T17:56:54.822Z"
   },
@@ -385,9 +361,86 @@
   "medCat": "B2",
   "leaveAvailed": "14",
   "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
+  "selfEvaluation": "COMPLETED",
+  "peerEvaluation": {
+    "status": "EVALUATED",
+    "evaluatedBy": {
+      "$oid": "6883152ffa5537a2db906434"
+    },
+    "evaluatedAt": {
+      "$date": "2025-08-12T07:11:23.694Z"
+    },
+    "answers": [
+      {
+        "questionId": "68995b979bff53b7ddf151ef",
+        "answer": "3",
+        "_id": {
+          "$oid": "689ae91b83888845cf8e0fc2"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf151fa",
+        "answer": "8",
+        "_id": {
+          "$oid": "689ae91b83888845cf8e0fc3"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf15205",
+        "answer": "6",
+        "_id": {
+          "$oid": "689ae91b83888845cf8e0fc4"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf15210",
+        "answer": "10",
+        "_id": {
+          "$oid": "689ae91b83888845cf8e0fc5"
+        }
+      },
+      {
+        "questionId": "68995b979bff53b7ddf1521b",
+        "answer": "10",
+        "_id": {
+          "$oid": "689ae91b83888845cf8e0fc6"
+        }
+      }
+    ],
+    "finalScore": 7.4
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-10T08:44:05.317Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-04T17:12:24.597Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68989ae375db7c5801a1bf08"
+  },
+  "armyNo": "ARMY4",
+  "rank": "Maj",
+  "name": "Testing",
+  "subBty": "R Bty",
+  "service": "6",
+  "dateOfInduction": {
+    "$date": "2025-06-10T00:00:00.000Z"
+  },
+  "medCat": "A2",
+  "leaveAvailed": "5",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
     "status": "PENDING",
+    "finalScore": 0,
     "answers": []
   },
   "battalion": {
@@ -396,10 +449,44 @@
   "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-08-04T17:12:24.597Z"
+    "$date": "2025-08-10T13:43:01.880Z"
   },
   "createdAt": {
-    "$date": "2025-08-04T17:12:24.597Z"
+    "$date": "2025-08-10T13:13:07.779Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689a292a1103b289f3ef7671"
+  },
+  "armyNo": "ARMY5",
+  "rank": "Capt",
+  "name": "Ayush Singh",
+  "subBty": "P Bty",
+  "service": "1",
+  "dateOfInduction": {
+    "$date": "2025-08-03T00:00:00.000Z"
+  },
+  "medCat": "A1",
+  "leaveAvailed": "56",
+  "maritalStatus": "UNMARRIED",
+  "selfEvaluation": "COMPLETED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "finalScore": 0,
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-12T07:12:44.751Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-11T17:32:26.199Z"
   },
   "__v": 0
 }]

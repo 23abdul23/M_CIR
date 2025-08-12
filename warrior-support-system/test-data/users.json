@@ -19,72 +19,6 @@
 },
 {
   "_id": {
-    "$oid": "6883152ffa5537a2db90642f"
-  },
-  "username": "jso_71fdregt",
-  "password": "$2a$10$ZG9xnZpx2BhErtWwBfi.he2/L6YQi/rGg78z6nPBdWuhWjeaqmi/u",
-  "fullName": "Maj Deepak Meena",
-  "role": "JSO",
-  "armyNo": "JC71000CB",
-  "rank": "MAJ",
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "isActive": true,
-  "createdAt": {
-    "$date": "2025-07-25T04:35:00.000Z"
-  },
-  "updatedAt": {
-    "$date": "2025-07-25T05:25:03.040Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6883152ffa5537a2db906430"
-  },
-  "username": "jso_219wksp",
-  "password": "$2a$10$xDciRmCldb.uNa.g53rjyeFy4/fAgRTJCuPYR8ZMEOLpgl05yewXu",
-  "fullName": "Maj Kiran Dey",
-  "role": "JSO",
-  "armyNo": "JC219001B",
-  "rank": "MAJ",
-  "battalion": {
-    "$oid": "6880b26f1b5f35ac22e00a13"
-  },
-  "isActive": true,
-  "createdAt": {
-    "$date": "2025-07-25T04:35:00.000Z"
-  },
-  "updatedAt": {
-    "$date": "2025-07-25T05:25:03.040Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6883152ffa5537a2db906431"
-  },
-  "username": "jso_15para",
-  "password": "$2a$10$HHt0g3f0B2tSLh0nrSD1rO37yORcGxzAp5z5VVdy/m9ynhR0CAtdy",
-  "fullName": "Maj Vinod Kumar",
-  "role": "JSO",
-  "armyNo": "JC15001B",
-  "rank": "MAJ",
-  "battalion": {
-    "$oid": "6880b26f1b5f35ac22e00a14"
-  },
-  "isActive": true,
-  "createdAt": {
-    "$date": "2025-07-25T04:35:00.000Z"
-  },
-  "updatedAt": {
-    "$date": "2025-07-25T05:25:03.040Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
     "$oid": "6883152ffa5537a2db906434"
   },
   "username": "jso_allahabad",
@@ -115,50 +49,6 @@
   "role": "USER",
   "armyNo": "SS710001C",
   "rank": "RFN",
-  "isActive": true,
-  "createdAt": {
-    "$date": "2025-07-25T04:35:00.000Z"
-  },
-  "updatedAt": {
-    "$date": "2025-07-25T05:25:03.040Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6883152ffa5537a2db906432"
-  },
-  "username": "jso_3guards",
-  "password": "$2a$10$vbhqpvNhVtR/0fPt0ioFjuCPXqtXnRZXdFM6DU62Z5Z1v7RlsUXfy",
-  "fullName": "Maj Priyanka Rawat",
-  "role": "JSO",
-  "armyNo": "JC30001B",
-  "rank": "MAJ",
-  "battalion": {
-    "$oid": "6880b26f1b5f35ac22e00a15"
-  },
-  "isActive": true,
-  "createdAt": {
-    "$date": "2025-07-25T04:35:00.000Z"
-  },
-  "updatedAt": {
-    "$date": "2025-07-25T05:25:03.040Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6883152ffa5537a2db906433"
-  },
-  "username": "jso_aligarh",
-  "password": "$2a$10$EAfRD6hdkQsesTVy0Bgz.OKNIGXAxi7povTXKx2Yzu0VcJUsnAZFm",
-  "fullName": "Maj Ritu Raj",
-  "role": "JSO",
-  "armyNo": "JCAL001B",
-  "rank": "MAJ",
-  "battalion": {
-    "$oid": "6880c6139b73b705f94a765e"
-  },
   "isActive": true,
   "createdAt": {
     "$date": "2025-07-25T04:35:00.000Z"
