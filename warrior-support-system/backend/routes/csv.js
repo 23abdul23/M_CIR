@@ -16,7 +16,7 @@ const upload = multer({ dest: 'uploads/' })
 // Export personnel data as CSV (JSO and CO only)
 router.get('/export/:battalionId', auth, async (req, res) => {
   try {
-    if (!['JSO', 'CO'].includes(req.user.role)) {
+    if (!['JCO', 'CO'].includes(req.user.role)) {
       return res.status(403).json({ message: 'Access denied' })
     }
 
@@ -24,7 +24,7 @@ router.get('/export/:battalionId', auth, async (req, res) => {
     
 
     // // JSO can only export their battalion data
-    // if (req.user.role === 'JSO') {
+    // if (req.user.role === 'JCO') {
     //   const user = await User.findById(req.user.userId)
     //   if (user.battalion.toString() !== battalionId) {
     //     return res.status(403).json({ message: 'Access denied to this battalion' })
@@ -47,49 +47,79 @@ router.get('/export/:battalionId', auth, async (req, res) => {
       }
     })
 
-    const combinedData = personnel.map(person => {
-      const exam = (person.selfEvaluation === 'COMPLETED') 
-        ? examMap.get(person.armyNo) 
-        : null
+    let combinedData, fields;
+    if (req.user.role === 'JCO') {
+      // JCO: Remove Depression, Stress, Anxiety columns
+      combinedData = personnel.map(person => {
+        return {
+          'Army No': person.armyNo,
+          'Rank': person.rank,
+          'Name': person.name,
+          'SubBty': person.subBty,
+          'Service': person.service,
+          'Date of Induction': person.dateOfInduction?.toISOString?.().split('T')[0] || 'N/A',
+          'Med Cat': person.medCat,
+          'Leave Availed': person.leaveAvailed || 'NIL',
+          'Marital Status': person.maritalStatus,
+          'Self Evaluation': person.selfEvaluation,
+          'Peer Evaluation Status': person.peerEvaluation?.status || 'N/A',
+          'Evaluated By': person.peerEvaluation?.evaluatedBy
+            ? `${person.peerEvaluation.evaluatedBy.rank} ${person.peerEvaluation.evaluatedBy.fullName}`
+            : 'N/A',
+          'Evaluation Date': person.peerEvaluation?.evaluatedAt
+            ? person.peerEvaluation.evaluatedAt.toISOString().split('T')[0]
+            : 'N/A'
+        }
+      });
+      fields = [
+        'Army No', 'Rank', 'Name', 'SubBty', 'Service', 
+        'Date of Induction', 'Med Cat', 'Leave Availed', 'Marital Status',
+        'Self Evaluation', 'Peer Evaluation Status',
+        'Evaluated By', 'Evaluation Date'
+      ];
+    } else {
+      // CO: Include all columns
+      combinedData = personnel.map(person => {
+        const exam = (person.selfEvaluation === 'COMPLETED') 
+          ? examMap.get(person.armyNo) 
+          : null;
+        return {
+          'Army No': person.armyNo,
+          'Rank': person.rank,
+          'Name': person.name,
+          'SubBty': person.subBty,
+          'Service': person.service,
+          'Date of Induction': person.dateOfInduction?.toISOString?.().split('T')[0] || 'N/A',
+          'Med Cat': person.medCat,
+          'Leave Availed': person.leaveAvailed || 'NIL',
+          'Marital Status': person.maritalStatus,
+          'Self Evaluation': person.selfEvaluation,
+          'Peer Evaluation Status': person.peerEvaluation?.status || 'N/A',
+          'Depresion': exam?.dassScores?.depressionSeverity || 'N/A',
+          'Stress': exam?.dassScores?.stressSeverity || 'N/A',
+          'Anxiety': exam?.dassScores?.anxietySeverity || 'N/A',
+          'Evaluated By': person.peerEvaluation?.evaluatedBy
+            ? `${person.peerEvaluation.evaluatedBy.rank} ${person.peerEvaluation.evaluatedBy.fullName}`
+            : 'N/A',
+          'Evaluation Date': person.peerEvaluation?.evaluatedAt
+            ? person.peerEvaluation.evaluatedAt.toISOString().split('T')[0]
+            : 'N/A'
+        }
+      });
+      fields = [
+        'Army No', 'Rank', 'Name', 'SubBty', 'Service', 
+        'Date of Induction', 'Med Cat', 'Leave Availed', 'Marital Status',
+        'Self Evaluation', 'Peer Evaluation Status', 'Depresion', 'Stress', 'Anxiety',
+        'Evaluated By', 'Evaluation Date'
+      ];
+    }
 
-      return {
-        'Army No': person.armyNo,
-        'Rank': person.rank,
-        'Name': person.name,
-        'SubBty': person.subBty,
-        'Service': person.service,
-        'Date of Induction': person.dateOfInduction?.toISOString?.().split('T')[0] || 'N/A',
-        'Med Cat': person.medCat,
-        'Leave Availed': person.leaveAvailed || 'NIL',
-        'Marital Status': person.maritalStatus,
-        'Self Evaluation': person.selfEvaluation,
-        'Peer Evaluation Status': person.peerEvaluation?.status || 'N/A',
-        'Depresion': exam?.dassScores?.depressionSeverity || 'N/A',
-        'Stress': exam?.dassScores?.stressSeverity || 'N/A',
-        'Anxiety': exam?.dassScores?.anxietySeverity || 'N/A',
-        'Evaluated By': person.peerEvaluation?.evaluatedBy
-          ? `${person.peerEvaluation.evaluatedBy.rank} ${person.peerEvaluation.evaluatedBy.fullName}`
-          : 'N/A',
-        'Evaluation Date': person.peerEvaluation?.evaluatedAt
-          ? person.peerEvaluation.evaluatedAt.toISOString().split('T')[0]
-          : 'N/A'
-      }
-    })
+    const json2csvParser = new Parser({ fields });
+    const csv = json2csvParser.parse(combinedData);
 
-    const fields = [
-      'Army No', 'Rank', 'Name', 'SubBty', 'Service', 
-      'Date of Induction', 'Med Cat', 'Leave Availed', 'Marital Status',
-      'Self Evaluation', 'Peer Evaluation Status', 'Depresion', 'Stress', 'Anxiety',
-      'Evaluated By', 'Evaluation Date'
-    ]
-
-    const json2csvParser = new Parser({ fields })
-    const csv = json2csvParser.parse(combinedData)
-
-
-    res.header('Content-Type', 'text/csv')
-    res.attachment(`personnel_data_${Date.now()}.csv`)
-    res.send(csv)
+    res.header('Content-Type', 'text/csv');
+    res.attachment(`personnel_data_${Date.now()}.csv`);
+    res.send(csv);
   } catch (error) {
     console.log("Error: ", error)
     res.status(500).json({ message: 'Server error', error: error.message })
@@ -99,14 +129,14 @@ router.get('/export/:battalionId', auth, async (req, res) => {
 // Import personnel data from CSV (JSO and CO only)
 router.post('/import/:battalionId', auth, upload.single('csvFile'), async (req, res) => {
   try {
-    if (!['JSO', 'CO'].includes(req.user.role)) {
+    if (!['JCO', 'CO'].includes(req.user.role)) {
       return res.status(403).json({ message: 'Access denied' })
     }
 
     const { battalionId } = req.params
 
     // JSO can only import to their battalion
-    if (req.user.role === 'JSO') {
+    if (req.user.role === 'JCO') {
       const user = await User.findById(req.user.userId)
       if (user.battalion.toString() !== battalionId) {
         return res.status(403).json({ message: 'Access denied to this battalion' })

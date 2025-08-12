@@ -96,7 +96,7 @@ function App() {
     switch (currentUser.role) {
       case 'CO':
         return <Navigate to="/co-dashboard" />
-      case 'JSO':
+      case 'JCO':
         return <Navigate to="/jso-dashboard" />
       case 'USER':
         return <Navigate to="/battalion-selection" />
@@ -146,7 +146,7 @@ function App() {
           <Route 
             path="/jso-dashboard" 
             element={
-              <ProtectedRoute allowedRoles={['JSO']}>
+              <ProtectedRoute allowedRoles={['JCO']}>
                 <JSODashboard 
                   currentUser={currentUser} 
                   onLogout={handleLogout}
@@ -159,7 +159,7 @@ function App() {
           <Route 
             path="/peer-evaluation/:personnelId" 
             element={
-              <ProtectedRoute allowedRoles={['JSO']}>
+              <ProtectedRoute allowedRoles={['JCO']}>
                 <PeerEvaluation 
                   currentUser={currentUser} 
                   onLogout={handleLogout}
@@ -172,7 +172,7 @@ function App() {
           <Route 
             path="/data-table-jso" 
             element={
-              <ProtectedRoute allowedRoles={['JSO']}>
+              <ProtectedRoute allowedRoles={['JCO']}>
                 <DataTable 
                   selectedBattalion={selectedBattalion}
                   currentUser={currentUser}
@@ -213,7 +213,7 @@ function App() {
           <Route 
             path="/individual-monitoring/:armyNo" 
             element={
-              <ProtectedRoute allowedRoles={['CO', 'JSO']}>
+              <ProtectedRoute allowedRoles={['CO', 'JCO']}>
                 <IndividualMonitoring 
                   currentUser={currentUser} 
                   onLogout={handleLogout}

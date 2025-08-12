@@ -87,7 +87,7 @@ router.get("/all/army-no/:armyNo", auth, async (req, res) => {
     }
 
     // JSO can only see examinations from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.find({ armyNo: req.user.armyNo })
       if (examination.battalion._id.toString() !== user.battalion.toString()) {
         return res.status(403).json({ message: "Access denied" })
@@ -121,7 +121,7 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
     }
 
     // JSO can only see examinations from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (examination.battalion._id.toString() !== user.battalion.toString()) {
         return res.status(403).json({ message: "Access denied" })
@@ -145,7 +145,7 @@ router.get("/battalion/:battalionId", auth, async (req, res) => {
     }
 
     // JSO can only see examinations from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (user.battalion.toString() !== battalionId) {
         return res.status(403).json({ message: "Access denied to this battalion" })
@@ -173,7 +173,7 @@ router.get("/stats/battalion/:battalionId", auth, async (req, res) => {
     }
 
     // JSO can only see stats from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (user.battalion.toString() !== battalionId) {
         return res.status(403).json({ message: "Access denied to this battalion" })
@@ -280,7 +280,7 @@ router.get("/history/:armyNo", auth, async (req, res) => {
     }
 
     // JSO can only see examinations from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       const personnel = await Personnel.findOne({ armyNo }).populate("battalion")
       

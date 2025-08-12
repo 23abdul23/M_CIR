@@ -11,7 +11,7 @@ const router = express.Router()
 router.post('/submit', auth, async (req, res) => {
   try {
     // JSO only can submit peer evaluation
-    if (req.user.role !== 'JSO') {
+    if (req.user.role !== 'JCO') {
       return res.status(403).json({ message: 'Access denied' })
     }
 
@@ -51,7 +51,7 @@ router.post('/submit', auth, async (req, res) => {
 // Get personnel for evaluation (JSO only)
 router.get('/personnel/:id', auth, async (req, res) => {
   try {
-    if (req.user.role !== 'JSO') {
+    if (req.user.role !== 'JCO') {
       return res.status(403).json({ message: 'Access denied' })
     }
 

@@ -24,7 +24,8 @@ const Login = ({ onLogin }) => {
     if (role === 'USER') {
       // Direct login for users without credentials
       handleDirectLogin('USER')
-    } else {
+    } 
+    else {
       setSelectedRole(role)
       setError('')
     }
@@ -59,7 +60,7 @@ const Login = ({ onLogin }) => {
         case 'CO':
           navigate('/co-dashboard')
           break
-        case 'JSO':
+        case 'JCO':
           navigate('/jso-dashboard')
           break
         default:
@@ -112,7 +113,7 @@ const Login = ({ onLogin }) => {
                 
                 <div 
                   className="role-card jso-card"
-                  onClick={() => handleRoleSelect('JSO')}
+                  onClick={() => handleRoleSelect('JCO')}
                 >
                   <span className="role-icon">👨‍✈️</span>
                   <h3>JCO</h3>

@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Username, password and full name are required' })
     }
 
-    if ((role === 'JSO' || role === 'USER') && !armyNo) {
+    if ((role === 'JCO' || role === 'USER') && !armyNo) {
       return res.status(400).json({ message: 'Army Number is required for JSO and USER roles' })
     }
 

@@ -80,7 +80,7 @@ router.get("/battalion/:battalionId", auth, async (req, res) => {
       return res.status(403).json({ message: "Access denied" })
     }
 
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       // JSO can only see personnel from their battalion
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (user.battalion.toString() !== battalionId) {
@@ -129,7 +129,7 @@ router.get("/army-no/:armyNo", auth, async (req, res) => {
     }
 
     // Role-based access control
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (personnel.battalion._id.toString() !== user.battalion.toString()) {
         return res.status(403).json({ message: "Access denied" })
@@ -187,7 +187,7 @@ router.post("/", auth, async (req, res) => {
 // Update personnel (CO and JSO only)
 router.put("/:id", auth, async (req, res) => {
   try {
-    if (req.user.role === "USER" || req.user.role === "JSO" ) {
+    if (req.user.role === "USER" || req.user.role === "JCO" ) {
       return res.status(403).json({ message: "Access denied" })
     }
 
@@ -230,7 +230,7 @@ router.delete("/:id", auth, async (req, res) => {
     }
 
     // JSO can only delete personnel from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (personnel.battalion.toString() !== user.battalion.toString()) {
         return res.status(403).json({ message: "Access denied" })
@@ -258,7 +258,7 @@ router.delete("/battalion/:battalionId", auth, async (req, res) => {
     const { battalionId } = req.params
 
     // JSO can only delete from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (user.battalion.toString() !== battalionId) {
         return res.status(403).json({ message: "Access denied" })
@@ -292,7 +292,7 @@ router.get("/stats/battalion/:battalionId", auth, async (req, res) => {
     }
 
     // JSO can only see stats from their battalion
-    if (req.user.role === "JSO") {
+    if (req.user.role === "JCO") {
       const user = await User.findOne({ armyNo: req.user.armyNo })
       if (user.battalion.toString() !== battalionId) {
         return res.status(403).json({ message: "Access denied to this battalion" })

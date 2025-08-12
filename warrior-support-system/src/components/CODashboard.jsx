@@ -373,7 +373,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
             <input type='text' name='fullName' onchange='(${handleChange})(event)' required />
             <label>Role</label>
             <select name='role' onchange='(${handleChange})(event)' required>
-              <option value='JSO'>JSO</option>
+              <option value='JCO'>JSO</option>
               <option value='CO'>CO</option>
             </select>
             <label>Army Number</label>
@@ -1042,7 +1042,7 @@ const AddUserForm = ({ onClose, onUserAdded, allBattalions }) => {
           <label>Role</label>
           <select name="role" value={formData.role} onChange={handleChange} required>
             <option value="USER">USER</option>
-            <option value="JSO">JSO</option>
+            <option value="JCO">JSO</option>
             <option value="CO">CO</option>
           </select>
           <label>Army Number</label>

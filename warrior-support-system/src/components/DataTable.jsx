@@ -161,9 +161,9 @@ const handleFilterChange = (column, value) => {
   }
 
 
-  const canManageData = ['CO', 'JSO', 'USER'].includes(currentUser.role)
-  const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
-  const canReview = currentUser.role === 'JSO'
+  const canManageData = ['CO', 'JCO', 'USER'].includes(currentUser.role)
+  const canImportExport = ['CO', 'JCO'].includes(currentUser.role)
+  const canReview = currentUser.role === 'JCO'
   
   const fetchSeverePersonnel = async () => {
     

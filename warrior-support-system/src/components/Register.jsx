@@ -73,7 +73,7 @@ const Register = ({ onRegister }) => {
       return
     }
 
-    if ((formData.role === "JSO" || formData.role === "USER") && !formData.armyNo) {
+    if ((formData.role === "JCO" || formData.role === "USER") && !formData.armyNo) {
       setError("Army Number is required for JSO and USER roles")
       setLoading(false)
       return
@@ -101,7 +101,7 @@ const Register = ({ onRegister }) => {
         case "CO":
           navigate("/co-dashboard")
           break
-        case "JSO":
+        case "JCO":
           navigate("/jso-dashboard")
           break
         case "USER":
@@ -123,7 +123,7 @@ const Register = ({ onRegister }) => {
     USER: "Regular User - Basic access for examinations and limited data management",
   }
 
-  const requiresArmyNo = formData.role === "JSO" || formData.role === "USER"
+  const requiresArmyNo = formData.role === "JCO" || formData.role === "USER"
 
   return (
     <div className="register-container">
@@ -203,7 +203,7 @@ const Register = ({ onRegister }) => {
               <label htmlFor="role">Role *</label>
               <select id="role" name="role" value={formData.role} onChange={handleChange} required>
                 <option value="USER">USER - Regular Soldier</option>
-                <option value="JSO">JSO - Junior Staff Officer</option>
+                <option value="JCO">JSO - Junior Staff Officer</option>
                 <option value="CO">CO - Commanding Officer</option>
               </select>
               <small className="role-description">{roleDescriptions[formData.role]}</small>
@@ -245,7 +245,7 @@ const Register = ({ onRegister }) => {
               </div>
             )}
 
-            {(formData.role === "JSO" || formData.role === "USER") && (
+            {(formData.role === "JCO" || formData.role === "USER") && (
               <div className="form-group">
                 <label htmlFor="battalionId">Battalion</label>
                 <select id="battalionId" name="battalionId" value={formData.battalionId} onChange={handleChange}>

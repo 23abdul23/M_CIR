@@ -88,7 +88,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       return isSevere(manualResult) || isSevere(aiResult);
     });
 
-    console.log(severePersonnels)
 
     try {
       const responce = await axios.post(`/api/severePersonnel`, severePersonnels,
@@ -150,18 +149,41 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         return;
       }
 
-      const filteredData = filteredPersonnel.map((person) => ({
-        'Army No': person.armyNo,
-        'Rank': person.rank,
-        'Name': person.name,
-        'SubBty': person.subBty,
-        'Service': person.service,
-        'Date of Induction': new Date(person.dateOfInduction).toLocaleDateString(),
-        'Med Cat': person.medCat,
-        'Leave Availed': person.leaveAvailed || 'NIL',
-        'Marital Status': person.maritalStatus,
-        'Self Evaluation': person.selfEvaluation,
-      }));
+      const filteredData = filteredPersonnel.map((person) => {
+        // Find latest manual and AI results for this person
+        const resultEntries = results.filter(r => r?.[2] === person.armyNo);
+        let manualResult = null;
+        let aiResult = null;
+        for (const r of resultEntries) {
+          if (!manualResult && r[3] === 'MANUAL') {
+            manualResult = r[0];
+          }
+          if (!aiResult && r[3] === 'AI') {
+            aiResult = r[0];
+          }
+          if (manualResult && aiResult) break;
+        }
+
+        return {
+          'Army No': person.armyNo,
+          'Rank': person.rank,
+          'Name': person.name,
+          'SubBty': person.subBty,
+          'Service': person.service,
+          'Date of Induction': new Date(person.dateOfInduction).toLocaleDateString(),
+          'Med Cat': person.medCat,
+          'Leave Availed': person.leaveAvailed || 'NIL',
+          'Marital Status': person.maritalStatus,
+          'Self Evaluation': person.selfEvaluation,
+          'JCO Review': person.peerEvaluation?.status || 'N/A',
+          'Manual Depression': manualResult ? `${manualResult.depression} (${manualResult.depressionSeverity})` : 'N/A',
+          'Manual Anxiety': manualResult ? `${manualResult.anxiety} (${manualResult.anxietySeverity})` : 'N/A',
+          'Manual Stress': manualResult ? `${manualResult.stress} (${manualResult.stressSeverity})` : 'N/A',
+          'AI Depression': aiResult ? `${aiResult.depression} (${aiResult.depressionSeverity})` : 'N/A',
+          'AI Anxiety': aiResult ? `${aiResult.anxiety} (${aiResult.anxietySeverity})` : 'N/A',
+          'AI Stress': aiResult ? `${aiResult.stress} (${aiResult.stressSeverity})` : 'N/A',
+        };
+      });
 
       const csvContent = [
         Object.keys(filteredData[0]).join(','),
@@ -321,7 +343,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   }, [filterSeverity]);
 
   const canManageData = ['CO'].includes(currentUser.role)
-  const canImportExport = ['CO', 'JSO'].includes(currentUser.role)
+  const canImportExport = ['CO', 'JCO'].includes(currentUser.role)
 
   // If showing individual monitoring, render that component
   if (showIndividualMonitoring && selectedPersonnel) {
