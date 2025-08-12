@@ -48,13 +48,32 @@
 }
 .interview-table {
   width: 100%;
+  min-width: 1200px;
+  max-width: 1200px;
+  margin: 0 auto 24px auto;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 .interview-table th, .interview-table td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
 }
+
+
+/* Set width for each column so you can manually adjust as needed */
+.interview-table th:nth-child(1), .interview-table td:nth-child(1) { /* Army No. */ width: 120px; }
+.interview-table th:nth-child(2), .interview-table td:nth-child(2) { /* Rank */ width: 80px; }
+.interview-table th:nth-child(3), .interview-table td:nth-child(3) { /* Name */ width: 180px; }
+.interview-table th:nth-child(4), .interview-table td:nth-child(4) { /* Service */ width: 70px; }
+.interview-table th:nth-child(5), .interview-table td:nth-child(5) { /* Date of Induction */ width: 100px; }
+.interview-table th:nth-child(6), .interview-table td:nth-child(6) { /* Med Cat */ width: 70px; }
+.interview-table th:nth-child(7), .interview-table td:nth-child(7) { /* Leave Availed */ width: 70px; }
+.interview-table th:nth-child(8), .interview-table td:nth-child(8) { /* Marital Status */ width: 120px; }
+.interview-table th:nth-child(9), .interview-table td:nth-child(9) { /* Self Evaluation */ width: 120px; }
+.interview-table th:nth-child(10), .interview-table td:nth-child(10) { /* JCO Review */ width: 100px; }
+.interview-table th:nth-child(11), .interview-table td:nth-child(11) { /* Results */ width: 320px; }
+.interview-table th:nth-child(12), .interview-table td:nth-child(12) { /* Interview */ width: 100px; }
 .interview-table th {
   background: #f8f9fa;
   font-weight: bold;

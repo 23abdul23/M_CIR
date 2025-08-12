@@ -74,85 +74,97 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                     </div>
                 ) : (
                     <div style={{overflowX:'auto'}}>
-                        <table className="interview-table">
-                            <thead>
-                                <tr>
-                                    <th>Army No.</th>
-                                    <th>Rank</th>
-                                    <th>Name</th>
-                                    <th>SubBty</th>
-                                    <th>Service</th>
-                                    <th>Date of Induction</th>
-                                    <th>Med Cat</th>
-                                    <th>Leave Availed</th>
-                                    <th>Marital Status</th>
-                                    <th>Self Evaluation</th>
-                                    <th>Results</th>
-                                    <th>Interview</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {severePersonnel.map((person) => (
-                                    <tr key={person._id}>
-                                        <td>{person.armyNo}</td>
-                                        <td>{person.rank}</td>
-                                        <td>{person.name}</td>
-                                        <td>{person.subBty}</td>
-                                        <td>{person.service}</td>
-                                        <td>{new Date(person.dateOfInduction).toLocaleDateString()}</td>
-                                        <td>{person.medCat}</td>
-                                        <td>{person.leaveAvailed || 'NIL'}</td>
-                                        <td>{person.maritalStatus}</td>
-                                        <td>{person.selfEvaluation}</td>
-                                        <td>
-                                            {person.dassScores ? (
-                                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
-                                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Depression</td>
-                                                            <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Stress</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className={getSeverityClass(person.dassScores.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
-                                                                {person.dassScores.anxiety} ({person.dassScores.anxietySeverity})
-                                                            </td>
-                                                            <td className={getSeverityClass(person.dassScores.depressionSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
-                                                                {person.dassScores.depression} ({person.dassScores.depressionSeverity})
-                                                            </td>
-                                                            <td className={getSeverityClass(person.dassScores.stressSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
-                                                                {person.dassScores.stress} ({person.dassScores.stressSeverity})
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            ) : (
-                                                <span>No Results found</span>
-                                            )}
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                checked={!!interviewChecked[person._id]}
-                                                onChange={e => setInterviewChecked(prev => ({ ...prev, [person._id]: e.target.checked }))}
-                                            />
-                                            {interviewChecked[person._id] && (
-                                                <button
-                                                    className="interview-done-btn"
-                                                    style={{ marginLeft: '8px', padding: '4px 12px', borderRadius: '4px', background: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}
-                                                    onClick={() => interviewDone(person.armyNo)}
-                                                >
-                                                    Done
-                                                </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        {/* Group by subBty */}
+                        {Object.entries(
+                            severePersonnel.reduce((acc, person) => {
+                                const key = person.subBty || 'Unknown';
+                                if (!acc[key]) acc[key] = [];
+                                acc[key].push(person);
+                                return acc;
+                            }, {})
+                        ).map(([subBty, persons]) => (
+                            <div key={subBty} style={{marginBottom:'32px'}}>
+                                <h3 style={{margin:'16px 0', color:'#2c3e50'}}>{subBty}</h3>
+                                <table className="interview-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Army No.</th>
+                                            <th>Rank</th>
+                                            <th>Name</th>
+                                            <th>Service</th>
+                                            <th>Date of Induction</th>
+                                            <th>Med Cat</th>
+                                            <th>Leave Availed</th>
+                                            <th>Marital Status</th>
+                                            <th>Self Evaluation</th>
+                                            <th>JCO Review</th>
+                                            <th>Results</th>
+                                            <th>Interview</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {persons.map((person) => (
+                                            <tr key={person._id}>
+                                                <td>{person.armyNo}</td>
+                                                <td>{person.rank}</td>
+                                                <td>{person.name}</td>
+                                                <td>{person.service}</td>
+                                                <td>{new Date(person.dateOfInduction).toLocaleDateString()}</td>
+                                                <td>{person.medCat}</td>
+                                                <td>{person.leaveAvailed || 'NIL'}</td>
+                                                <td>{person.maritalStatus}</td>
+                                                <td>{person.selfEvaluation}</td>
+                                                <td>{person.peerEvaluation?.status}</td>
+                                                <td>
+                                                    {person.dassScores ? (
+                                                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Anxiety</td>
+                                                                    <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Depression</td>
+                                                                    <td style={{ fontWeight: 'bold', border: '1px solid #ccc', padding: '2px 6px' }}>Stress</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className={getSeverityClass(person.dassScores.anxietySeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                                                        {person.dassScores.anxiety} ({person.dassScores.anxietySeverity})
+                                                                    </td>
+                                                                    <td className={getSeverityClass(person.dassScores.depressionSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                                                        {person.dassScores.depression} ({person.dassScores.depressionSeverity})
+                                                                    </td>
+                                                                    <td className={getSeverityClass(person.dassScores.stressSeverity)} style={{ border: '1px solid #ccc', padding: '2px 6px', borderRadius: '4px' }}>
+                                                                        {person.dassScores.stress} ({person.dassScores.stressSeverity})
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    ) : (
+                                                        <span>No Results found</span>
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={!!interviewChecked[person._id]}
+                                                        onChange={e => setInterviewChecked(prev => ({ ...prev, [person._id]: e.target.checked }))}
+                                                    />
+                                                    {interviewChecked[person._id] && (
+                                                        <button
+                                                            className="interview-done-btn"
+                                                            style={{ marginLeft: '8px', padding: '4px 12px', borderRadius: '4px', background: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}
+                                                            onClick={() => interviewDone(person.armyNo)}
+                                                        >
+                                                            Done
+                                                        </button>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ))}
                     </div>
                 )}
-                
             </div>
         </>
     );

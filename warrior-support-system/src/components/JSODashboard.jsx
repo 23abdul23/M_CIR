@@ -109,7 +109,7 @@ const JSODashboard = ({ currentUser, onLogout }) => {
           <div className="jso-title-section">
             <div>
               <h1 className="jso-title">SOLDIER SUPPORT SYSTEM</h1>
-              <p className="jso-subtitle">JSO Dashboard - {battalionInfo?.name || 'Battalion'}</p>
+              <p className="jso-subtitle">JCO Dashboard - {battalionInfo?.name || 'Battalion'}</p>
             </div>
           </div>
           <div className="jso-user-info">
