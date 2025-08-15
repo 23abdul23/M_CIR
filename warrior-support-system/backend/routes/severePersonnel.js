@@ -6,7 +6,7 @@ const router = express.Router()
 
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id',auth, async (req, res) => {
   try{
     const id = req.params.id;
     const severePersonnel = await SeverePersonnel.find({battalion : new mongoose.Types.ObjectId(id)});

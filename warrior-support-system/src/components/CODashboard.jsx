@@ -630,10 +630,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
 // Update the AddQuestionModal component
 const AddQuestionModal = ({ onClose, onSave }) => {
-
-  let num = Number(localStorage.getItem("num_questions")) + 1;
+  
+  const defaultPeerOptions = Array.from({ length: 10 }, (_, i) => ({ optionId: `${i + 1}`, optionText: `${i + 1}` }));
   const [formData, setFormData] = useState({
-    questionId: `${num}`,
+    questionId: "",
     questionText: "",
     questionType: "MCQ",
     options: [
@@ -642,9 +642,10 @@ const AddQuestionModal = ({ onClose, onSave }) => {
       { optionId: "2", optionText: "" },
       { optionId: "3", optionText: "" },
     ],
-    order: num,
+    order: "",
   })
   const [loading, setLoading] = useState(false)
+  const [targetDatabase, setTargetDatabase] = useState("manual") // default value
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -654,12 +655,23 @@ const AddQuestionModal = ({ onClose, onSave }) => {
       // Generate questionId if not provided
       const questionId = formData.questionId || Date.now()
 
+      // Always use 1-10 options for peer MCQ
+      let optionsToSend = formData.options;
+      if (targetDatabase === "peer" && formData.questionType === "MCQ") {
+        optionsToSend = Array.from({ length: 10 }, (_, i) => ({ optionId: `${i + 1}`, optionText: `${i + 1}` }));
+      } else if (formData.questionType === "MCQ") {
+        optionsToSend = formData.options.filter((opt) => opt.optionText.trim());
+      } else {
+        optionsToSend = [];
+      }
+
       const questionData = {
         questionId: Number.parseInt(questionId),
         questionText: formData.questionText,
         questionType: formData.questionType,
-        options: formData.questionType === "MCQ" ? formData.options.filter((opt) => opt.optionText.trim()) : [],
+        options: optionsToSend,
         order: Number.parseInt(formData.order),
+        targetDatabase // pass to backend
       }
 
       console.log("Submitting question:", questionData)
@@ -679,6 +691,8 @@ const AddQuestionModal = ({ onClose, onSave }) => {
   }
 
   const handleOptionChange = (index, value) => {
+    // For peer MCQ, do not allow editing
+    if (targetDatabase === "peer" && formData.questionType === "MCQ") return;
     const newOptions = [...formData.options]
     newOptions[index].optionText = value
     setFormData({ ...formData, options: newOptions })
@@ -687,6 +701,11 @@ const AddQuestionModal = ({ onClose, onSave }) => {
   const addTextQuestion = () => {
     setFormData({ ...formData, questionType: "TEXT", options: [] })
   }
+
+  // Set peer MCQ options to 1-10 if needed
+  const effectiveOptions = (targetDatabase === "peer" && formData.questionType === "MCQ")
+    ? defaultPeerOptions
+    : formData.options;
 
   return (
     <div className="modal-overlay">
@@ -699,6 +718,16 @@ const AddQuestionModal = ({ onClose, onSave }) => {
         </div>
 
         <form onSubmit={handleSubmit} className={loading ? "form-loading" : ""}>
+          {/* New: Target Database Selection */}
+          <div className="form-group">
+            <label>Target Database</label>
+            <select value={targetDatabase} onChange={e => setTargetDatabase(e.target.value)} required>
+              <option value="manual">Manual Questions</option>
+              <option value="peer">Peer Questions</option>
+              <option value="ai">AI Questions</option>
+            </select>
+          </div>
+          
           <div className="form-group">
             <label>Question ID (Optional)</label>
             <input
@@ -745,7 +774,7 @@ const AddQuestionModal = ({ onClose, onSave }) => {
           {formData.questionType === "MCQ" && (
             <div className="options-section">
               <label>Answer Options</label>
-              {formData.options.map((option, index) => (
+              {effectiveOptions.map((option, index) => (
                 <div key={index} className="option-group">
                   <div className="option-input-group">
                     <span>{option.optionId}.</span>
@@ -755,6 +784,7 @@ const AddQuestionModal = ({ onClose, onSave }) => {
                       onChange={(e) => handleOptionChange(index, e.target.value)}
                       placeholder={`Option ${option.optionId}`}
                       required={formData.questionType === "MCQ"}
+                      disabled={targetDatabase === "peer" && formData.questionType === "MCQ"}
                     />
                   </div>
                 </div>

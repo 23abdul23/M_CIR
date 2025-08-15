@@ -77,7 +77,7 @@ router.post('/', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied. CO role required.' })
     }
 
-    const { questionId, questionText, questionType, options, order } = req.body
+    const { questionId, questionText, questionType, options, order, targetDatabase } = req.body
 
     // Validate required fields
     if (!questionId || !questionText || !questionType || order === undefined) {
@@ -93,24 +93,41 @@ router.post('/', auth, async (req, res) => {
       })
     }
 
-    // Check if questionId already exists
-    const existingQuestion = await Question.findOne({ questionId })
-    if (existingQuestion) {
-      return res.status(400).json({ 
-        message: 'Question ID already exists' 
-      })
-    }
 
-    const question = new Question({
+    if (targetDatabase == "manual"){
+      const question = new Question({
       questionId,
       questionText,
       questionType,
       options: questionType === 'MCQ' ? options : [],
       order
     })
-
     await question.save()
-    res.status(201).json(question)
+    }
+
+    else if (targetDatabase == "ai"){
+      const question = new QuestionAI({
+        questionId,
+        questionText,
+        questionType,
+        options: questionType === 'MCQ' ? options : [],
+        order
+      })
+      await question.save()
+    }
+
+    else if (targetDatabase == "peer"){
+      const question = new QuestionPeer({
+        questionId,
+        questionText,
+        questionType,
+        options: questionType === 'MCQ' ? options : [],
+        order
+      })
+      await question.save()
+    }
+  
+    res.status(201).json("Success")
   } catch (error) {
     console.error('Error creating question:', error)
     res.status(500).json({ message: 'Error creating question' })
