@@ -7,17 +7,22 @@ const router = express.Router()
 
 
 router.get('/:id',auth, async (req, res) => {
-  try{
+  try {
+    console.log(req.user)
+    // If user is CO, return all severe personnel
+    if (req.user && req.user.role === 'CO') {
+      const severePersonnel = await SeverePersonnel.find({});
+      return res.status(200).json({ data: severePersonnel });
+    }
+    // Otherwise, filter by battalion
     const id = req.params.id;
-    const severePersonnel = await SeverePersonnel.find({battalion : new mongoose.Types.ObjectId(id)});
-    res.status(200).json({data: severePersonnel})
+    const severePersonnel = await SeverePersonnel.find({ battalion: new mongoose.Types.ObjectId(id) });
+    res.status(200).json({ data: severePersonnel });
+  } catch (error) {
+    console.log("Error", error);
+    res.status(500).json({ error: "Error fetching personnel" });
   }
-  catch(error){
-    console.log("Error", error)
-    res.status(500)
-  }
-}
-)
+})
 
 router.post("/", auth , async (req, res) => {
 
