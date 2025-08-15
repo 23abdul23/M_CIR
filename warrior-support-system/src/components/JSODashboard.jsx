@@ -159,33 +159,6 @@ const JSODashboard = ({ currentUser, onLogout }) => {
           onLogout={handleLogout}
         />}
 
-        {/* JSO Profile
-        <section className="jso-csv-section">
-          <h2 className="jso-section-title">My Profile</h2>
-          <div className="jso-csv-actions">
-            <div className="jso-csv-card">
-              <h3 className="jso-csv-title">Officer Information</h3>
-              <div className="jso-csv-description">
-                <p><strong>Name:</strong> {currentUser.fullName}</p>
-                <p><strong>Army No:</strong> {currentUser.armyNo}</p>
-                <p><strong>Rank:</strong> {currentUser.rank}</p>
-                <p><strong>Role:</strong> {currentUser.role}</p>
-                <p><strong>Battalion:</strong> {battalionInfo?.name || 'Not Assigned'}</p>
-              </div>
-            </div>
-
-            <div className="jso-csv-card">
-              <h3 className="jso-csv-title">Responsibilities</h3>
-              <div className="jso-csv-description">
-                <p>• Personnel Management</p>
-                <p>• Peer Evaluations</p>
-                <p>• Data Export/Import</p>
-                <p>• Examination Oversight</p>
-                <p>• Report Generation</p>
-              </div>
-            </div>
-          </div>
-        </section> */}
       </main>
     </div>
   )

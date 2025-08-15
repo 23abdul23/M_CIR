@@ -69,12 +69,7 @@ router.post('/', auth, async (req, res) => {
   try {
     const { name, postedStr } = req.body
 
-    // Check if battalion already exists
-    const existingBattalion = await Battalion.findOne({ postedStr })
-    if (existingBattalion) {
-      return res.status(400).json({ message: 'SubBty already exists' })
-    }
-
+    
     const battalionData = {
       name,
       postedStr,
@@ -91,11 +86,9 @@ router.post('/', auth, async (req, res) => {
     const battalion = new Battalion(battalionData)
     await battalion.save()
 
-    await battalion.populate('requestedBy', 'fullName username')
-    await battalion.populate('approvedBy', 'fullName username')
-
     res.status(201).json(battalion)
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 })

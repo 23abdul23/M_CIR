@@ -168,8 +168,10 @@ const handleFilterChange = (column, value) => {
   const fetchSeverePersonnel = async () => {
     
     try {
-      const responce = await axios.get(`/api/severePersonnel`,
-        {headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
+      const responce = await axios.get(`/api/severePersonnel/${currentUser.battalion._id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        }
       )
       setInterviewPersonnel(responce.data.data)
     }
@@ -178,13 +180,12 @@ const handleFilterChange = (column, value) => {
     }
   }
 
-
   return (
     <div className="datatable-container">
       
       <div className="datatable-content">
         <div className="datatable-header">
-          <h1 className="datatable-subtitle">{currentUser.battalion.name}</h1>
+          <h1 className="datatable-subtitle">{currentUser.battalion.name +' (' + currentUser.battalion.postedStr +")"}</h1>
         </div>
 
         <div className="datatable-actions">

@@ -561,11 +561,33 @@ const CombinedAssessment = () => {
     }
   };
   
-  const handleNext = () => {
+  const handleNext = async () => {
     // Prevent navigation during audio processing
     if (isProcessingAudio) {
       console.log('⚠️ Cannot navigate while processing audio');
       return;
+    }
+
+    // If manualInput is present (user typed answer), send to hindi_sentiment API and wait for response
+    if (manualInput && manualInput.trim()) {
+      setIsSubmitting(true);
+      try {
+        const response = await axios.post(
+          'http://localhost:8000/api/get_sentiment',
+          { text: manualInput },
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+
+        console.log(response.data)
+        // Optionally, you can use response.data here (e.g., save sentiment)
+        // For now, just proceed to next question after response
+      } catch (error) {
+        console.error('Error sending manual input to sentiment API:', error);
+        alert('Failed to analyze your answer. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
+      setIsSubmitting(false);
     }
 
     if (currentQuestionIndex < questions.length - 1) {
@@ -573,8 +595,7 @@ const CombinedAssessment = () => {
       setVoiceTranscript('');
       setManualInput('');
       resetTranscript();
-    } 
-    else {
+    } else {
       handleSubmit();
     }
   };

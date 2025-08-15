@@ -46,20 +46,29 @@ const UserRegister = ({ onRegister }) => {
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-
-    // Clear army number and rank if role is CO
-    if (name === "role" && value === "CO") {
-      setFormData((prev) => ({
-        ...prev,
+    const { name, value } = e.target;
+    if (name === "battalion") {
+      // Find the selected battalion object
+      const selectedBattalion = battalions.find(b => b._id === value);
+      setFormData({
+        ...formData,
+        battalion: value,
+        subBty: selectedBattalion ? selectedBattalion.postedStr : '',
+      });
+    } else {
+      setFormData({
+        ...formData,
         [name]: value,
-        armyNo: "",
-        rank: "",
-      }))
+      });
+      // Clear army number and rank if role is CO
+      if (name === "role" && value === "CO") {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value,
+          armyNo: "",
+          rank: "",
+        }));
+      }
     }
   }
 
@@ -167,20 +176,7 @@ const UserRegister = ({ onRegister }) => {
                 />
                 </div>
                 
-                <div className="form-group">
-                <label>COY/SQN/BTY</label>
                 
-                <select 
-                    value={formData.subBty} 
-                    onChange={(e) => setFormData({ ...formData, subBty: e.target.value })}
-                >
-                    <option value="">SELECT Sub BN</option>
-                    <option value="P Bty">P Bty</option>
-                    <option value="Q Bty">Q Bty</option>
-                    <option value="R Bty">R Bty</option>
-                    <option value="HQ Bty">HQ Bty</option>
-                </select>
-                </div>
                 
                 <div className="form-group">
                 <label>SERVICE (YEARS)</label>
@@ -255,7 +251,7 @@ const UserRegister = ({ onRegister }) => {
                 <option value="">Select Battalion</option>
                 {battalions.map((battalion) => (
                 <option key={battalion._id} value={battalion._id}>
-                    {battalion.name}
+                    {battalion.name + " (" + battalion.postedStr + ")"}
                 </option>
                 ))}
             </select>

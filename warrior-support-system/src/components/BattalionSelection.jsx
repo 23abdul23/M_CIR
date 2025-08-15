@@ -34,9 +34,8 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
   }
 
   const handleProceed = () => {
-    if (selectedBattalion && selectedSubBattalion) {
+    if (selectedBattalion) {
       localStorage.setItem('selectedBattalion', selectedBattalion)
-      localStorage.setItem('selectedSubBattalion', selectedSubBattalion)
       navigate('/decide-assessment')
     }
   }
@@ -84,27 +83,12 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
             <option value="">SELECT BN</option>
             {battalions.map(battalion => (
               <option key={battalion._id} value={battalion._id}>
-                {battalion.name}
+                {battalion.name + ' (' + battalion.postedStr + ')'}
               </option>
             ))}
           </select>
 
-          <label>SELECT Sub BN</label>
-          <select 
-            value={selectedSubBattalion} 
-            onChange={(e) => setSelectedSubBattalion(e.target.value)}
-          >
-            <option value="">SELECT Sub BN</option>
-            <option value="P Bty">P Bty</option>
-            <option value="Q Bty">Q Bty</option>
-            <option value="R Bty">R Bty</option>
-            <option value="HQ Bty">HQ Bty</option>
-          </select>
-
-          {/* <div className="action-buttons">
-            <button onClick={() => setShowAddForm(true)}>ADD BN</button>
-            <button onClick={handleDeleteBattalion}>DELETE BN</button>
-          </div> */}
+          
 
           {showAddForm && (
             <form onSubmit={handleAddBattalion} className="add-battalion-form">
@@ -128,7 +112,6 @@ const BattalionSelection = ({ selectedBattalion, setSelectedBattalion, currentUs
           <button 
             onClick={handleProceed} 
             className="proceed-btn"
-            disabled={!selectedBattalion || !selectedSubBattalion}
           >
             Proceed
           </button>

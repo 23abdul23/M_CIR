@@ -8,6 +8,7 @@
   "role": "CO",
   "armyNo": "HG710001A",
   "rank": "COL",
+  "subBty": "",
   "isActive": true,
   "createdAt": {
     "$date": "2025-07-25T04:35:00.000Z"
@@ -21,7 +22,7 @@
   "_id": {
     "$oid": "6883152ffa5537a2db906434"
   },
-  "username": "jso_allahabad",
+  "username": "jso_allahabad_hq",
   "password": "$2a$10$SLJpVLmDvxEsuK324rbiTu.Gbrv44pokLxTQsQO8tpklrOOvbduOO",
   "fullName": "Maj Neha Pandey",
   "role": "JCO",
@@ -30,6 +31,7 @@
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
   },
+  "subBty": "HQ BTY",
   "isActive": true,
   "createdAt": {
     "$date": "2025-07-25T04:35:00.000Z"
@@ -55,6 +57,29 @@
   },
   "updatedAt": {
     "$date": "2025-07-25T05:25:03.040Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689cc4bdaf41d22d7d8a71c6"
+  },
+  "username": "jso_allahabad_p",
+  "password": "$2a$10$zdmYXplVwRBIrC0a4HNTRO8rsJlBgrtLytiztNsU8.mDeryN0dM7.",
+  "fullName": "Abdul Anand",
+  "role": "JCO",
+  "armyNo": "123456AZE",
+  "rank": "HAV",
+  "battalion": {
+    "$oid": "689cb8f4e9d9008ac45bde34"
+  },
+  "subBty": "P BTY",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-08-13T17:00:45.379Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-13T17:00:45.382Z"
   },
   "__v": 0
 }]

@@ -27,12 +27,27 @@ except ImportError as e:
 
 # Add parent directory to path for config import
 sys.path.append(str(Path(__file__).parent.parent.parent))
+
 try:
     from config import MODELS_DIR, HINDI_MODELS, MODEL_CONFIG
 except ImportError:
-    # Fallback configuration
-    MODELS_DIR = Path("data/models")
+    # Fallback configuration with absolute model paths
+    MODELS_DIR = Path(r"./models")
     MODELS_DIR.mkdir(exist_ok=True)
+    HINDI_MODELS = {
+        "sentiment_primary": {
+            "model_name": "ai4bharat/indic-bert",
+            "local_path": MODELS_DIR / "indic-bert"
+        },
+        "sentiment_secondary": {
+            "model_name": "l3cube-pune/hindi-bert-v2",
+            "local_path": MODELS_DIR / "hindi-bert-v2"
+        },
+        "sentiment_fallback": {
+            "model_name": "roberta-base",
+            "local_path": MODELS_DIR / "roberta-base"
+        }
+    }
     MODEL_CONFIG = {"device": "cpu", "local_files_only": True}
 
 class HindiSentimentAnalyzer:
@@ -221,7 +236,7 @@ class HindiSentimentAnalyzer:
             
             # Preprocess text
             processed_text = self.preprocess_hindi_text(text)
-            
+            print("Process: ", processed_text)
             if not processed_text:
                 return {"label": "NEUTRAL", "score": 0.5}
             
@@ -253,6 +268,7 @@ class HindiSentimentAnalyzer:
         processed_text = self.preprocess_hindi_text(text.lower())
 
         if not processed_text:
+            print("No Processed Text\n")
             return {"label": "NEUTRAL", "score": 0.5}
 
         # Count keyword matches with better scoring
@@ -286,7 +302,6 @@ class HindiSentimentAnalyzer:
                 negative_score *= 1.5  # Boost negative
 
         total_score = positive_score + negative_score
-
         if positive_score > negative_score:
             confidence = min(0.7 + (positive_score / max(total_score, 1)) * 0.3, 0.95)
             return {"label": "POSITIVE", "score": confidence}

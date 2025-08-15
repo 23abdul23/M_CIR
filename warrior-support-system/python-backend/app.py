@@ -24,6 +24,7 @@ from models.enhanced_voice_processor import EnhancedVoiceProcessor
 from models.facial_behavior_analyzer import EnhancedFacialBehaviorAnalyzer
 from models.advanced_voice_mental_health import AdvancedVoiceMentalHealthAnalyzer
 from models.weighted_ai_assessment import WeightedAIAssessmentEngine
+from models.hindi_sentiment import HindiSentimentAnalyzer
 
 from app_voice_enhanced import *
 # from fucntions import * 
@@ -248,6 +249,28 @@ async def translate_audio(audio: UploadFile = File(...)):
             print(f"⚠️ Cleanup error: {cleanup_error}")
 
 
+# For sentiment API: use Pydantic model for JSON input
+from pydantic import BaseModel
+
+class SentimentRequest(BaseModel):
+    text: str
+
+@app.post("/api/get_sentiment")
+async def get_sentiment(request: SentimentRequest):
+    print(request)
+    hindi_sentiment_analyzer = HindiSentimentAnalyzer()
+    results = hindi_sentiment_analyzer.analyze_sentiment(request.text)
+
+    results2 = hindi_sentiment_analyzer.analyze_sentiment_with_model(request.text)
+    print("Results 1: ",results)
+
+    print("Results 2: ",results2)
+
+    
+    return {"sentiment": results}
+    
+
+
     
 SESSIONS: Dict[str, list] = {}  # Stores frame paths per session
 DURATION = 0
@@ -269,10 +292,6 @@ async def stream_frame(frame: UploadFile = File(...), session_id: str = Form(...
         if session_id not in SESSIONS:
             SESSIONS[session_id] = []
         SESSIONS[session_id].append(file_path)
-
-        print(f"Received frame {len(SESSIONS[session_id])} for session {session_id}")
-
-        
         
         return {"status": "frame received", "frame_count": len(SESSIONS[session_id])}
     

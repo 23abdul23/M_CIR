@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['CO', 'JCO', 'JCO', 'USER'],
+    enum: ['CO', 'JCO', 'USER'],
     default: 'USER',
     required: true
   },
@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
   battalion: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Battalion'
+  },
+  subBty : {
+    type: String,
+    trim: true,
+    uppercase: true
   },
   isActive: {
     type: Boolean,

@@ -1,13 +1,16 @@
 const express = require("express")
+const mongoose = require("mongoose")
 const SeverePersonnel = require("../models/SeverePersonnel")
 const auth = require("../middleware/auth")
 const router = express.Router()
 
 
 
-router.get('/', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try{
-    res.status(200).json({data: await SeverePersonnel.find({})})
+    const id = req.params.id;
+    const severePersonnel = await SeverePersonnel.find({battalion : new mongoose.Types.ObjectId(id)});
+    res.status(200).json({data: severePersonnel})
   }
   catch(error){
     console.log("Error", error)

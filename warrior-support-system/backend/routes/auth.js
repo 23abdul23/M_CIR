@@ -17,7 +17,9 @@ router.post('/register', async (req, res) => {
       role = 'USER',
       armyNo,
       rank,
-      battalionId
+      battalionId,
+      battalionName,
+      subBty
     } = req.body
 
     // Check if user with same army number exists
@@ -37,6 +39,16 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Army Number is required for JSO and USER roles' })
     }
 
+    let battalionObjId = battalionId
+    // If battalionName and subBty are provided, find the matching battalion
+    const battalionDoc = await Battalion.findOne({ name: battalionId, postedStr: subBty });
+    
+    console.log(battalionDoc)
+
+    if (battalionDoc) {
+      battalionObjId = battalionDoc._id;
+    }
+
     const newUser = new User({
       username: username.trim(),
       password,
@@ -44,7 +56,8 @@ router.post('/register', async (req, res) => {
       role,
       armyNo: armyNo ? armyNo.toUpperCase() : undefined,
       rank: rank ? rank.toUpperCase() : undefined,
-      battalion: battalionId || undefined
+      battalion: battalionObjId || undefined,
+      subBty: subBty || undefined
     })
 
     await newUser.save()
@@ -108,6 +121,43 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 })
+
+
+
+router.get('/available-subbty', async (req, res) => {
+  try {
+    // Get all approved battalions
+    const battalions = await Battalion.find({ status: 'APPROVED' });
+    // Standard subBtys
+    const subBtys = ['P Bty', 'Q Bty', 'R Bty', 'HQ Bty'];
+    // Get all JCO users with battalion and subBty set
+    const users = await User.find({ role: 'JCO', battalion: { $ne: null }, subBty: { $ne: null } });
+
+    // Map: subBty -> array of battalion info where that subBty is assigned to a JCO
+    const subBtyMap = {};
+    users.forEach(user => {
+      const subBty = user.subBty;
+      const battalion = battalions.find(b => b._id.equals(user.battalion));
+      if (battalion) {
+        if (!subBtyMap[subBty]) subBtyMap[subBty] = [];
+        subBtyMap[subBty].push({
+          battalionId: battalion._id,
+          battalionName: battalion.name,
+          postedStr: battalion.postedStr,
+          status: battalion.status,
+          createdAt: battalion.createdAt,
+          approvedAt: battalion.approvedAt,
+        });
+      }
+    });
+
+    res.json(subBtyMap);
+  } catch (error) {
+    console.log("Error: ", error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 
 // Get current user
 router.get('/me', auth, async (req, res) => {

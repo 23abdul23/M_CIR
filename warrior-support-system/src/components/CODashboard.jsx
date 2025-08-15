@@ -22,6 +22,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const [reExamDate, setReExamDate] = useState("")
   const [reExamPeriod, setReExamPeriod] = useState(10)
 
+  
   const [stats, setStats] = useState({
     totalBattalions: 0,
     pendingApprovals: 0,
@@ -29,6 +30,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
   })
   const [pendingUsers, setPendingUsers] = useState([])
   const [showAddUserForm, setShowAddUserForm] = useState(false)
+  
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -39,6 +41,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
     fetchPendingUsers()
     fetchSubBtys()
   }, [])
+
+  
 
   const fetchSubBtys = async () => {
     try {
@@ -62,7 +66,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
       console.error("Error fetching usernames:",error)
     }
   }
+  // For battalion dropdown, get all unique battalionIds and names from the API response
   
+  
+
   const fetchAllBattalions = async () => {
     try {
       const response = await axios.get("/api/battalion", {
@@ -290,7 +297,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
       
       showNotification("Battalion added successfully", "success")
     } catch (error) {
-      window.location.reload();
+      // window.location.reload();
       showNotification("Error adding battalion", "error")
     }
   }
@@ -312,110 +319,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
     }
   }
 
-  const addNewUsername = async () => {
-    const newUser = {
-      username: "",
-      password: "",
-      fullName: "",
-      role: "USER",
-      armyNo: "",
-      rank: "",
-      battalionId: "",
-    };
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      newUser[name] = value;
-    };
-
-    const handleSubmit = async () => {
-      try {
-        const resoponce = await axios.post(
-          "/api/auth/register",
-          newUser,
-          {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-          }
-        );
-        alert("User added successfully");
-        document.querySelector(".modal-overlay").remove();
-        window.location.reload();
-      } catch (error) {
-        console.error("Error adding user:", error);
-      }
-    };
-
-    const handleClose = () => {
-      document.querySelector(".modal-overlay").remove();
-    };
-
-    const battalionOptions = allBattalions
-      .map((battalion) => `<option value='${battalion._id}'>${battalion.name}</option>`)
-      .join("");
-
-    const subBtyoptions = btys
-      .map((b) => `<option value='${battalion._id}'>${battalion.name}</option>`)
-      .join("");
-
-    const formHtml = `
-      <div class='modal-overlay'>
-        <div class='modal-content'>
-          <div class='modal-header'>
-            <h2>Add New User</h2>
-            <button class='close-btn' onclick='(${handleClose})()'>×</button>
-          </div>
-          <form>
-            <label>Username</label>
-            <input type='text' name='username' onchange='(${handleChange})(event)' required />
-            <label>Password</label>
-            <input type='password' name='password' onchange='(${handleChange})(event)' required />
-            <label>Full Name</label>
-            <input type='text' name='fullName' onchange='(${handleChange})(event)' required />
-            <label>Role</label>
-            <select name='role' onchange='(${handleChange})(event)' required>
-              <option value='JCO'>JSO</option>
-              <option value='CO'>CO</option>
-            </select>
-            <label>Army Number</label>
-            <input type='text' name='armyNo' onchange='(${handleChange})(event)' required />
-            <label>RANK</label>
-                    <select
-                        id="rank"
-                        name="rank"
-                        value={formData.rank}
-                        onChange=(${handleChange})
-                      >
-                        <option value="">Select Rank</option>
-                        <option value="Lt Col">Lt Col</option>
-                        <option value="Maj">Maj</option>
-                        <option value="Capt">Capt</option>
-                        <option value="Lt">Lt</option>
-                        <option value="2Lt">2Lt</option>
-                        <option value="Sub">Sub</option>
-                        <option value="Nb Sub">Nb Sub</option>
-                        <option value="Hav">Hav</option>
-                        <option value="Nk">Nk</option>
-                        <option value="L/Nk">L/Nk</option>
-                        <option value="Sep">Sep</option>
-                        <option value="Rfn">Rfn</option>
-                    </select>
-            <label>Battalion ID</label>
-            <select name='battalionId' onchange='(${handleChange})(event)'>
-              <option value=''>Select Battalion</option>
-              ${battalionOptions}
-            </select>
-            <select name='subBty' onchange='(${handleChange})(event)'>
-              <option value=''>Select SubBty</option>
-              ${subBtyoptions}
-            </select>
-            <button type='button' onclick='(${handleSubmit})()'>Submit</button>
-          </form>
-        </div>
-      </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", formHtml);
-  };
 
 
   const handleSetReExamPeriod = async () => {
@@ -524,7 +427,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                   .filter((b) => b.status === "APPROVED")
                   .map((battalion) => (
                     <option key={battalion._id} value={battalion._id}>
-                      {battalion.name}
+                      {battalion.name + " (" + battalion.postedStr + ")"}
                     </option>
                   ))}
               </select>
@@ -548,7 +451,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
                   .filter((b) => b.status === "APPROVED")
                   .map((battalion) => (
                     <option key={battalion._id} value={battalion._id}>
-                      {battalion.name}
+                      {battalion.name + " (" + battalion.postedStr + ")"}
                     </option>
                   ))}
               </select>
@@ -561,17 +464,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
           
         </section>
         
-        {/* Battalion Management
-        <section className="co-battalion-management">
-          <h2 className="co-section-title">Re Examination Requests</h2>
-          {pendingUsers.length > 0 ? (
-            <div className="co-battalion-grid">
-              
-            </div>
-          ) : (
-            <p className="text-center">No Re Examination Requests</p>
-          )}
-        </section> */}
 
 
         {/* Battalion Management */}
@@ -592,7 +484,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
                   </div>
                   <div className="co-battalion-info">
                     <div>
-                      <strong>Posted Strength:</strong> {user.addedBattalion || allBattalions.find(b => b._id === user.battalion)?.name || "Unknown"}
+                      <strong>Battalion:</strong> {user.addedBattalion || allBattalions.find(b => b._id === user.battalion)?.name || "Unknown"}
+                    </div>
+                    <div>
+                      <strong>SubBty:</strong> {user.subBty}
                     </div>
                     <div>
                       <strong>Created:</strong> {new Date(user.createdAt).toLocaleDateString()}
@@ -684,7 +579,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
           <AddUserForm
             onClose={() => setShowAddUserForm(false)}
             onUserAdded={fetchAllUsernames}
-            allBattalions={allBattalions}
           />
         )}
 
@@ -990,21 +884,83 @@ const ViewQuestionsModal = ({ questions, onClose, onRefresh, showNotification })
 }
 
 // Add User Form Component
-const AddUserForm = ({ onClose, onUserAdded, allBattalions }) => {
+const AddUserForm = ({ onClose, onUserAdded }) => {
   const [formData, setFormData] = useState({
     username: "",
-    password: "",
+    password: "123456",
     fullName: "",
-    role: "USER",
+    role: "JCO",
     armyNo: "",
     rank: "",
     battalionId: "",
+    battalionName : "",
+    subBty: "",
   });
+
+  const [battalionOptions, setBattalionOptions] = useState([])
+  const [availableBattalionSubBtys, setAvailableBattalionSubBtys] = useState([])
+
+  const fetchAvailableBattalionSubBtys = async () => {
+    try {
+      const response = await axios.get("/api/auth/available-subbty", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setAvailableBattalionSubBtys(response.data);
+    } catch (error) {
+      console.error("Error fetching available battalion/subBty:", error);
+    }
+  }
+
+  const fetchAllBattalions = async () => {
+    try {
+      const response = await axios.get("/api/battalion", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+
+      const X = new Set(response.data)
+      const Y = new Set([...X].map(obj => obj.name));
+      setBattalionOptions([...Y])
+    } catch (error) {
+      console.error("Error fetching battalions:", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchAllBattalions(),
+    fetchAvailableBattalionSubBtys()
+  }, [])
+
+
+  // Standard subBtys
+  const standardSubBtys = ['P BTY', 'Q BTY', 'R BTY', 'HQ BTY'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "battalionId") {
+      // Find the battalion name for the selected id
+      const selected = battalionOptions.find(b => b.id === value);
+      setFormData({
+        ...formData,
+        battalionId: value,
+        battalionName: selected ? selected.name : "",
+        subBty: ""
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
+
+  // Find selected battalion's assigned subBtys (from availableBattalionSubBtys API response)
+  let assignedSubBtys = [];
+  if (formData.battalionId && availableBattalionSubBtys && typeof availableBattalionSubBtys === 'object' && !Array.isArray(availableBattalionSubBtys)) {
+    // Find the selected battalion name
+    const selectedBattalionName = formData.battalionId;
+    assignedSubBtys = Object.entries(availableBattalionSubBtys)
+      .filter(([subBty, arr]) => Array.isArray(arr) && arr.some(b => b.battalionName === selectedBattalionName))
+      .map(([subBty]) => subBty);
+  }
+  // The subBtys that are not yet assigned for this battalion
+  const subBtyOptions = standardSubBtys.filter(subBty => !assignedSubBtys.includes(subBty));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -1019,11 +975,17 @@ const AddUserForm = ({ onClose, onUserAdded, allBattalions }) => {
       alert("User added successfully");
       onUserAdded();
       onClose();
+
+      window.location.reload();
+
     } catch (error) {
       console.error("Error adding user:", error);
       alert("Error adding user");
     }
   };
+
+
+  
 
   return (
     <div className="modal-overlay">
@@ -1042,7 +1004,7 @@ const AddUserForm = ({ onClose, onUserAdded, allBattalions }) => {
           <label>Role</label>
           <select name="role" value={formData.role} onChange={handleChange} required>
             <option value="USER">USER</option>
-            <option value="JCO">JSO</option>
+            <option value="JCO">JCO</option>
             <option value="CO">CO</option>
           </select>
           <label>Army Number</label>
@@ -1063,11 +1025,18 @@ const AddUserForm = ({ onClose, onUserAdded, allBattalions }) => {
             <option value="Sep">Sep</option>
             <option value="Rfn">Rfn</option>
           </select>
-          <label>Battalion ID</label>
-          <select name="battalionId" value={formData.battalionId} onChange={handleChange}>
+          <label>Battalion</label>
+          <select name="battalionId" value={formData.battalionId} onChange={handleChange} required>
             <option value="">Select Battalion</option>
-            {allBattalions.map((battalion) => (
-              <option key={battalion._id} value={battalion._id}>{battalion.name}</option>
+            {battalionOptions.map((b, index) => (
+              <option key={index} value={b}>{b}</option>
+            ))}
+          </select>
+          <label>SubBty</label>
+          <select name="subBty" value={formData.subBty} onChange={handleChange} required disabled={!formData.battalionId}>
+            <option value="">Select SubBty</option>
+            {subBtyOptions.map(subBty => (
+              <option key={subBty} value={subBty}>{subBty}</option>
             ))}
           </select>
           <button type="submit">Submit</button>

@@ -1,180 +1,674 @@
-[{
-  "_id": {
-    "$oid": "68825358d62b6e71084d1bab"
+[
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bab" },
+    "questionId": 1,
+    "questionText": "Kya aap chhoti-chhoti baaton se jaldi pareshan ho jaate hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 1,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
   },
-  "questionId": 1,
-  "questionText": "Maine paya ki main bahut chhoti-chhoti baton se pareshan ho jata hoon",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "0",
-      "optionText": "Bilkul bhi lagu nahi hota mujhe"
-    },
-    {
-      "optionId": "1",
-      "optionText": "Thoda bahut lagu hota hai mujhe"
-    },
-    {
-      "optionId": "2",
-      "optionText": "Kafi hadd tak lagu hota hai mujhe"
-    },
-    {
-      "optionId": "3",
-      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
-    }
-  ],
-  "isActive": true,
-  "order": 1,
-  "createdAt": "2025-07-24T15:36:00.000Z",
-  "updatedAt": "2025-07-24T15:36:00.000Z"
-},
-{
-  "_id": {
-    "$oid": "68825358d62b6e71084d1bac"
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bac" },
+    "questionId": 2,
+    "questionText": "Kya aapne muh sukhepan mehsoos kiya hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 2,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
   },
-  "questionId": 2,
-  "questionText": "Mujhe apne muh ki sookhapan ka ehsaas hua",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "0",
-      "optionText": "Bilkul bhi lagu nahi hota mujhe"
-    },
-    {
-      "optionId": "1",
-      "optionText": "Thoda bahut lagu hota hai mujhe"
-    },
-    {
-      "optionId": "2",
-      "optionText": "Kafi hadd tak lagu hota hai mujhe"
-    },
-    {
-      "optionId": "3",
-      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
-    }
-  ],
-  "isActive": true,
-  "order": 2,
-  "createdAt": "2025-07-24T15:36:00.000Z",
-  "updatedAt": "2025-07-24T15:36:00.000Z"
-},
-{
-  "_id": {
-    "$oid": "68825358d62b6e71084d1bad"
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bad" },
+    "questionId": 3,
+    "questionText": "Kya aapko lagta hai ki aap positive bhavna mehsoos nahi kar pa rahe hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 3,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
   },
-  "questionId": 3,
-  "questionText": "Main bilkul bhi positive feeling mehsoos nahi kar pa raha tha",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "0",
-      "optionText": "Bilkul bhi lagu nahi hota mujhe"
-    },
-    {
-      "optionId": "1",
-      "optionText": "Thoda bahut lagu hota hai mujhe"
-    },
-    {
-      "optionId": "2",
-      "optionText": "Kafi hadd tak lagu hota hai mujhe"
-    },
-    {
-      "optionId": "3",
-      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
-    }
-  ],
-  "isActive": true,
-  "order": 3,
-  "createdAt": "2025-07-24T15:36:00.000Z",
-  "updatedAt": "2025-07-24T15:36:00.000Z"
-},
-{
-  "_id": {
-    "$oid": "68825358d62b6e71084d1bae"
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bae" },
+    "questionId": 4,
+    "questionText": "Kya aapko bina mehnat ke saans lene mein dikkat hui hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 4,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
   },
-  "questionId": 4,
-  "questionText": "Mujhe saans lene mein dikkat hui (jaise bahut tez saans chalna ya bina physical mehnat ke saans rukna)",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "0",
-      "optionText": "Bilkul bhi lagu nahi hota mujhe"
-    },
-    {
-      "optionId": "1",
-      "optionText": "Thoda bahut lagu hota hai mujhe"
-    },
-    {
-      "optionId": "2",
-      "optionText": "Kafi hadd tak lagu hota hai mujhe"
-    },
-    {
-      "optionId": "3",
-      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
-    }
-  ],
-  "isActive": true,
-  "order": 4,
-  "createdAt": "2025-07-24T15:36:00.000Z",
-  "updatedAt": "2025-07-24T15:36:00.000Z"
-},
-{
-  "_id": {
-    "$oid": "68825358d62b6e71084d1baf"
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1baf" },
+    "questionId": 5,
+    "questionText": "Kya aapko koi kaam shuru karna mushkil lagta hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 5,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
   },
-  "questionId": 5,
-  "questionText": "Main shuru hi nahi kar pa raha tha",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "0",
-      "optionText": "Bilkul bhi lagu nahi hota mujhe"
-    },
-    {
-      "optionId": "1",
-      "optionText": "Thoda bahut lagu hota hai mujhe"
-    },
-    {
-      "optionId": "2",
-      "optionText": "Kafi hadd tak lagu hota hai mujhe"
-    },
-    {
-      "optionId": "3",
-      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
-    }
-  ],
-  "isActive": true,
-  "order": 5,
-  "createdAt": "2025-07-24T15:36:00.000Z",
-  "updatedAt": "2025-07-24T15:36:00.000Z"
-},
-{
-  "_id": {
-    "$oid": "68825358d62b6e71084d1bb0"
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb0" },
+    "questionId": 6,
+    "questionText": "Kya aap situations par zyada react karte hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 6,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
   },
-  "questionId": 6,
-  "questionText": "Main situations par zyada react karta tha",
-  "questionType": "MCQ",
-  "options": [
-    {
-      "optionId": "0",
-      "optionText": "Bilkul bhi lagu nahi hota mujhe"
-    },
-    {
-      "optionId": "1",
-      "optionText": "Thoda bahut lagu hota hai mujhe"
-    },
-    {
-      "optionId": "2",
-      "optionText": "Kafi hadd tak lagu hota hai mujhe"
-    },
-    {
-      "optionId": "3",
-      "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe"
-    }
-  ],
-  "isActive": true,
-  "order": 6,
-  "createdAt": "2025-07-24T15:36:00.000Z",
-  "updatedAt": "2025-07-24T15:36:00.000Z"
-}]
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb1" },
+    "questionId": 7,
+    "questionText": "Kya aapko pair ya sharir mein kampan mehsoos hota hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 7,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb2" },
+    "questionId": 8,
+    "questionText": "Kya aapko relax karna mushkil lagta hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 8,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb3" },
+    "questionId": 9,
+    "questionText": "Kya aap aisi situations mein rahe jahan bahut anxiety hui aur sirf khatam hone par relief mila?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 9,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb4" },
+    "questionId": 10,
+    "questionText": "Kya aapko lagta hai ki aage kuch dekhne layak nahi hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 10,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb5" },
+    "questionId": 11,
+    "questionText": "Kya aap jaldi irritate ho jaate hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 11,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb6" },
+    "questionId": 12,
+    "questionText": "Kya aapko lagta hai ki aap bahut nervous energy kharch kar rahe hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 12,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb7" },
+    "questionId": 13,
+    "questionText": "Kya aapko udaasi ya depression mehsoos hua hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 13,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb8" },
+    "questionId": 14,
+    "questionText": "Kya aap delay hone par impatient ho jaate hain, jaise traffic light ya lift?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 14,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bb9" },
+    "questionId": 15,
+    "questionText": "Kya aapko behoshi jaisi feeling hui hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 15,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bba" },
+    "questionId": 16,
+    "questionText": "Kya aapne har cheez mein interest khona mehsoos kiya hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 16,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bbb" },
+    "questionId": 17,
+    "questionText": "Kya aapko lagta hai ki aap kisi kaam ke nahi hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 17,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bbc" },
+    "questionId": 18,
+    "questionText": "Kya aap pehle se zyada touchy ho gaye hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 18,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bbd" },
+    "questionId": 19,
+    "questionText": "Kya aapke haathon mein bina wajah paseena aata hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 19,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bbe" },
+    "questionId": 20,
+    "questionText": "Kya aap bina wajah ke darr mehsoos karte hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 20,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bbf" },
+    "questionId": 21,
+    "questionText": "Kya aapko lagta hai ki zindagi bekaar hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 21,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc0" },
+    "questionId": 22,
+    "questionText": "Kya aapko apne aap ko shaant karna mushkil lagta hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 22,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc1" },
+    "questionId": 23,
+    "questionText": "Kya aapko nigalne mein dikkat hoti hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar vaqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 23,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc2" },
+    "questionId": 24,
+    "questionText": "Kya aap kisi bhi kaam se maza nahi le pa rahe hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 24,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc3" },
+    "questionId": 25,
+    "questionText": "Kya aapko bina mehnat ke dil tez chalna ya miss karna mehsoos hota hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 25,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc4" },
+    "questionId": 26,
+    "questionText": "Kya aapko gehri udaasi mehsoos hoti hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 26,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc5" },
+    "questionId": 27,
+    "questionText": "Kya aap bahut chidhchidhapan mehsoos karte hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 27,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc6" },
+    "questionId": 28,
+    "questionText": "Kya aapko lagta hai ki aap panic hone ke kareeb hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 28,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc7" },
+    "questionId": 29,
+    "questionText": "Kya aap upset hone ke baad shaant nahi ho pate hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 29,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc8" },
+    "questionId": 30,
+    "questionText": "Kya aapko darr hai ki koi chhoti si ajeeb baat aapko pareshan kar degi?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 30,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bc9" },
+    "questionId": 31,
+    "questionText": "Kya aapko kisi bhi cheez ke liye utsaah mehsoos nahi hota?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 31,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bca" },
+    "questionId": 32,
+    "questionText": "Kya aapko interruptions bardasht karna mushkil lagta hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 32,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bcb" },
+    "questionId": 33,
+    "questionText": "Kya aap nervous tension mehsoos karte hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 33,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bcc" },
+    "questionId": 34,
+    "questionText": "Kya aapko lagta hai ki aap bilkul bekaar hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 34,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bcd" },
+    "questionId": 35,
+    "questionText": "Kya aapko apne kaam mein rukawat bardasht nahi hoti?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 35,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bce" },
+    "questionId": 36,
+    "questionText": "Kya aapne kabhi bahut zyada darr mehsoos kiya hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar waqt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 36,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bcf" },
+    "questionId": 37,
+    "questionText": "Kya aapko future mein koi ummeed nahi dikhti?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar wakt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 37,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bd0" },
+    "questionId": 38,
+    "questionText": "Kya aapko lagta hai ki zindagi be-matlab hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar wakt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 38,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bd1" },
+    "questionId": 39,
+    "questionText": "Kya aap aksar pareshan mehsoos karte hain?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar wakt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 39,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bd2" },
+    "questionId": 40,
+    "questionText": "Kya aapko darr hai ki aap panic situation mein aa kar beizzat ho jaayenge?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar wakt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 40,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bd3" },
+    "questionId": 41,
+    "questionText": "Kya aapke haathon mein kampan hoti hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar wakt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 41,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  },
+  {
+    "_id": { "$oid": "68825358d62b6e71084d1bd4" },
+    "questionId": 42,
+    "questionText": "Kya aapko kisi bhi kaam ko shuru karne ke liye himmat jutana mushkil lagta hai?",
+    "questionType": "MCQ",
+    "options": [
+      { "optionId": "0", "optionText": "Bilkul bhi lagu nahi hota mujhe" },
+      { "optionId": "1", "optionText": "Thoda bahut lagu hota hai mujhe" },
+      { "optionId": "2", "optionText": "Kafi hadd tak lagu hota hai mujhe" },
+      { "optionId": "3", "optionText": "Bahut zyada, zyada tar wakt lagu hota hai mujhe" }
+    ],
+    "isActive": true,
+    "order": 42,
+    "createdAt": "2025-07-24T15:36:00.000Z",
+    "updatedAt": "2025-07-24T15:36:00.000Z"
+  }
+]
