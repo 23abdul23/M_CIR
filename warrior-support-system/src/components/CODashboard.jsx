@@ -90,7 +90,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       
-      
+      localStorage.setItem("num_questions", response.data.length)
       setQuestions(response.data)
     } catch (error) {
       console.error("Error fetching questions:", error)
@@ -630,17 +630,19 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
 // Update the AddQuestionModal component
 const AddQuestionModal = ({ onClose, onSave }) => {
+
+  let num = Number(localStorage.getItem("num_questions")) + 1;
   const [formData, setFormData] = useState({
-    questionId: "",
+    questionId: `${num}`,
     questionText: "",
     questionType: "MCQ",
     options: [
-      { optionId: "A", optionText: "" },
-      { optionId: "B", optionText: "" },
-      { optionId: "C", optionText: "" },
-      { optionId: "D", optionText: "" },
+      { optionId: "0", optionText: "" },
+      { optionId: "1", optionText: "" },
+      { optionId: "2", optionText: "" },
+      { optionId: "3", optionText: "" },
     ],
-    order: 1,
+    order: num,
   })
   const [loading, setLoading] = useState(false)
 
@@ -980,7 +982,7 @@ const AddUserForm = ({ onClose, onUserAdded }) => {
 
     } catch (error) {
       console.error("Error adding user:", error);
-      alert("Error adding user");
+      alert("Error Adding User, Battalion Not Formed Yet");
     }
   };
 

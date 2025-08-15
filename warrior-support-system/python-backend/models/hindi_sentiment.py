@@ -236,7 +236,7 @@ class HindiSentimentAnalyzer:
             
             # Preprocess text
             processed_text = self.preprocess_hindi_text(text)
-            print("Process: ", processed_text)
+            
             if not processed_text:
                 return {"label": "NEUTRAL", "score": 0.5}
             
@@ -268,7 +268,6 @@ class HindiSentimentAnalyzer:
         processed_text = self.preprocess_hindi_text(text.lower())
 
         if not processed_text:
-            print("No Processed Text\n")
             return {"label": "NEUTRAL", "score": 0.5}
 
         # Count keyword matches with better scoring
@@ -302,6 +301,7 @@ class HindiSentimentAnalyzer:
                 negative_score *= 1.5  # Boost negative
 
         total_score = positive_score + negative_score
+
         if positive_score > negative_score:
             confidence = min(0.7 + (positive_score / max(total_score, 1)) * 0.3, 0.95)
             return {"label": "POSITIVE", "score": confidence}
