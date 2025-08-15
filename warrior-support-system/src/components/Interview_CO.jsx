@@ -29,10 +29,11 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     const fetchSeverePersonnel = async () => {
         setLoading(true);
         try {
-            const responce = await axios.get(`/api/severePersonnel/${currentUser.battalion._id}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
-
+            const responce = await axios.get(`/api/severePersonnel/all`,
+                {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                }
+            )
             console.log(responce.data.data)
             setSeverePersonnel(responce.data.data);
         } catch (error) {

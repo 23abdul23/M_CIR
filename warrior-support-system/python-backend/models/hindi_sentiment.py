@@ -45,7 +45,7 @@ except ImportError:
         },
         "sentiment_fallback": {
             "model_name": "roberta-base",
-            "local_path": MODELS_DIR / "roberta-base"
+            "local_path": MODELS_DIR / "roberta-sentiment"
         }
     }
     MODEL_CONFIG = {"device": "cpu", "local_files_only": True}

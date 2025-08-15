@@ -439,7 +439,7 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
             <div className="co-action-card">
               <h3 className="co-action-title">Scheduled Interviews</h3>
-              <p className="co-action-description">interview Personnels with Severity</p>
+              <p className="co-action-description">Interview Personnels with Severity</p>
               <select
                 value={selectedBattalionInterview}
                 onChange={(e) => setSelectedBattalionInterview(e.target.value)}

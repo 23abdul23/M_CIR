@@ -6,8 +6,20 @@ const router = express.Router()
 
 
 
+router.get('/all',auth, async (req, res) => {
+  try {
+    const severePersonnel = await SeverePersonnel.find({});
+    return res.status(200).json({ data: severePersonnel });
+
+  } catch (error) {
+    console.log("Error", error);
+    res.status(500).json({ error: "Error fetching personnel" });
+  }
+})
+
 router.get('/:id',auth, async (req, res) => {
   try {
+    console.log(req)
     console.log(req.user)
     // If user is CO, return all severe personnel
     if (req.user && req.user.role === 'CO') {
@@ -31,8 +43,6 @@ router.post("/", auth , async (req, res) => {
     if (!Array.isArray(req.body)) {
       return res.status(400).json({ error: "Request body must be an array" });
     }
-
-    await SeverePersonnel.deleteMany({});
 
     // Map incoming objects to schema-compatible format
     const personnelData = req.body.map(item => ({
