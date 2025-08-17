@@ -19,6 +19,24 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+
+router.get('/all', auth, async (req, res) => {
+  try {
+    const questions = await Question.find({})
+    const questionsAI = await QuestionAI.find({})
+    const questionsPeer = await QuestionPeer.find({})
+  
+    res.json({
+    'daasQuestions' : questions,
+    'aiQuestions' : questionsAI,
+    'peerQuestions' : questionsPeer,
+  })
+  } catch (error) {
+    console.error('Error fetching questions:', error)
+    res.status(500).json({ message: 'Error fetching questions' })
+  }
+})
+
 // Get all active questions
 router.get('/ai', auth, async (req, res) => {
   try {
@@ -53,6 +71,7 @@ router.get('/peer_question', auth, async (req, res) => {
 // Get question by ID
 router.get('/:questionId', auth, async (req, res) => {
   try {
+    
     const question = await Question.findOne({ 
       questionId: req.params.questionId,
       isActive: true 
@@ -96,13 +115,13 @@ router.post('/', auth, async (req, res) => {
 
     if (targetDatabase == "manual"){
       const question = new Question({
-      questionId,
-      questionText,
-      questionType,
-      options: questionType === 'MCQ' ? options : [],
-      order
-    })
-    await question.save()
+        questionId,
+        questionText,
+        questionType,
+        options: questionType === 'MCQ' ? options : [],
+        order
+      })
+      await question.save()
     }
 
     else if (targetDatabase == "ai"){
@@ -134,34 +153,6 @@ router.post('/', auth, async (req, res) => {
   }
 })
 
-// Update question (CO only)
-router.put('/:questionId', auth, async (req, res) => {
-  try {
-    // Check if user is CO
-    if (req.user.role !== 'CO') {
-      return res.status(403).json({ message: 'Access denied. CO role required.' })
-    }
-
-    const question = await Question.findOne({ questionId: req.params.questionId })
-    if (!question) {
-      return res.status(404).json({ message: 'Question not found' })
-    }
-
-    const { questionText, questionType, options, order, isActive } = req.body
-
-    if (questionText) question.questionText = questionText
-    if (questionType) question.questionType = questionType
-    if (options !== undefined) question.options = options
-    if (order !== undefined) question.order = order
-    if (isActive !== undefined) question.isActive = isActive
-
-    await question.save()
-    res.json(question)
-  } catch (error) {
-    console.error('Error updating question:', error)
-    res.status(500).json({ message: 'Error updating question' })
-  }
-})
 
 // Delete question (CO only)
 router.delete('/:questionId', auth, async (req, res) => {
@@ -170,10 +161,26 @@ router.delete('/:questionId', auth, async (req, res) => {
     if (req.user.role !== 'CO') {
       return res.status(403).json({ message: 'Access denied. CO role required.' })
     }
+    const {selectedType} = req.body;
+    console.log(selectedType)
 
-    const question = await Question.findOneAndDelete({ questionId: req.params.questionId })
-    if (!question) {
-      return res.status(404).json({ message: 'Question not found' })
+    if (selectedType == "manual"){
+      const question = await Question.findOneAndDelete({ questionId: req.params.questionId })
+      if (!question) {
+        return res.status(404).json({ message: 'Question not found' })
+      }
+    }
+    if (selectedType == "ai"){
+      const question = await QuestionAI.findOneAndDelete({ questionId: req.params.questionId })
+      if (!question) {
+        return res.status(404).json({ message: 'Question not found' })
+      }
+    }
+    if (selectedType == "peer"){
+      const question = await QuestionPeer.findOneAndDelete({ questionId: req.params.questionId })
+      if (!question) {
+        return res.status(404).json({ message: 'Question not found' })
+      }
     }
 
     res.json({ message: 'Question deleted successfully' })

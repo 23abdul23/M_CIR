@@ -16,6 +16,8 @@ const CODashboard = ({ currentUser, onLogout }) => {
   const [selectedBattalionData, setSelectedBattalionData] = useState("");
   const [selectedBattalionInterview, setSelectedBattalionInterview] = useState("");
   const [questions, setQuestions] = useState([])
+  
+
   const [showQuestionModal, setShowQuestionModal] = useState(false)
   const [showQuestionsView, setShowQuestionsView] = useState(false)
   const [showPasswordPop, setPasswordPop] =  useState(false)
@@ -28,6 +30,9 @@ const CODashboard = ({ currentUser, onLogout }) => {
     totalBattalions: 0,
     pendingApprovals: 0,
     totalQuestions: 0,
+    dassQuestions: 0,
+    aiQuestions: 0,
+    peerQuestions: 0
   })
   const [pendingUsers, setPendingUsers] = useState([])
   const [showAddUserForm, setShowAddUserForm] = useState(false)
@@ -115,14 +120,18 @@ const CODashboard = ({ currentUser, onLogout }) => {
       const approvedBattalions = responce.data.filter((b) => b.status === "APPROVED").length
       const pendingBattalions = responce.data.filter((b) => b.status === "PENDING").length
       
-      const res = await axios.get("/api/questions", {
+      const res = await axios.get("/api/questions/all", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
+
+      console.log(res.data)
       
       setStats({
         totalBattalions: approvedBattalions,
         pendingApprovals: pendingBattalions,
-        totalQuestions: res.data.length,
+        dassQuestions: res.data.daasQuestions.length,
+        aiQuestions: res.data.aiQuestions.length,
+        peerQuestions: res.data.peerQuestions.length,
       })
     } catch (error) {
       console.error("Error calculating stats:", error)
@@ -393,14 +402,34 @@ const CODashboard = ({ currentUser, onLogout }) => {
             <p className="co-stat-description">Awaiting approval</p>
           </div>
 
-          <div className="co-stat-card">
+          <div className="co-stat-card co-stat-questions-card">
             <div className="co-stat-header">
-              <span className="co-stat-title">Total Questions</span>
+              <span className="co-stat-title">Questions</span>
               <div className="co-stat-icon">❓</div>
             </div>
-            <h2 className="co-stat-value">{stats.totalQuestions}</h2>
-            <p className="co-stat-description">Examination questions</p>
+            <div className="co-stat-questions-row">
+              <div className="co-stat-questions-item">
+                <span className="co-stat-questions-label" title="DASS Questions">DAAS</span>
+                <div>
+                  <span className="co-stat-value">{stats.dassQuestions}</span>
+                </div>
+              </div>
+              <div className="co-stat-questions-item">
+                <span className="co-stat-questions-label" title="AI Questions">AI</span>
+                <div>
+                  <span className="co-stat-value">{stats.aiQuestions}</span>
+                </div>
+              </div>
+              <div className="co-stat-questions-item">
+                <span className="co-stat-questions-label" title="Peer Questions">PEER</span>
+                <div>
+                  <span className="co-stat-value">{stats.peerQuestions}</span>
+                </div>
+              </div>
+            </div>
+            <p className="co-stat-description">All Questions</p>
           </div>
+
         </section>
 
         {/* Quick Actions */}
@@ -636,7 +665,40 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
 // Update the AddQuestionModal component
 const AddQuestionModal = ({ onClose, onSave }) => {
-  
+  const [targetDatabase, setTargetDatabase] = useState("manual");
+  // Hide question type and options for AI questions
+  useEffect(() => {
+    if (targetDatabase === "ai") {
+      setFormData(prev => ({
+        ...prev,
+        questionType: "MCQ",
+        options: Array.from({ length: 4 }, (_, i) => ({ optionId: `${i + 1}`, optionText: `${i + 1}` }))
+      }));
+    }
+  }, [targetDatabase]);
+
+  const [allQuestions, setAllQuestions] = useState({
+    'daasQuestions' : 0,
+    'aiQuestions' : 0,
+    'peerQuestions' : 0,
+  })
+
+  const fetchAllQuestions  = async () => {
+    try {
+      const response = await axios.get("/api/questions/all", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      setAllQuestions(response.data)
+    }
+    catch (error){
+      console.error("Error fetching questions:",error)
+    }
+  }
+
+  useEffect(() => {
+    fetchAllQuestions()
+  }, [])
+
   const defaultPeerOptions = Array.from({ length: 10 }, (_, i) => ({ optionId: `${i + 1}`, optionText: `${i + 1}` }));
   const [formData, setFormData] = useState({
     questionId: "",
@@ -651,7 +713,27 @@ const AddQuestionModal = ({ onClose, onSave }) => {
     order: "",
   })
   const [loading, setLoading] = useState(false)
-  const [targetDatabase, setTargetDatabase] = useState("manual") // default value
+  
+  // Auto-update questionId and order based on targetDatabase and allQuestions
+  useEffect(() => {
+    let nextId = "";
+    let nextOrder = "";
+    if (targetDatabase === "manual" && allQuestions.daasQuestions !== undefined) {
+      nextId = allQuestions.daasQuestions.length + 1;
+      nextOrder = allQuestions.daasQuestions.length + 1;
+    } else if (targetDatabase === "ai" && allQuestions.aiQuestions !== undefined) {
+      nextId = allQuestions.aiQuestions.length + 1;
+      nextOrder = allQuestions.aiQuestions.length + 1;
+    } else if (targetDatabase === "peer" && allQuestions.peerQuestions !== undefined) {
+      nextId = allQuestions.peerQuestions.length + 1;
+      nextOrder = allQuestions.peerQuestions.length + 1;
+    }
+    setFormData(prev => ({
+      ...prev,
+      questionId: nextId,
+      order: nextOrder
+    }));
+  }, [targetDatabase, allQuestions]);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -738,7 +820,7 @@ const AddQuestionModal = ({ onClose, onSave }) => {
             <label>Question ID (Optional)</label>
             <input
               type="number"
-              value={formData.questionId}
+              value={formData.questionId || ""}
               onChange={(e) => setFormData({ ...formData, questionId: e.target.value })}
               placeholder="Auto-generated if empty"
             />
@@ -755,47 +837,51 @@ const AddQuestionModal = ({ onClose, onSave }) => {
             />
           </div>
 
-          <div className="form-group">
-            <label>Question Type</label>
-            <select
-              value={formData.questionType}
-              onChange={(e) => setFormData({ ...formData, questionType: e.target.value })}
-            >
-              <option value="MCQ">Multiple Choice (MCQ)</option>
-              <option value="TEXT">Text Answer</option>
-            </select>
-          </div>
+          {targetDatabase !== "ai" && (
+            <>
+              <div className="form-group">
+                <label>Question Type</label>
+                <select
+                  value={formData.questionType}
+                  onChange={(e) => setFormData({ ...formData, questionType: e.target.value })}
+                >
+                  <option value="MCQ">Multiple Choice (MCQ)</option>
+                  <option value="TEXT">Text Answer</option>
+                </select>
+              </div>
 
-          <div className="form-group">
-            <label>Order</label>
-            <input
-              type="number"
-              value={formData.order}
-              onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-              min="1"
-              required
-            />
-          </div>
+              <div className="form-group">
+                <label>Order</label>
+                <input
+                  type="number"
+                  value={formData.order || ""}
+                  onChange={(e) => setFormData({ ...formData, order: e.target.value })}
+                  min="1"
+                  required
+                />
+              </div>
 
-          {formData.questionType === "MCQ" && (
-            <div className="options-section">
-              <label>Answer Options</label>
-              {effectiveOptions.map((option, index) => (
-                <div key={index} className="option-group">
-                  <div className="option-input-group">
-                    <span>{option.optionId}.</span>
-                    <input
-                      type="text"
-                      value={option.optionText}
-                      onChange={(e) => handleOptionChange(index, e.target.value)}
-                      placeholder={`Option ${option.optionId}`}
-                      required={formData.questionType === "MCQ"}
-                      disabled={targetDatabase === "peer" && formData.questionType === "MCQ"}
-                    />
-                  </div>
+              {formData.questionType === "MCQ" && (
+                <div className="options-section">
+                  <label>Answer Options</label>
+                  {effectiveOptions.map((option, index) => (
+                    <div key={index} className="option-group">
+                      <div className="option-input-group">
+                        <span>{option.optionId}.</span>
+                        <input
+                          type="text"
+                          value={option.optionText}
+                          onChange={(e) => handleOptionChange(index, e.target.value)}
+                          placeholder={`Option ${option.optionId}`}
+                          required={formData.questionType === "MCQ"}
+                          disabled={targetDatabase === "peer" && formData.questionType === "MCQ"}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
 
           <button type="submit" className="submit-btn" disabled={loading}>
@@ -809,28 +895,54 @@ const AddQuestionModal = ({ onClose, onSave }) => {
 
 // View Questions Modal Component
 const ViewQuestionsModal = ({ questions, onClose, onRefresh, showNotification }) => {
-  const [selectedCategory, setSelectedCategory] = useState("")
-  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
 
-  const categories = [...new Set(questions.map((q) => q.category))].filter(Boolean)
+  const [viewQuestions, setViewQuestions] = useState({ dassQuestions: [], aiQuestions: [], peerQuestions: [] });
 
-  const filteredQuestions = questions.filter((question) => {
-    const matchesCategory = !selectedCategory || question.category === selectedCategory
+  const categories = [...new Set(questions.map((q) => q.category))].filter(Boolean);
+
+  const fetchAllQuestions = async () => {
+    try {
+      const response = await axios.get("/api/questions/all", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setViewQuestions(response.data);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllQuestions();
+  }, []);
+
+  // Determine which questions to show based on selectedType
+  let questionsToShow = questions;
+  if (selectedType === "manual") questionsToShow = viewQuestions.dassQuestions || [];
+  else if (selectedType === "ai") questionsToShow = viewQuestions.aiQuestions || [];
+  else if (selectedType === "peer") questionsToShow = viewQuestions.peerQuestions || [];
+
+  const filteredQuestions = questionsToShow.filter((question) => {
+    const matchesCategory = !selectedCategory || question.category === selectedCategory;
     const matchesSearch =
       !searchTerm ||
       question.questionText.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (question.category && question.category.toLowerCase().includes(searchTerm.toLowerCase()))
-    return matchesCategory && matchesSearch
-  })
+      (question.category && question.category.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesCategory && matchesSearch;
+  });
 
   const handleDeleteQuestion = async (questionId) => {
     if (window.confirm("Are you sure you want to delete this question?")) {
       try {
         await axios.delete(`/api/questions/${questionId}`, {
+          data: { selectedType },
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         onRefresh()
         showNotification("Question deleted successfully", "success")
+        window.location.reload();
       } catch (error) {
         console.error("Error deleting question:", error)
         showNotification("Error deleting question", "error")
@@ -842,13 +954,22 @@ const ViewQuestionsModal = ({ questions, onClose, onRefresh, showNotification })
     <div className="modal-overlay">
       <div className="modal-content questions-view-modal">
         <div className="modal-header">
-          <h2>MANAGE QUESTIONS ({questions.length})</h2>
+          <h2>VIEW QUESTIONS</h2>
           <button className="close-btn" onClick={onClose}>
             ×
           </button>
         </div>
 
+
         <div className="questions-filters">
+          <div className="filter-group">
+            <label>Question Set:&nbsp;</label>
+            <select value={selectedType} onChange={e => setSelectedType(e.target.value)} className="category-filter">
+              <option value="dass">Dass Questions</option>
+              <option value="ai">AI Questions</option>
+              <option value="peer">Peer Questions</option>
+            </select>
+          </div>
           <div className="filter-group">
             <input
               type="text"
@@ -891,7 +1012,10 @@ const ViewQuestionsModal = ({ questions, onClose, onRefresh, showNotification })
                   </button>
                 </div>
                 <div className="question-text">{question.questionText}</div>
-                {question.questionType === "MCQ" && question.options && question.options.length > 0 && (
+                {question.questionType === "MCQ" &&
+                question.options &&
+                question.options.length > 0 &&
+                selectedType === "manual" && (
                   <div className="question-options">
                     {question.options.map((option, optIndex) => (
                       <div key={optIndex} className="option">
@@ -901,6 +1025,7 @@ const ViewQuestionsModal = ({ questions, onClose, onRefresh, showNotification })
                     ))}
                   </div>
                 )}
+
                 {question.questionType === "TEXT" && (
                   <div className="question-options">
                     <div className="option">
