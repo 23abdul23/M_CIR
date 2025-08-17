@@ -51,14 +51,6 @@ const examinationSchema = new mongoose.Schema({
     enum: ['AI', 'MANUAL'],
     default: 'MANUAL',
   },
-  // examAI_taken: {
-  //   type : Boolean,
-  //   default : False
-  // },
-  // examManual_taken: {
-  //   type : Boolean,
-  //   default : False
-  // },
   completedAt: {
     type: Date,
     default: Date.now,

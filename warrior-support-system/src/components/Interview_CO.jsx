@@ -26,16 +26,17 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         }
     };
 
+   
     const fetchSeverePersonnel = async () => {
         setLoading(true);
         try {
-            const responce = await axios.get(`/api/severePersonnel/all`,
-                {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                }
-            )
-            console.log(responce.data.data)
-            setSeverePersonnel(responce.data.data);
+            const response = await axios.get(`/api/severePersonnel/all`, {
+            params: { battalionName: localStorage.getItem("selectedBattalion") },
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            });
+            console.log(response.data.data)
+            setSeverePersonnel(response.data.data);
+
         } catch (error) {
             setSeverePersonnel([]);
         } finally {
@@ -59,7 +60,7 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         <>
             <Header currentUser={currentUser} onLogout={onLogout} />
             <div className="interview-table-container">
-                <h2 className="interview-table-title">Severe Personnel List</h2>
+                <h2 className="interview-table-title">Severe Personnel List - {localStorage.getItem("selectedBattalion")}</h2>
                 <div className="interview-table-legend">
                     <span className="interview-legend-box interview-legend-red"></span> Red - Extremely Severe
                     <span className="interview-legend-box interview-legend-orange" style={{marginLeft:'16px'}}></span> Orange - Severe

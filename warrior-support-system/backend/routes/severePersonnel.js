@@ -1,14 +1,26 @@
+
 const express = require("express")
 const mongoose = require("mongoose")
 const SeverePersonnel = require("../models/SeverePersonnel")
+const Personnel = require("../models/Personnel")
+const Examination = require("../models/Examination")
+const Battalion = require("../models/Battalion")
+
 const auth = require("../middleware/auth")
 const router = express.Router()
 
 
-
 router.get('/all',auth, async (req, res) => {
   try {
-    const severePersonnel = await SeverePersonnel.find({});
+    const { battalionName } = req.query;
+
+    const allBattalions = await Battalion.find({'name' : battalionName});
+    const allBattalionIds = allBattalions.map(b => b._id)
+
+    const severePersonnel = await SeverePersonnel.find({
+      battalion: { $in: allBattalionIds }
+    });
+
     return res.status(200).json({ data: severePersonnel });
 
   } catch (error) {
@@ -36,49 +48,62 @@ router.get('/:id',auth, async (req, res) => {
   }
 })
 
-router.post("/", auth , async (req, res) => {
+// Post examinations for personnel with selfEvaluation COMPLETED
+router.post('/all', auth, async (req, res) => {
+  try {
+    const personnel = await Personnel.find({ selfEvaluation: "COMPLETED"});
+    // console.log(personnel)
+    const armyNos = personnel.map(p => p.armyNo);
+    // Find examinations for those army numbers
+    const examinations = await Examination.find({ armyNo: { $in: armyNos } });
 
-    try {
-    // Ensure req.body is an array
-    if (!Array.isArray(req.body)) {
-      return res.status(400).json({ error: "Request body must be an array" });
-    }
-
-    // Map incoming objects to schema-compatible format
-    const personnelData = req.body.map(item => ({
-      armyNo: item.armyNo,
-      rank: item.rank,
-      name: item.name.trim(),
-      subBty: item.subBty,
-      service: item.service,
-      dateOfInduction: item.dateOfInduction,
-      medCat: item.medCat,
-      leaveAvailed: item.leaveAvailed,
-      maritalStatus: item.maritalStatus,
-      selfEvaluation: item.selfEvaluation,
-      peerEvaluation: item.peerEvaluation,
-      battalion: item.battalion?._id || undefined,  // take ID if present
-      dassScores: item.dassScores,
-      mode: item.mode,
-      addedBattalion: item.addedBattalion,
-      status: item.status,
-      updatedAt: item.updatedAt,
-      createdAt: item.createdAt
-    }));
-
-    // Save all docs at once
-    const savedDocs = await SeverePersonnel.insertMany(personnelData, { ordered: false });
-
-    res.status(201).json({
-      message: `${savedDocs.length} personnel saved successfully`,
-      data: savedDocs
+    // Combine data by armyNo
+    const examMap = {};
+    examinations.forEach(exam => {
+      if (!examMap[exam.armyNo]) examMap[exam.armyNo] = [];
+      examMap[exam.armyNo].push(exam);
     });
 
+    const combined = personnel.map(p => ({
+      ...p.toObject(),
+      examinations: examMap[p.armyNo] || []
+    }));
+
+    // Filter for severe/extremely severe cases
+    const severeLevels = ['Severe', 'Extremely Severe'];
+    const severePersonnels = combined
+      .map(person => {
+        if (person.selfEvaluation !== 'COMPLETED') return null;
+        // Sort all exams by completedAt descending to get the latest
+        const sortedExams = [...(person.examinations || [])].sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
+        const latestExam = sortedExams[0];
+        if (!latestExam || !latestExam.dassScores) return null;
+        const isSevere = (scores) => {
+          if (!scores) return false;
+          return (
+            severeLevels.includes(scores.anxietySeverity) ||
+            severeLevels.includes(scores.depressionSeverity) ||
+            severeLevels.includes(scores.stressSeverity)
+          );
+        };
+        if (isSevere(latestExam.dassScores)) {
+          // Overwrite dassScores with the latest
+          return { ...person, dassScores: latestExam.dassScores };
+        }
+        return null;
+      })
+      .filter(Boolean);
+
+    await SeverePersonnel.deleteMany({});
+
+    const savedDocs = await SeverePersonnel.insertMany(severePersonnels, { ordered: false });
+
+    res.status(200).json({ data: severePersonnels });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error saving personnel", details: error.message });
+    console.error("Error fetching completed examinations:", error);
+    res.status(500).json({ error: "Error fetching completed examinations" });
   }
-  })
+});
 
 router.post("/done/:armyNo", auth, async (req, res) => {
   try {

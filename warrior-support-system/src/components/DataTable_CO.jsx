@@ -54,43 +54,10 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
       setUniqueValues(uniqueValuesObj)
     }
   }, [personnel])
-
+  
   const fetchSeverePersonnel = async () => {
-    // Find all personnel with severe, or extremely severe in either latest manual or AI result
-    const severeLevels = ['Severe', 'Extremely Severe'];
-    const severePersonnels = filteredPersonnel.filter(person => {
-      if (person.selfEvaluation !== 'COMPLETED') return false;
-
-      // Find latest manual and AI results for this person
-      const resultEntries = results.filter(r => r?.[2] === person.armyNo);
-      let manualResult = null;
-      let aiResult = null;
-      for (const r of resultEntries) {
-        if (!manualResult && r[3] === 'MANUAL') {
-          manualResult = r[0];
-        }
-        if (!aiResult && r[3] === 'AI') {
-          aiResult = r[0];
-        }
-        if (manualResult && aiResult) break;
-      }
-
-      // Check both manual and AI results for severe/extremely severe
-      const isSevere = (scores) => {
-        if (!scores) return false;
-        return (
-          severeLevels.includes(scores.anxietySeverity) ||
-          severeLevels.includes(scores.depressionSeverity) ||
-          severeLevels.includes(scores.stressSeverity)
-        );
-      };
-
-      return isSevere(manualResult) || isSevere(aiResult);
-    });
-
-
     try {
-      const responce = await axios.post(`/api/severePersonnel`, severePersonnels,
+      const responce = await axios.post(`/api/severePersonnel/all`, {},
         {headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
       )
 
