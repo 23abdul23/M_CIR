@@ -74,6 +74,12 @@ router.post("/updateUser/:armyNo", auth, async (req, res) => {
 router.get("/battalion/:battalionId", auth, async (req, res) => {
   try {
     const { battalionId } = req.params
+    const allBattalions = await Battalion.find({'name' : battalionId});
+    const allBattalionIds = allBattalions.map(b => b._id)
+
+    const personnel = await Personnel.find({
+      battalion: { $in: allBattalionIds }
+    });
 
     // Role-based access control
     if (req.user.role === "USER") {
@@ -88,9 +94,11 @@ router.get("/battalion/:battalionId", auth, async (req, res) => {
       }
     }
 
-    const personnel = await Personnel.find({ battalion: battalionId })
-      .populate("battalion", "name")
-      .sort({ createdAt: -1 })
+
+
+    // const personnel = await Personnel.find({ battalion: battalionId })
+    //   .populate("battalion", "name")
+    //   .sort({ createdAt: -1 })
 
     // Enhance personnel data with examination status and DASS scores
     const enhancedPersonnel = await Promise.all(
@@ -107,6 +115,7 @@ router.get("/battalion/:battalionId", auth, async (req, res) => {
     )
 
     res.json(enhancedPersonnel)
+    
   } catch (error) {
     console.error("Error fetching personnel:", error)
     res.status(500).json({ message: "Server error", error: error.message })

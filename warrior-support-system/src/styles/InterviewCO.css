@@ -46,18 +46,102 @@
   background: #fff700 !important;
   color: #333;
 }
+
+/* Enhanced Interview Table Styling */
 .interview-table {
   width: 100%;
   min-width: 1200px;
   max-width: 1200px;
   margin: 0 auto 24px auto;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   table-layout: fixed;
+  background: #f9fbfd;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(44, 85, 48, 0.06);
 }
 .interview-table th, .interview-table td {
-  border: 1px solid #ccc;
-  padding: 8px;
+  border: 1px solid #e3e8f0;
+  padding: 10px 8px;
   text-align: center;
+  font-size: 1em;
+  transition: background 0.2s;
+}
+.interview-table th {
+  background: linear-gradient(90deg, #eaf1f7 80%, #f4f8fb 100%);
+  font-weight: bold;
+  color: #2c3e50;
+  border-top: 2px solid #b7c6d6;
+  border-bottom: 2px solid #b7c6d6;
+  font-size: 1.05em;
+}
+.interview-table tbody tr:nth-child(even) {
+  background: #f4f8fb;
+}
+.interview-table tbody tr:nth-child(odd) {
+  background: #fff;
+}
+.interview-table tbody tr:hover {
+  background: #e3f5e8 !important;
+  transition: background 0.2s;
+}
+.interview-table td {
+  border-radius: 0;
+}
+.interview-table td:first-child {
+  border-left: 2px solid #b7c6d6;
+}
+.interview-table td:last-child {
+  border-right: 2px solid #b7c6d6;
+}
+.interview-table tr:first-child th:first-child {
+  border-top-left-radius: 14px;
+}
+.interview-table tr:first-child th:last-child {
+  border-top-right-radius: 14px;
+}
+.interview-table tr:last-child td:first-child {
+  border-bottom-left-radius: 14px;
+}
+.interview-table tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
+}
+
+/* Date input and button styling in table */
+.interview-table input[type="date"] {
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid #b7c6d6;
+  background: #f8f9fa;
+  font-size: 1em;
+  color: #2c3e50;
+  transition: border 0.2s;
+}
+.interview-table input[type="date"]:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+}
+.interview-table button {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-size: 0.98em;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-left: 4px;
+}
+.interview-table button:hover {
+  background: #145ea8;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
+}
+.interview-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4caf50;
+  cursor: pointer;
 }
 
 
@@ -73,10 +157,25 @@
 .interview-table th:nth-child(9), .interview-table td:nth-child(9) { /* Self Evaluation */ width: 120px; }
 .interview-table th:nth-child(10), .interview-table td:nth-child(10) { /* JCO Review */ width: 100px; }
 .interview-table th:nth-child(11), .interview-table td:nth-child(11) { /* Results */ width: 320px; }
-.interview-table th:nth-child(12), .interview-table td:nth-child(12) { /* Interview */ width: 100px; }
-.interview-table th {
-  background: #f8f9fa;
-  font-weight: bold;
+.interview-table th:nth-child(12), .interview-table td:nth-child(12) { /* Interview */ width: 150px; }
+.interview-table th:nth-child(13), .interview-table td:nth-child(12) { /* Interview */ width: 100px; }
+
+/* Responsive improvements */
+@media (max-width: 1300px) {
+  .interview-table {
+    min-width: 900px;
+    max-width: 100%;
+    font-size: 0.95em;
+  }
+}
+@media (max-width: 900px) {
+  .interview-table-container {
+    padding: 0.5rem;
+  }
+  .interview-table {
+    min-width: 600px;
+    font-size: 0.92em;
+  }
 }
 .interview-table-empty {
   text-align: center;

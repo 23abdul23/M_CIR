@@ -232,10 +232,11 @@ const Register = ({ onRegister }) => {
                     <option value="Maj">Maj</option>
                     <option value="Capt">Capt</option>
                     <option value="Lt">Lt</option>
-                    <option value="2Lt">2Lt</option>
+                    <option value="Sub_Maj">Sub_Maj</option>
                     <option value="Sub">Sub</option>
                     <option value="Nb Sub">Nb Sub</option>
                     <option value="Hav">Hav</option>
+                    <option value="L/Hav">L/Hav</option>
                     <option value="Nk">Nk</option>
                     <option value="L/Nk">L/Nk</option>
                     <option value="Sep">Sep</option>

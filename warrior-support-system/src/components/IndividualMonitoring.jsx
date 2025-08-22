@@ -106,9 +106,6 @@ const IndividualMonitoring = ({ armyNo: propArmyNo, currentUser, onLogout, onBac
 
   // Latest scores for pie charts
   const latestScores = examinationHistory.length > 0 ? examinationHistory[examinationHistory.length - 1].dassScores : null;
-
-  console.log('Latest DASS Scores:', latestScores);
-
   const pieData = latestScores ? [
     { name: 'Depression', value: latestScores.depression, color: '#FF6B6B' },
     { name: 'Anxiety', value: latestScores.anxiety, color: '#4ECDC4' },

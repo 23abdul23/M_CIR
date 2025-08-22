@@ -5,24 +5,10 @@ require('dotenv').config()
 
 const app = express()
 
-// Middleware
-const allowedOrigins = ['http://localhost:5000','http://localhost:3000', 'http://localhost:8000'];
-
-app.use(cors({
-  origin: function (origin, callback) {
-      // Allow requests with no origin (like curl, Postman, etc.)
-    if (!origin) return callback(null, true);
-      // Allow all localhost origins (any port)
-      if (/^http:\/\/localhost:\d+$/.test(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true
-}))
 
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+app.use(cors())
 
 // Routes
 app.use('/api/auth', require('./routes/auth'))
@@ -33,6 +19,7 @@ app.use('/api/evaluation', require('./routes/evaluation'))
 app.use('/api/csv', require('./routes/csv'))
 app.use('/api/questions', require('./routes/questions')) 
 app.use('/api/severePersonnel', require('./routes/severePersonnel'))
+app.use('/api/interview', require('./routes/interview')) 
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

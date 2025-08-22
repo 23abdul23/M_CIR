@@ -225,44 +225,103 @@
   overflow-y: auto;
 }
 
+
+/* Enhanced DataTable Table Styling (matches InterviewCO.css) */
 .datatable-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.9rem;
+  background: #f9fbfd;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(44, 85, 48, 0.06);
 }
-
-.datatable-table th {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  color: white;
-  padding: 1rem 0.75rem;
+.datatable-table th, .datatable-table td {
+  border: 1px solid #e3e8f0;
+  padding: 10px 8px;
   text-align: center;
+  font-size: 1em;
+  transition: background 0.2s;
+}
+.datatable-table th {
+  background: linear-gradient(90deg, #eaf1f7 80%, #f4f8fb 100%);
   font-weight: bold;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #2c3e50;
+  border-top: 2px solid #b7c6d6;
+  border-bottom: 2px solid #b7c6d6;
+  font-size: 1.05em;
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 2px solid #1a252f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-
+.datatable-table tbody tr:nth-child(even) {
+  background: #f4f8fb;
+}
+.datatable-table tbody tr:nth-child(odd) {
+  background: #fff;
+}
+.datatable-table tbody tr:hover {
+  background: #e3f5e8 !important;
+  transition: background 0.2s;
+}
 .datatable-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #ecf0f1;
-  vertical-align: middle;
-  text-align: center;
-  height: 100%;
-  display: table-cell;
-  justify-content: center;
-  align-items: center;
+  border-radius: 0;
 }
-
-.datatable-table tr:hover {
-  background: rgba(52, 152, 219, 0.1);
+.datatable-table td:first-child {
+  border-left: 2px solid #b7c6d6;
 }
-
-.datatable-table tr:nth-child(even) {
-  background: rgba(0, 0, 0, 0.02);
+.datatable-table td:last-child {
+  border-right: 2px solid #b7c6d6;
+}
+.datatable-table tr:first-child th:first-child {
+  border-top-left-radius: 14px;
+}
+.datatable-table tr:first-child th:last-child {
+  border-top-right-radius: 14px;
+}
+.datatable-table tr:last-child td:first-child {
+  border-bottom-left-radius: 14px;
+}
+.datatable-table tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
+}
+/* Date input and button styling in table (if used) */
+.datatable-table input[type="date"] {
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid #b7c6d6;
+  background: #f8f9fa;
+  font-size: 1em;
+  color: #2c3e50;
+  transition: border 0.2s;
+}
+.datatable-table input[type="date"]:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+}
+.datatable-table button {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-size: 0.98em;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-left: 4px;
+}
+.datatable-table button:hover {
+  background: #145ea8;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
+}
+.datatable-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4caf50;
+  cursor: pointer;
 }
 
 .datatable-status {

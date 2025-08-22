@@ -14,12 +14,16 @@ router.get('/all',auth, async (req, res) => {
   try {
     const { battalionName } = req.query;
 
+    console.log(battalionName)
+
     const allBattalions = await Battalion.find({'name' : battalionName});
     const allBattalionIds = allBattalions.map(b => b._id)
 
     const severePersonnel = await SeverePersonnel.find({
       battalion: { $in: allBattalionIds }
     });
+
+    console.log(severePersonnel)
 
     return res.status(200).json({ data: severePersonnel });
 
@@ -71,37 +75,43 @@ router.post('/all', auth, async (req, res) => {
 
     // Filter for severe/extremely severe cases
     const severeLevels = ['Severe', 'Extremely Severe'];
+    
     const severePersonnels = combined
-      .map(person => {
-        if (person.selfEvaluation !== 'COMPLETED') return null;
-        // Sort all exams by completedAt descending to get the latest
-        const sortedExams = [...(person.examinations || [])].sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
-        const latestExam = sortedExams[0];
-        if (!latestExam || !latestExam.dassScores) return null;
-        const isSevere = (scores) => {
-          if (!scores) return false;
-          return (
-            severeLevels.includes(scores.anxietySeverity) ||
-            severeLevels.includes(scores.depressionSeverity) ||
-            severeLevels.includes(scores.stressSeverity)
-          );
-        };
-        if (isSevere(latestExam.dassScores)) {
-          // Overwrite dassScores with the latest
-          return { ...person, dassScores: latestExam.dassScores };
-        }
-        return null;
-      })
-      .filter(Boolean);
+    .map(person => {
+      if (person.selfEvaluation !== 'COMPLETED') return null;
 
-    await SeverePersonnel.deleteMany({});
+      const sortedExams = [...(person.examinations || [])]
+        .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
 
+      const latestExam = sortedExams[0];
+      if (!latestExam || !latestExam.dassScores) return null;
+
+      const isSevere = (scores) => (
+        severeLevels.includes(scores.anxietySeverity) ||
+        severeLevels.includes(scores.depressionSeverity) ||
+        severeLevels.includes(scores.stressSeverity)
+      );
+
+      if (isSevere(latestExam.dassScores)) {
+        const { _id,...rest } = person;   // ✅ FIX HERE
+        return { ...rest, armyNo: person.armyNo, dassScores: latestExam.dassScores };
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+    
+    console.log(severePersonnels)
     const savedDocs = await SeverePersonnel.insertMany(severePersonnels, { ordered: false });
+    console.log(savedDocs)
 
     res.status(200).json({ data: severePersonnels });
   } catch (error) {
-    console.error("Error fetching completed examinations:", error);
-    res.status(500).json({ error: "Error fetching completed examinations" });
+    if (error.code === 11000) {
+      console.warn("Duplicate armyNo skipped:", error.keyValue);
+    } else {
+      console.error("Error inserting severe personnels:", error);
+    }
   }
 });
 

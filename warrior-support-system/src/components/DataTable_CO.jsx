@@ -15,7 +15,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
 
 
   const [results, setResults] = useState([])
-  const [jcoresults, setjcoresults] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editingPersonnel, setEditingPersonnel] = useState(null)
@@ -31,9 +30,20 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const location = useLocation()
   const locationSelectedBattalion = location.state?.selectedBattalion
 
+  // Set Interviews button handler
+  const handleSetInterviews = async () => {
+    try {
+      await fetchSeverePersonnel();
+      console.log("DONE")
+    } catch (error) {
+      alert('Interview Set Up Not Successful!');
+    }
+  };
+
   useEffect(() => {
     fetchPersonnel()
     fetchResults()
+    handleSetInterviews()
   }, [selectedBattalion])
 
   useEffect(() => {
@@ -75,11 +85,11 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       
-      const n = response.data
+      const results = response.data
         .map((e) => [e.dassScores, e.battalion, e.armyNo, e.mode, e.completedAt])
         .sort((a, b) => new Date(b[4]) - new Date(a[4])); // index 4 is completedAt
 
-      setResults(n);
+      setResults(results);
     } catch (error) {
       console.log("Error fetching results: ", error)
     }
@@ -324,15 +334,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     )
   }
 
-  // Set Interviews button handler
-  const handleSetInterviews = async () => {
-    try {
-      await fetchSeverePersonnel();
-      alert('Interviews set up successfully!');
-    } catch (error) {
-      alert('Not successful!');
-    }
-  };
+  
 
   return (
     <div className="datatable-container">
@@ -352,7 +354,6 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
               {/* <button onClick={handleImport} className="datatable-btn datatable-btn-import">IMPORT</button> */}
               <button onClick={handleExport} className="datatable-btn datatable-btn-export">EXPORT</button>
               <button onClick={() => setShowGraph(true)} className="datatable-btn datatable-btn-graph">Graphical Analysis</button>
-              <button onClick={handleSetInterviews} className="datatable-btn datatable-btn-interview" style={{marginLeft:'8px', backgroundColor: "skyblue"}}>Set Interviews</button>
             </>
           )}
           {canManageData && (
@@ -655,7 +656,7 @@ const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                             </table>
                           );
                         })() : (
-                          <td>Not Completed</td>
+                          <p style={{textAlign : "center"}}>Not Completed</p>
                         )}
                       </td>
 

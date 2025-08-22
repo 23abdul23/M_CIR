@@ -2,6 +2,7 @@ const express = require("express")
 const Examination = require("../models/Examination")
 const Personnel = require("../models/Personnel")
 const User = require("../models/User")
+const Battalion = require("../models/Battalion")
 const auth = require("../middleware/auth")
 const ReExamPeriod= require("../models/ReExam")
 
@@ -152,7 +153,10 @@ router.get("/battalion/:battalionId", auth, async (req, res) => {
       }
     }
 
-    const examinations = await Examination.find({ battalion: battalionId })
+    const allBattalions = await Battalion.find({'name' : battalionId});
+    const allBattalionIds = allBattalions.map(b => b._id)
+
+    const examinations = await Examination.find({ battalion: { $in: allBattalionIds } })
       .populate("battalion", "name")
       .sort({ completedAt: -1 })
 

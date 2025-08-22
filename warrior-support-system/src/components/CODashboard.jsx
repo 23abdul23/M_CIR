@@ -124,7 +124,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
 
-      console.log(res.data)
       
       setStats({
         totalBattalions: approvedBattalions,
@@ -246,7 +245,6 @@ const CODashboard = ({ currentUser, onLogout }) => {
 
   const handleInterviews = () => {
     if (selectedBattalionInterview) {
-      console.log(selectedBattalionInterview)
       localStorage.setItem("selectedBattalion", selectedBattalionInterview)
       navigate("/interview-co", {
         state: { selectedBattalion: selectedBattalionInterview }
@@ -459,11 +457,10 @@ const CODashboard = ({ currentUser, onLogout }) => {
                 className="form-control mb-2"
               >
                 <option value="">Select Battalion</option>
-                {allBattalions
-                  .filter((b) => b.status === "APPROVED")
-                  .map((battalion) => (
-                    <option key={battalion._id} value={battalion._id}>
-                      {battalion.name + " (" + battalion.postedStr + ")"}
+                {allUniqueBattalions
+                  .map((battalion, index) => (
+                    <option key={index} value={battalion}>
+                      {battalion}
                     </option>
                   ))}
               </select>

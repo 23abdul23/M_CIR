@@ -8,6 +8,8 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     const [severePersonnel, setSeverePersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
     const [interviewChecked, setInterviewChecked] = useState({});
+    // Store interview date for each person
+    const [interviewDates, setInterviewDates] = useState({});
     const interviewDone = async (personId) => {
         try {
 
@@ -26,6 +28,22 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         }
     };
 
+    const setInterview = async (armyNo,date) =>{
+        try{
+            const responce = await axios.post('/api/interview/setInterview', { 
+                interviewDate: date,
+                armyNo: armyNo
+            },
+            {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            }
+            );
+            alert(`Interview date is Set`);
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
    
     const fetchSeverePersonnel = async () => {
         setLoading(true);
@@ -34,7 +52,6 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
             params: { battalionName: localStorage.getItem("selectedBattalion") },
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
-            console.log(response.data.data)
             setSeverePersonnel(response.data.data);
 
         } catch (error) {
@@ -103,6 +120,7 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                             <th>Self Evaluation</th>
                                             <th>JCO Review</th>
                                             <th>Results</th>
+                                            <th>Set Interview</th>
                                             <th>Interview</th>
                                         </tr>
                                     </thead>
@@ -144,6 +162,28 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                                     ) : (
                                                         <span>No Results found</span>
                                                     )}
+                                                </td>
+                                                {/* Interview Date Picker */}
+                                                <td>
+                                                  <input
+                                                    type="date"
+                                                    value={interviewDates[person._id] || ''}
+                                                    onChange={e => setInterviewDates(prev => ({ ...prev, [person._id]: e.target.value }))}
+                                                    style={{ padding: '2px 6px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                                  />
+                                                  {/* Save button for date (API integration can be added here) */}
+                                                  {interviewDates[person._id] && (
+                                                    <button
+                                                      style={{ marginLeft: '6px', padding: '2px 10px', borderRadius: '4px', background: '#1976d2', color: '#fff', border: 'none', cursor: 'pointer', fontSize: '0.9em' }}
+                                                      onClick={e => {
+                                                        e.preventDefault();
+                                                        setInterview(person.armyNo, interviewDates[person._id])
+                                                        
+                                                      }}
+                                                    >
+                                                      Set
+                                                    </button>
+                                                  )}
                                                 </td>
                                                 <td>
                                                     <input
