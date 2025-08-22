@@ -76,8 +76,10 @@
 .back-btn,
 .proceed-btn {
   padding: 12px 30px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 16px !important;
+  width: 150px !important;
+  height: 60px !important;
+  font-weight: bold !important;
   border: none;
   border-radius: 5px;
   cursor: pointer;

@@ -6,7 +6,21 @@ require('dotenv').config()
 const app = express()
 
 // Middleware
-app.use(cors())
+const allowedOrigins = ['http://localhost:5000','http://localhost:3000', 'http://localhost:8000'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+      // Allow requests with no origin (like curl, Postman, etc.)
+    if (!origin) return callback(null, true);
+      // Allow all localhost origins (any port)
+      if (/^http:\/\/localhost:\d+$/.test(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}))
+
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 

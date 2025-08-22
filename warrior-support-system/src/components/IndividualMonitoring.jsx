@@ -107,11 +107,24 @@ const IndividualMonitoring = ({ armyNo: propArmyNo, currentUser, onLogout, onBac
   // Latest scores for pie charts
   const latestScores = examinationHistory.length > 0 ? examinationHistory[examinationHistory.length - 1].dassScores : null;
 
+  console.log('Latest DASS Scores:', latestScores);
+
   const pieData = latestScores ? [
     { name: 'Depression', value: latestScores.depression, color: '#FF6B6B' },
     { name: 'Anxiety', value: latestScores.anxiety, color: '#4ECDC4' },
     { name: 'Stress', value: latestScores.stress, color: '#45B7D1' }
   ] : [];
+
+  // Check if latest scores are all zero
+  const isLatestScoresZero = latestScores &&
+    latestScores.depression === 0 &&
+    latestScores.anxiety === 0 &&
+    latestScores.stress === 0;
+
+  // Check if all severities are Normal or Mild
+  const isAllClearSeverity = latestScores &&
+    [latestScores.depressionSeverity, latestScores.anxietySeverity, latestScores.stressSeverity]
+      .every(sev => sev === 'Normal' || sev === 'Mild');
 
   const severityColors = {
     'Normal': '#4CAF50',
@@ -170,7 +183,7 @@ const IndividualMonitoring = ({ armyNo: propArmyNo, currentUser, onLogout, onBac
           <div className='same-line-charts'>
             {/* Line Chart for Score Trends */}
             <div className="chart-card">
-                <h3>DASS-21 Score Trends Over Time</h3>
+                <h3>DASS-42 Score Trends Over Time</h3>
                 <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -205,26 +218,39 @@ const IndividualMonitoring = ({ armyNo: propArmyNo, currentUser, onLogout, onBac
 
             {/* Pie Chart for Score Distribution */}
             <div className="chart-card-pie">
-                <h3>Latest Score Distribution</h3>
-                <ResponsiveContainer width="100%" height={400}>
-                <PieChart>
-                    <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value }) => `${name}: ${value}`}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    dataKey="value"
-                    >
-                    {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                    </Pie>
-                    <Tooltip />
-                </PieChart>
-                </ResponsiveContainer>
+                <h3 style={{textAlign: "center"}}>Latest Score Distribution</h3>
+                {(isLatestScoresZero || isAllClearSeverity) ? (
+                  <div className="latest-scores-zero-msg">
+                    <span className="zero-icon">✔️</span>
+                    <div className="zero-title">All Clear!</div>
+                    <div className="zero-desc">
+                      {isLatestScoresZero
+                        ? <>The latest DASS test has values <b>0, 0, 0</b> (Normal on all scales).</>
+                        : <>The latest DASS test is within <b>Normal</b> or <b>Mild</b> range for all categories.</>
+                      }
+                    </div>
+                  </div>
+                ) : (
+                  <ResponsiveContainer width="100%" height={400}>
+                    <PieChart>
+                        <Pie
+                        data={pieData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ name, value }) => `${name}: ${value}`}
+                        outerRadius={120}
+                        fill="#8884d8"
+                        dataKey="value"
+                        >
+                        {pieData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                        </Pie>
+                        <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
             </div>
 
           </div>

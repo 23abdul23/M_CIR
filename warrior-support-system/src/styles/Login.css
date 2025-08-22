@@ -9,12 +9,15 @@
 }
 
 .login-content {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  max-width: 500px;
+  max-width: 1200px;
   width: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: row;
   animation: slideIn 0.5s ease-out;
 }
 
@@ -32,8 +35,14 @@
 .login-header {
   background: linear-gradient(135deg, #2c3e50, #34495e);
   color: white;
-  padding: 30px;
+  padding: 30px 30px 30px 30px;
   text-align: center;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 1.5px solid #e0e0e0;
 }
 
 .logo-section {
@@ -79,7 +88,14 @@
 }
 
 .login-form-container {
-  padding: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 40px 40px 40px;
+  width: 800px !important;
+  max-width: 120px;
 }
 
 .login-form h2 {
@@ -183,21 +199,30 @@
 
 .role-cards {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
+  flex-direction: row;
+  gap: 24px;
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: stretch;
 }
 
 .role-card {
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   border: 2px solid #dee2e6;
   border-radius: 12px;
-  padding: 25px;
+  padding: 32px 28px;
+  min-width: 240px;
+  min-height: 200px;
+  flex: 1 1 0;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .role-card::before {
@@ -322,40 +347,29 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .login-container {
-    padding: 10px;
-  }
-  
+@media (max-width: 1024px) {
   .login-content {
-    max-width: 100%;
+    flex-direction: column;
+    max-width: 98vw;
+    min-height: unset;
   }
-  
   .login-header {
-    padding: 20px;
+    border-right: none;
+    border-bottom: 1.5px solid #e0e0e0;
+    min-width: unset;
+    padding: 24px 10px;
   }
-  
-  .login-header h1 {
-    font-size: 20px;
-  }
-  
   .login-form-container {
-    padding: 20px;
+    min-width: unset;
+    padding: 24px 10px;
   }
-  
   .role-cards {
-    gap: 12px;
+    flex-direction: column;
+    gap: 14px;
   }
-  
   .role-card {
-    padding: 20px;
-  }
-  
-  .role-card h3 {
-    font-size: 18px;
-  }
-  
-  .role-card .role-icon {
-    font-size: 35px;
+    min-width: unset;
+    min-height: 120px;
+    padding: 20px 12px;
   }
 }

@@ -921,26 +921,6 @@ const CombinedAssessment = () => {
                 {currentQuestion.questionText}
               </div>
               
-              {/* {currentQuestion.questionType === 'MCQ' && currentQuestion.options && (
-                <div className="options-container">
-                  {currentQuestion.options.map((option, index) => (
-                    <button
-                      key={index}
-                      className={`option-button ${currentAnswer === option.optionText ? 'selected' : ''}`}
-                      onClick={() => {
-                        setManualInput(''); // Clear manual input for MCQ
-                        setVoiceTranscript(''); // Clear voice transcript for MCQ
-                        setAnswers(prev => ({
-                          ...prev,
-                          [currentQuestion.questionId]: option.optionText
-                        }));
-                      }}
-                    >
-                      {option.optionId}. {option.optionText}
-                    </button>
-                  ))}
-                </div>
-              )} */}
               
               {/* Voice Recording Section */}
               <div className="voice-section">
