@@ -115,8 +115,8 @@ const UserRegister = ({ onRegister }) => {
       <div className="register-content">
         <div className="register-header">
           <div className="logo-section">
-            <div className="logo-placeholder">🇮🇳</div>
-            <div className="logo-placeholder">⚔️</div>
+            <div className="logo-placeholder logo1"></div>
+            <div className="logo-placeholder logo2"></div>
           </div>
           <h1>SOLDIER SUPPORT SYSTEM</h1>
           <p className="register-subtitle">Register YourSelf</p>
