@@ -343,6 +343,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                     </th>
                     {canReview && <th>PEER EVALUATION</th>}
                     
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -410,6 +411,7 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                   <th>LEAVE AVAILED</th>
                   <th>MARITAL STATUS</th>
                   <th>Interview Status</th>
+                  <th>Interview Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -432,6 +434,20 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
                           Interview Scheduled
                         </span>
                       </td>
+                      <td>{(() => {
+                        if (Array.isArray(existingInterviewDates)) {
+                          const interviewObj = existingInterviewDates.find(p => String(p.armyNo) === String(person.armyNo));
+                          if (interviewObj && interviewObj.interviewDate) {
+                            const date = new Date(interviewObj.interviewDate);
+                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                            return date.toLocaleDateString('en-GB', options);
+                          }
+                          else {
+                            return <span style={{color:'#aaa'}}>No Date Scheduled</span>;
+                          }
+                        }
+                        return <span style={{color:'#aaa'}}>Not Set</span>;
+                      })()}</td>
                     </tr>
                   ))
                 )}

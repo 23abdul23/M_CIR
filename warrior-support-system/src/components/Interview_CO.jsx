@@ -227,20 +227,33 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                                     })()}
                                                 </td>
                                                 <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={!!interviewChecked[person._id]}
-                                                        onChange={e => setInterviewChecked(prev => ({ ...prev, [person._id]: e.target.checked }))}
-                                                    />
-                                                    {interviewChecked[person._id] && (
-                                                        <button
-                                                            className="interview-done-btn"
-                                                            style={{ marginLeft: '8px', padding: '4px 12px', borderRadius: '4px', background: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}
-                                                            onClick={() => interviewDone(person.armyNo)}
-                                                        >
-                                                            Done
-                                                        </button>
-                                                    )}
+                                                    {(() => {
+                                                        // Find interview for this person
+                                                        const interviewObj = Array.isArray(existingInterviewDates)
+                                                            ? existingInterviewDates.find(i => String(i.armyNo) === String(person.armyNo))
+                                                            : null;
+                                                        const today = new Date().toISOString().split('T')[0];
+                                                        const interviewScheduled = interviewObj && interviewObj.interviewDate && interviewObj.interviewDate >= today;
+                                                        return (
+                                                            <>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={!!interviewChecked[person._id]}
+                                                                    disabled={!interviewScheduled}
+                                                                    onChange={e => setInterviewChecked(prev => ({ ...prev, [person._id]: e.target.checked }))}
+                                                                />
+                                                                {interviewChecked[person._id] && interviewScheduled && (
+                                                                    <button
+                                                                        className="interview-done-btn"
+                                                                        style={{ marginLeft: '8px', padding: '4px 12px', borderRadius: '4px', background: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}
+                                                                        onClick={() => interviewDone(person.armyNo)}
+                                                                    >
+                                                                        Done
+                                                                    </button>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
                                                 </td>
                                             </tr>
                                         ))}

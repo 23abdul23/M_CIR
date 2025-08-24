@@ -35,7 +35,6 @@ router.post("/setInterview", async (req, res) => {
 router.get("/getInterview", async (req,res) => {
     try{
         const existingInterviews = await Interview.find({})
-        console.log(existingInterviews)
         res.status(200).json(existingInterviews)
     }
 
