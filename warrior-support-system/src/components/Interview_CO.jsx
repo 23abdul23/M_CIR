@@ -8,12 +8,15 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     const [severePersonnel, setSeverePersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
     const [interviewChecked, setInterviewChecked] = useState({});
+
     // Store interview date for each person
     const [interviewDates, setInterviewDates] = useState({});
+    const [existingInterviewDates, setExistingInterviewDates] = useState({})
+
+
     const interviewDone = async (personId) => {
         try {
 
-            console.log(personId)
             await axios.post(`/api/severePersonnel/done/${personId}`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
@@ -28,20 +31,34 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
         }
     };
 
-    const setInterview = async (armyNo,date) =>{
+    const fetchExistingInterviewDates = async () =>{
         try{
-            const responce = await axios.post('/api/interview/setInterview', { 
-                interviewDate: date,
-                armyNo: armyNo
-            },
-            {
+            const responce = await axios.get(`/api/interview/getInterview`,{
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-            }
-            );
-            alert(`Interview date is Set`);
+            })
+
+            console.log(responce.data)
+            setExistingInterviewDates(responce.data)
         }
         catch(error){
             console.log(error)
+        }
+    }
+
+
+    const setInterview = async (armyNo, date) => {
+        try {
+            const responce = await axios.post('/api/interview/setInterview', { 
+                interviewDate: date,
+                armyNo: armyNo
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            });
+            fetchExistingInterviewDates()
+            alert(`Interview date is Set`);
+        } 
+        catch (error) {
+            console.log(error);
         }
     }
    
@@ -62,7 +79,8 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
     };
 
     useEffect(() => {
-        fetchSeverePersonnel();
+        fetchSeverePersonnel(),
+        fetchExistingInterviewDates();
     }, []);
 
     function getSeverityClass(severity) {
@@ -165,25 +183,48 @@ const Interview_CO = ({ selectedBattalion, currentUser, onLogout }) => {
                                                 </td>
                                                 {/* Interview Date Picker */}
                                                 <td>
-                                                  <input
-                                                    type="date"
-                                                    value={interviewDates[person._id] || ''}
-                                                    onChange={e => setInterviewDates(prev => ({ ...prev, [person._id]: e.target.value }))}
-                                                    style={{ padding: '2px 6px', borderRadius: '4px', border: '1px solid #ccc' }}
-                                                  />
-                                                  {/* Save button for date (API integration can be added here) */}
-                                                  {interviewDates[person._id] && (
-                                                    <button
-                                                      style={{ marginLeft: '6px', padding: '2px 10px', borderRadius: '4px', background: '#1976d2', color: '#fff', border: 'none', cursor: 'pointer', fontSize: '0.9em' }}
-                                                      onClick={e => {
-                                                        e.preventDefault();
-                                                        setInterview(person.armyNo, interviewDates[person._id])
-                                                        
-                                                      }}
-                                                    >
-                                                      Set
-                                                    </button>
-                                                  )}
+                                                    {(() => {
+                                                        // Find interview for this person
+                                                        const interviewObj = Array.isArray(existingInterviewDates)
+                                                            ? existingInterviewDates.find(i => i.armyNo === person.armyNo)
+                                                            : null;
+                                                        const today = new Date().toISOString().split('T')[0];
+                                                        // If interview exists and date is today or in the future, show date
+                                                        if (interviewObj && interviewObj.interviewDate && interviewObj.interviewDate >= today) {
+                                                            return (
+                                                                <span style={{ color: '#1976d2', fontWeight: 'bold' }}>
+                                                                    {(() => {
+                                                                        const date = new Date(interviewObj.interviewDate);
+                                                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                                                        return date.toLocaleDateString('en-GB', options);
+                                                                    })()}
+                                                                </span>
+                                                            );
+                                                        }
+                                                        // Else, show date picker and set button
+                                                        return (
+                                                            <>
+                                                                <input
+                                                                    type="date"
+                                                                    min={new Date().toISOString().split('T')[0]}
+                                                                    value={interviewDates[person._id] || ''}
+                                                                    onChange={e => setInterviewDates(prev => ({ ...prev, [person._id]: e.target.value }))}
+                                                                    style={{ padding: '2px 6px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                                                />
+                                                                {interviewDates[person._id] && (
+                                                                    <button
+                                                                        style={{ marginLeft: '6px', padding: '2px 10px', borderRadius: '4px', background: '#1976d2', color: '#fff', border: 'none', cursor: 'pointer', fontSize: '0.9em' }}
+                                                                        onClick={e => {
+                                                                            e.preventDefault();
+                                                                            setInterview(person.armyNo, interviewDates[person._id]);
+                                                                        }}
+                                                                    >
+                                                                        Set
+                                                                    </button>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
                                                 </td>
                                                 <td>
                                                     <input

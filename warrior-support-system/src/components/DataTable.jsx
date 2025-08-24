@@ -16,7 +16,8 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
 
   const [interviewPersonnel, setInterviewPersonnel] = useState([])
   const [severePersonnels, setSeverePersonnels] = useState([])
-
+  const [existingInterviewDates, setExistingInterviewDates] = useState({})
+  
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -45,29 +46,41 @@ const DataTable = ({ selectedBattalion, currentUser, onLogout }) => {
     });
   });
 
-const handleFilterChange = (column, value) => {
+  const handleFilterChange = (column, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [column]: value,
     }));
   };
   
+  const fetchExistingInterviewDates = async () =>{
+        try{
+            const responce = await axios.get(`/api/interview/getInterview`,{
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            })
+            setExistingInterviewDates(responce.data)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
 
 
   useEffect(() => {
     fetchPersonnel()
     fetchSeverePersonnel()
+    fetchExistingInterviewDates()
   }, [selectedBattalion])
 
   const fetchPersonnel = async () => {
     setLoading(true)
     try {
       const battalionId = currentUser.battalion
-
-      
-      const response = await axios.get(`/api/personnel/battalion/${battalionId._id}`, {
+      console.log(battalionId)
+      const response = await axios.get(`/api/personnel/battalion/jco/${battalionId._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
+      });
+      console.log(response.data)
       setPersonnel(response.data)
     } catch (error) {
       console.error('Error fetching personnel:', error)
@@ -179,6 +192,8 @@ const handleFilterChange = (column, value) => {
       console.error("Error fetching severe personnel:", error)
     }
   }
+
+  console.log(personnel)
 
   return (
     <div className="datatable-container">

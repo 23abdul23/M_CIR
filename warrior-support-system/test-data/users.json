@@ -82,4 +82,50 @@
     "$date": "2025-08-13T17:00:45.382Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689ce9fb9b0fed6f09fdca88"
+  },
+  "username": "jso_allahabad_q",
+  "password": "$2a$10$U7Wc7/D08gWPudXcyJtyfeYOd7AbBEQxNwYTbZ2irOejUN4hhP.E2",
+  "fullName": "Jai Prakash",
+  "role": "JCO",
+  "armyNo": "123456AEDF",
+  "rank": "MAJ",
+  "battalion": {
+    "$oid": "689cc0094e2d40c796ea7f2b"
+  },
+  "subBty": "Q BTY",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-08-13T19:39:39.031Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-13T19:39:39.037Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689f0760b0493bb90510a862"
+  },
+  "username": "jco_aligarh_p",
+  "password": "$2a$10$kyzjK9R7TfUwAbZAKIjCGuEKuW41zOuPFD7bHMoG3sXwoy4dY9lKO",
+  "fullName": "Mayank Lukar",
+  "role": "JCO",
+  "armyNo": "123456V",
+  "rank": "CAPT",
+  "battalion": {
+    "$oid": "689cc612c9f98b201426229e"
+  },
+  "subBty": "P BTY",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-08-15T10:09:36.455Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-15T10:09:36.459Z"
+  },
+  "__v": 0
 }]

@@ -12,8 +12,6 @@ import GraphicalAnalysis from './GraphicalAnalysis';
 
 const DataTable_CO = ({ selectedBattalion, currentUser, onLogout }) => {
   const [personnel, setPersonnel] = useState([])
-
-
   const [results, setResults] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)

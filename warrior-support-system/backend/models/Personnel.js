@@ -89,6 +89,10 @@ const personnelSchema = new mongoose.Schema({
     enum: ['PENDING', 'APPROVED', 'REJECTED'],
     default: 'PENDING'
   },
+  interviewTaken : {
+    type: Boolean,
+    default : false
+  },
   updatedAt: {
     type: Date,
     default: Date.now

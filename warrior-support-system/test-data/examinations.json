@@ -1,962 +1,48 @@
 [{
   "_id": {
-    "$oid": "68846e83822d90f477c84766"
+    "$oid": "689ec12810a656f3195d4f2e"
   },
-  "armyNo": "SSS1782K",
+  "armyNo": "ARMY1",
   "answers": [
     {
       "questionId": "1",
-      "answer": 2,
+      "answer": "Lets check this if it is working or not.",
       "_id": {
-        "$oid": "68846e83822d90f477c84767"
+        "$oid": "689ec12810a656f3195d4f2f"
       }
     },
     {
       "questionId": "2",
-      "answer": 1,
+      "answer": "Lets check this if it is working or not.",
       "_id": {
-        "$oid": "68846e83822d90f477c84768"
+        "$oid": "689ec12810a656f3195d4f30"
       }
     },
     {
       "questionId": "3",
-      "answer": 3,
+      "answer": "This is workling well and good ",
       "_id": {
-        "$oid": "68846e83822d90f477c84769"
+        "$oid": "689ec12810a656f3195d4f31"
       }
     },
     {
       "questionId": "4",
-      "answer": 2,
+      "answer": "This is workling well and good ",
       "_id": {
-        "$oid": "68846e83822d90f477c8476a"
+        "$oid": "689ec12810a656f3195d4f32"
       }
     },
     {
       "questionId": "5",
-      "answer": 3,
+      "answer": "This is workling well and good ",
       "_id": {
-        "$oid": "68846e83822d90f477c8476b"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 3,
-      "_id": {
-        "$oid": "68846e83822d90f477c8476c"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 12,
-    "depressionSeverity": "Mild",
-    "anxiety": 6,
-    "anxietySeverity": "Normal",
-    "stress": 10,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-26T05:58:27.250Z"
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6884820286a6b5c887000135"
-  },
-  "armyNo": "19764521T",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "6884820286a6b5c887000136"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 2,
-      "_id": {
-        "$oid": "6884820286a6b5c887000137"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 3,
-      "_id": {
-        "$oid": "6884820286a6b5c887000138"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 1,
-      "_id": {
-        "$oid": "6884820286a6b5c887000139"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "6884820286a6b5c88700013a"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 2,
-      "_id": {
-        "$oid": "6884820286a6b5c88700013b"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 12,
-    "depressionSeverity": "Mild",
-    "anxiety": 6,
-    "anxietySeverity": "Normal",
-    "stress": 4,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-26T07:21:38.981Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6884a1cc3e3fa321bcab675b"
-  },
-  "armyNo": "SSS1782K",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 3,
-      "_id": {
-        "$oid": "6884a1cc3e3fa321bcab675c"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 2,
-      "_id": {
-        "$oid": "6884a1cc3e3fa321bcab675d"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 1,
-      "_id": {
-        "$oid": "6884a1cc3e3fa321bcab675e"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 2,
-      "_id": {
-        "$oid": "6884a1cc3e3fa321bcab675f"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "6884a1cc3e3fa321bcab6760"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 2,
-      "_id": {
-        "$oid": "6884a1cc3e3fa321bcab6761"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 8,
-    "depressionSeverity": "Normal",
-    "anxiety": 8,
-    "anxietySeverity": "Mild",
-    "stress": 10,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-26T09:37:16.572Z"
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6887845a24b9b2952aee2bda"
-  },
-  "armyNo": "SSS1782K",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "6887845a24b9b2952aee2bdb"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "6887845a24b9b2952aee2bdc"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 2,
-      "_id": {
-        "$oid": "6887845a24b9b2952aee2bdd"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 3,
-      "_id": {
-        "$oid": "6887845a24b9b2952aee2bde"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 2,
-      "_id": {
-        "$oid": "6887845a24b9b2952aee2bdf"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 2,
-      "_id": {
-        "$oid": "6887845a24b9b2952aee2be0"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 8,
-    "depressionSeverity": "Normal",
-    "anxiety": 12,
-    "anxietySeverity": "Moderate",
-    "stress": 4,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-28T14:08:26.886Z"
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688785fd24b9b2952aee2ee8"
-  },
-  "armyNo": "16500231Z",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 3,
-      "_id": {
-        "$oid": "688785fd24b9b2952aee2ee9"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 2,
-      "_id": {
-        "$oid": "688785fd24b9b2952aee2eea"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 1,
-      "_id": {
-        "$oid": "688785fd24b9b2952aee2eeb"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 0,
-      "_id": {
-        "$oid": "688785fd24b9b2952aee2eec"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "688785fd24b9b2952aee2eed"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 2,
-      "_id": {
-        "$oid": "688785fd24b9b2952aee2eee"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 8,
-    "depressionSeverity": "Normal",
-    "anxiety": 4,
-    "anxietySeverity": "Normal",
-    "stress": 10,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-28T14:15:25.826Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a188192985645b57ae3cc"
-  },
-  "armyNo": "SSS1782K",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 3,
-      "_id": {
-        "$oid": "688a188192985645b57ae3cd"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "688a188192985645b57ae3ce"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 3,
-      "_id": {
-        "$oid": "688a188192985645b57ae3cf"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 3,
-      "_id": {
-        "$oid": "688a188192985645b57ae3d0"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "688a188192985645b57ae3d1"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 3,
-      "_id": {
-        "$oid": "688a188192985645b57ae3d2"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 5,
-      "_id": {
-        "$oid": "688a188192985645b57ae3d3"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 12,
-    "depressionSeverity": "Mild",
-    "anxiety": 22,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 12,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-30T13:05:04.987Z"
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688ae2b5564a98dfe5561fa9"
-  },
-  "armyNo": "123456ATER",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 2,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561faa"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561fab"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 2,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561fac"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 3,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561fad"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 2,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561fae"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 3,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561faf"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 4,
-      "_id": {
-        "$oid": "688ae2b5564a98dfe5561fb0"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 8,
-    "depressionSeverity": "Normal",
-    "anxiety": 20,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 10,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-31T03:27:49.481Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688ae322564a98dfe55621e9"
-  },
-  "armyNo": "123456ATER",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621ea"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621eb"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 1,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621ec"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621ed"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621ee"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621ef"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 2,
-      "_id": {
-        "$oid": "688ae322564a98dfe55621f0"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 2,
-    "depressionSeverity": "Normal",
-    "anxiety": 4,
-    "anxietySeverity": "Normal",
-    "stress": 0,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-07-31T03:29:38.857Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688c9c35977dc26134db3aa0"
-  },
-  "armyNo": "SSS1782K",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa1"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa2"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 2,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa3"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 3,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa4"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 1,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa5"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa6"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 5,
-      "_id": {
-        "$oid": "688c9c35977dc26134db3aa7"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 6,
-    "depressionSeverity": "Normal",
-    "anxiety": 22,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 0,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-01T10:51:33.725Z"
-  },
-  "battalion": {
-    "$oid": "64a1b2c3d4e5f6789012345e"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688ca1e55e59d5765f44b799"
-  },
-  "armyNo": "123456ATER",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 2,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b79a"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b79b"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 2,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b79c"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 3,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b79d"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b79e"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b79f"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 4,
-      "_id": {
-        "$oid": "688ca1e55e59d5765f44b7a0"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 10,
-    "depressionSeverity": "Mild",
-    "anxiety": 20,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 4,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-01T11:15:49.465Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688ca65eaa8e431cc7de2acd"
-  },
-  "armyNo": "123456ATER",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2ace"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 1,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2acf"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2ad0"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2ad1"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 1,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2ad2"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2ad3"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 4,
-      "_id": {
-        "$oid": "688ca65eaa8e431cc7de2ad4"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 2,
-    "depressionSeverity": "Severe",
-    "anxiety": 10,
-    "anxietySeverity": "Moderate",
-    "stress": 0,
-    "stressSeverity": "Extremely Severe"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-01T11:34:54.004Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6891ec9b4c482fc34af3f252"
-  },
-  "armyNo": "SSS1782K",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f253"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 1,
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f254"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f255"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 0,
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f256"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f257"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f258"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": "okaish\n",
-      "_id": {
-        "$oid": "6891ec9b4c482fc34af3f259"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 8,
-    "depressionSeverity": "Normal",
-    "anxiety": null,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 10,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-05T11:35:55.756Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6891eea9414162ebb9948066"
-  },
-  "armyNo": "SSS1782K",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891eea9414162ebb9948067"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891eea9414162ebb9948068"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891eea9414162ebb9948069"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 1,
-      "_id": {
-        "$oid": "6891eea9414162ebb994806a"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 3,
-      "_id": {
-        "$oid": "6891eea9414162ebb994806b"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 2,
-      "_id": {
-        "$oid": "6891eea9414162ebb994806c"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": "Okay this is workinng Fine",
-      "_id": {
-        "$oid": "6891eea9414162ebb994806d"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 10,
-    "depressionSeverity": "Mild",
-    "anxiety": null,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 8,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-05T11:44:40.939Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "68999e5ecd686e5ad319c7b9"
-  },
-  "armyNo": "123456ATER",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": "This is working ",
-      "_id": {
-        "$oid": "68999e5ecd686e5ad319c7ba"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": "this is alsoi working",
-      "_id": {
-        "$oid": "68999e5ecd686e5ad319c7bb"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": "this is alsoi working",
-      "_id": {
-        "$oid": "68999e5ecd686e5ad319c7bc"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": "this is alsoi working",
-      "_id": {
-        "$oid": "68999e5ecd686e5ad319c7bd"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": "this is alsoi working",
-      "_id": {
-        "$oid": "68999e5ecd686e5ad319c7be"
+        "$oid": "689ec12810a656f3195d4f33"
       }
     }
   ],
   "dassScores": {
     "depression": 0,
-    "depressionSeverity": "Moderate",
+    "depressionSeverity": "Mild",
     "anxiety": 0,
     "anxietySeverity": "Normal",
     "stress": 0,
@@ -964,391 +50,391 @@
   },
   "mode": "AI",
   "completedAt": {
-    "$date": "2025-08-11T07:40:14.641Z"
+    "$date": "2025-08-15T05:10:00.892Z"
   },
   "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
+    "$oid": "689cb8f4e9d9008ac45bde34"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "68985bd54b254dbcde674dae"
+    "$oid": "689ec1bd10a656f3195d5669"
   },
-  "armyNo": "SSS1782KOKO",
+  "armyNo": "ARMY2",
   "answers": [
     {
       "questionId": "1",
       "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674daf"
+        "$oid": "689ec1bd10a656f3195d566a"
       }
     },
     {
       "questionId": "2",
-      "answer": 3,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db0"
+        "$oid": "689ec1bd10a656f3195d566b"
       }
     },
     {
       "questionId": "3",
-      "answer": 2,
+      "answer": 3,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db1"
+        "$oid": "689ec1bd10a656f3195d566c"
       }
     },
     {
       "questionId": "4",
-      "answer": 1,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db2"
+        "$oid": "689ec1bd10a656f3195d566d"
       }
     },
     {
       "questionId": "5",
-      "answer": 3,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db3"
+        "$oid": "689ec1bd10a656f3195d566e"
       }
     },
     {
       "questionId": "6",
       "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db4"
+        "$oid": "689ec1bd10a656f3195d566f"
       }
     },
     {
       "questionId": "7",
       "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db5"
+        "$oid": "689ec1bd10a656f3195d5670"
       }
     },
     {
       "questionId": "8",
       "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db6"
+        "$oid": "689ec1bd10a656f3195d5671"
       }
     },
     {
       "questionId": "9",
-      "answer": 0,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db7"
+        "$oid": "689ec1bd10a656f3195d5672"
       }
     },
     {
       "questionId": "10",
-      "answer": 2,
+      "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db8"
+        "$oid": "689ec1bd10a656f3195d5673"
       }
     },
     {
       "questionId": "11",
-      "answer": 1,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674db9"
+        "$oid": "689ec1bd10a656f3195d5674"
       }
     },
     {
       "questionId": "12",
-      "answer": 0,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dba"
+        "$oid": "689ec1bd10a656f3195d5675"
       }
     },
     {
       "questionId": "13",
-      "answer": 2,
+      "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dbb"
+        "$oid": "689ec1bd10a656f3195d5676"
       }
     },
     {
       "questionId": "14",
-      "answer": 2,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dbc"
+        "$oid": "689ec1bd10a656f3195d5677"
       }
     },
     {
       "questionId": "15",
-      "answer": 0,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dbd"
+        "$oid": "689ec1bd10a656f3195d5678"
       }
     },
     {
       "questionId": "16",
-      "answer": 2,
+      "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dbe"
+        "$oid": "689ec1bd10a656f3195d5679"
       }
     },
     {
       "questionId": "17",
-      "answer": 1,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dbf"
+        "$oid": "689ec1bd10a656f3195d567a"
       }
     },
     {
       "questionId": "18",
       "answer": 3,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc0"
+        "$oid": "689ec1bd10a656f3195d567b"
       }
     },
     {
       "questionId": "19",
       "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc1"
+        "$oid": "689ec1bd10a656f3195d567c"
       }
     },
     {
       "questionId": "20",
-      "answer": 1,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc2"
+        "$oid": "689ec1bd10a656f3195d567d"
       }
     },
     {
       "questionId": "21",
-      "answer": 2,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc3"
+        "$oid": "689ec1bd10a656f3195d567e"
       }
     },
     {
       "questionId": "22",
-      "answer": 3,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc4"
+        "$oid": "689ec1bd10a656f3195d567f"
       }
     },
     {
       "questionId": "23",
-      "answer": 1,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc5"
+        "$oid": "689ec1bd10a656f3195d5680"
       }
     },
     {
       "questionId": "24",
-      "answer": 3,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc6"
+        "$oid": "689ec1bd10a656f3195d5681"
       }
     },
     {
       "questionId": "25",
-      "answer": 0,
+      "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc7"
+        "$oid": "689ec1bd10a656f3195d5682"
       }
     },
     {
       "questionId": "26",
       "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc8"
+        "$oid": "689ec1bd10a656f3195d5683"
       }
     },
     {
       "questionId": "27",
-      "answer": 0,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dc9"
+        "$oid": "689ec1bd10a656f3195d5684"
       }
     },
     {
       "questionId": "28",
-      "answer": 1,
+      "answer": 2,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dca"
+        "$oid": "689ec1bd10a656f3195d5685"
       }
     },
     {
       "questionId": "29",
-      "answer": 3,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dcb"
+        "$oid": "689ec1bd10a656f3195d5686"
       }
     },
     {
       "questionId": "30",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dcc"
+        "$oid": "689ec1bd10a656f3195d5687"
       }
     },
     {
       "questionId": "31",
       "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dcd"
+        "$oid": "689ec1bd10a656f3195d5688"
       }
     },
     {
       "questionId": "32",
-      "answer": 1,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dce"
+        "$oid": "689ec1bd10a656f3195d5689"
       }
     },
     {
       "questionId": "33",
-      "answer": 2,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dcf"
+        "$oid": "689ec1bd10a656f3195d568a"
       }
     },
     {
       "questionId": "34",
       "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd0"
+        "$oid": "689ec1bd10a656f3195d568b"
       }
     },
     {
       "questionId": "35",
       "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd1"
+        "$oid": "689ec1bd10a656f3195d568c"
       }
     },
     {
       "questionId": "36",
-      "answer": 3,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd2"
+        "$oid": "689ec1bd10a656f3195d568d"
       }
     },
     {
       "questionId": "37",
       "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd3"
+        "$oid": "689ec1bd10a656f3195d568e"
       }
     },
     {
       "questionId": "38",
       "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd4"
+        "$oid": "689ec1bd10a656f3195d568f"
       }
     },
     {
       "questionId": "39",
-      "answer": 2,
+      "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd5"
+        "$oid": "689ec1bd10a656f3195d5690"
       }
     },
     {
       "questionId": "40",
-      "answer": 1,
+      "answer": 0,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd6"
+        "$oid": "689ec1bd10a656f3195d5691"
       }
     },
     {
       "questionId": "41",
-      "answer": 3,
+      "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd7"
+        "$oid": "689ec1bd10a656f3195d5692"
       }
     },
     {
       "questionId": "42",
       "answer": 1,
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd8"
+        "$oid": "689ec1bd10a656f3195d5693"
       }
     },
     {
       "questionId": "43",
-      "answer": "good",
+      "answer": "This was good",
       "_id": {
-        "$oid": "68985bd54b254dbcde674dd9"
+        "$oid": "689ec1bd10a656f3195d5694"
       }
     }
   ],
   "dassScores": {
-    "depression": 40,
-    "depressionSeverity": "Extremely Severe",
-    "anxiety": 32,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 40,
-    "stressSeverity": "Extremely Severe"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-10T08:44:05.069Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "68985c544b254dbcde6752e9"
-  },
-  "armyNo": "123456VOK",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": "yes this is woprjin ",
-      "_id": {
-        "$oid": "68985c544b254dbcde6752ea"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": "yes this is woprjin ",
-      "_id": {
-        "$oid": "68985c544b254dbcde6752eb"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": "yes this is woprjin ",
-      "_id": {
-        "$oid": "68985c544b254dbcde6752ec"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": "yes this is woprjin ",
-      "_id": {
-        "$oid": "68985c544b254dbcde6752ed"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": "yes this is woprjin ",
-      "_id": {
-        "$oid": "68985c544b254dbcde6752ee"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 21.07,
+    "depression": 22,
     "depressionSeverity": "Severe",
-    "anxiety": 22.63,
+    "anxiety": 28,
     "anxietySeverity": "Extremely Severe",
-    "stress": 19.73,
+    "stress": 22,
     "stressSeverity": "Moderate"
+  },
+  "mode": "MANUAL",
+  "completedAt": {
+    "$date": "2025-08-15T05:12:29.841Z"
+  },
+  "battalion": {
+    "$oid": "689cb8f4e9d9008ac45bde34"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689f27b47e5d3815c1c5edab"
+  },
+  "armyNo": "ARMY4",
+  "answers": [
+    {
+      "questionId": "1",
+      "answer": "I am feeling well and cheerful and is quite good in health and is fit ",
+      "_id": {
+        "$oid": "689f27b47e5d3815c1c5edac"
+      }
+    },
+    {
+      "questionId": "2",
+      "answer": "I am very happy and fine \n",
+      "_id": {
+        "$oid": "689f27b47e5d3815c1c5edad"
+      }
+    },
+    {
+      "questionId": "3",
+      "answer": "fdcjvnkfdlnv\n",
+      "_id": {
+        "$oid": "689f27b47e5d3815c1c5edae"
+      }
+    },
+    {
+      "questionId": "4",
+      "answer": "I am not well \n",
+      "_id": {
+        "$oid": "689f27b47e5d3815c1c5edaf"
+      }
+    },
+    {
+      "questionId": "5",
+      "answer": "I am very happy and fine \n",
+      "_id": {
+        "$oid": "689f27b47e5d3815c1c5edb0"
+      }
+    }
+  ],
+  "dassScores": {
+    "depression": 0,
+    "depressionSeverity": "Normal",
+    "anxiety": 0,
+    "anxietySeverity": "Normal",
+    "stress": 0,
+    "stressSeverity": "Normal"
   },
   "mode": "AI",
   "completedAt": {
-    "$date": "2025-08-10T08:46:11.994Z"
+    "$date": "2025-08-15T12:27:32.308Z"
   },
   "battalion": {
     "$oid": "68832bf35a9c9096000530f4"
@@ -1357,1862 +443,385 @@
 },
 {
   "_id": {
-    "$oid": "68987451e7fcd6d563340f19"
+    "$oid": "689f27b87e5d3815c1c5edb6"
   },
-  "armyNo": "123456Abcde",
+  "armyNo": "ARMY4",
+  "answers": [
+    {
+      "questionId": "1",
+      "answer": "I am feeling well and cheerful and is quite good in health and is fit ",
+      "_id": {
+        "$oid": "689f27b87e5d3815c1c5edb7"
+      }
+    },
+    {
+      "questionId": "2",
+      "answer": "I am very happy and fine \n",
+      "_id": {
+        "$oid": "689f27b87e5d3815c1c5edb8"
+      }
+    },
+    {
+      "questionId": "3",
+      "answer": "fdcjvnkfdlnv\n",
+      "_id": {
+        "$oid": "689f27b87e5d3815c1c5edb9"
+      }
+    },
+    {
+      "questionId": "4",
+      "answer": "I am not well \n",
+      "_id": {
+        "$oid": "689f27b87e5d3815c1c5edba"
+      }
+    },
+    {
+      "questionId": "5",
+      "answer": "I am very happy and fine \n",
+      "_id": {
+        "$oid": "689f27b87e5d3815c1c5edbb"
+      }
+    }
+  ],
+  "dassScores": {
+    "depression": 0,
+    "depressionSeverity": "Normal",
+    "anxiety": 0,
+    "anxietySeverity": "Normal",
+    "stress": 0,
+    "stressSeverity": "Extremely Severe"
+  },
+  "mode": "AI",
+  "completedAt": {
+    "$date": "2025-08-15T12:27:36.006Z"
+  },
+  "battalion": {
+    "$oid": "68832bf35a9c9096000530f4"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a18638cf622b28a43b403e"
+  },
+  "armyNo": "ARMY9",
   "answers": [
     {
       "questionId": "1",
       "answer": 2,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f1a"
+        "$oid": "68a18638cf622b28a43b403f"
       }
     },
     {
       "questionId": "2",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f1b"
+        "$oid": "68a18638cf622b28a43b4040"
       }
     },
     {
       "questionId": "3",
-      "answer": 2,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f1c"
+        "$oid": "68a18638cf622b28a43b4041"
       }
     },
     {
       "questionId": "4",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f1d"
+        "$oid": "68a18638cf622b28a43b4042"
       }
     },
     {
       "questionId": "5",
-      "answer": 2,
+      "answer": 1,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f1e"
+        "$oid": "68a18638cf622b28a43b4043"
       }
     },
     {
       "questionId": "6",
-      "answer": 3,
+      "answer": 1,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f1f"
+        "$oid": "68a18638cf622b28a43b4044"
       }
     },
     {
       "questionId": "7",
       "answer": 2,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f20"
+        "$oid": "68a18638cf622b28a43b4045"
       }
     },
     {
       "questionId": "8",
-      "answer": 3,
+      "answer": 2,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f21"
+        "$oid": "68a18638cf622b28a43b4046"
       }
     },
     {
       "questionId": "9",
       "answer": 2,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f22"
+        "$oid": "68a18638cf622b28a43b4047"
       }
     },
     {
       "questionId": "10",
       "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f23"
+        "$oid": "68a18638cf622b28a43b4048"
       }
     },
     {
       "questionId": "11",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f24"
+        "$oid": "68a18638cf622b28a43b4049"
       }
     },
     {
       "questionId": "12",
-      "answer": 2,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f25"
+        "$oid": "68a18638cf622b28a43b404a"
       }
     },
     {
       "questionId": "13",
       "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f26"
+        "$oid": "68a18638cf622b28a43b404b"
       }
     },
     {
       "questionId": "14",
       "answer": 1,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f27"
+        "$oid": "68a18638cf622b28a43b404c"
       }
     },
     {
       "questionId": "15",
-      "answer": 0,
+      "answer": 2,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f28"
+        "$oid": "68a18638cf622b28a43b404d"
       }
     },
     {
       "questionId": "16",
       "answer": 0,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f29"
+        "$oid": "68a18638cf622b28a43b404e"
       }
     },
     {
       "questionId": "17",
-      "answer": 0,
+      "answer": 1,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f2a"
+        "$oid": "68a18638cf622b28a43b404f"
       }
     },
     {
       "questionId": "18",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f2b"
+        "$oid": "68a18638cf622b28a43b4050"
       }
     },
     {
       "questionId": "19",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f2c"
+        "$oid": "68a18638cf622b28a43b4051"
       }
     },
     {
       "questionId": "20",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f2d"
+        "$oid": "68a18638cf622b28a43b4052"
       }
     },
     {
       "questionId": "21",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f2e"
+        "$oid": "68a18638cf622b28a43b4053"
       }
     },
     {
       "questionId": "22",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f2f"
+        "$oid": "68a18638cf622b28a43b4054"
       }
     },
     {
       "questionId": "23",
       "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f30"
+        "$oid": "68a18638cf622b28a43b4055"
       }
     },
     {
       "questionId": "24",
-      "answer": 2,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f31"
+        "$oid": "68a18638cf622b28a43b4056"
       }
     },
     {
       "questionId": "25",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f32"
+        "$oid": "68a18638cf622b28a43b4057"
       }
     },
     {
       "questionId": "26",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f33"
+        "$oid": "68a18638cf622b28a43b4058"
       }
     },
     {
       "questionId": "27",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f34"
+        "$oid": "68a18638cf622b28a43b4059"
       }
     },
     {
       "questionId": "28",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f35"
+        "$oid": "68a18638cf622b28a43b405a"
       }
     },
     {
       "questionId": "29",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f36"
+        "$oid": "68a18638cf622b28a43b405b"
       }
     },
     {
       "questionId": "30",
-      "answer": 2,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f37"
+        "$oid": "68a18638cf622b28a43b405c"
       }
     },
     {
       "questionId": "31",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f38"
+        "$oid": "68a18638cf622b28a43b405d"
       }
     },
     {
       "questionId": "32",
-      "answer": 2,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f39"
+        "$oid": "68a18638cf622b28a43b405e"
       }
     },
     {
       "questionId": "33",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f3a"
+        "$oid": "68a18638cf622b28a43b405f"
       }
     },
     {
       "questionId": "34",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f3b"
+        "$oid": "68a18638cf622b28a43b4060"
       }
     },
     {
       "questionId": "35",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f3c"
+        "$oid": "68a18638cf622b28a43b4061"
       }
     },
     {
       "questionId": "36",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f3d"
+        "$oid": "68a18638cf622b28a43b4062"
       }
     },
     {
       "questionId": "37",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f3e"
+        "$oid": "68a18638cf622b28a43b4063"
       }
     },
     {
       "questionId": "38",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f3f"
+        "$oid": "68a18638cf622b28a43b4064"
       }
     },
     {
       "questionId": "39",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f40"
+        "$oid": "68a18638cf622b28a43b4065"
       }
     },
     {
       "questionId": "40",
-      "answer": 0,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f41"
+        "$oid": "68a18638cf622b28a43b4066"
       }
     },
     {
       "questionId": "41",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f42"
+        "$oid": "68a18638cf622b28a43b4067"
       }
     },
     {
       "questionId": "42",
-      "answer": 1,
+      "answer": 3,
       "_id": {
-        "$oid": "68987451e7fcd6d563340f43"
+        "$oid": "68a18638cf622b28a43b4068"
       }
     },
     {
       "questionId": "43",
-      "answer": "theek thaK ",
+      "answer": "okay",
       "_id": {
-        "$oid": "68987451e7fcd6d563340f44"
+        "$oid": "68a18638cf622b28a43b4069"
       }
     }
   ],
   "dassScores": {
-    "depression": 32,
+    "depression": 70,
     "depressionSeverity": "Extremely Severe",
-    "anxiety": 26,
+    "anxiety": 78,
     "anxietySeverity": "Extremely Severe",
-    "stress": 40,
+    "stress": 72,
     "stressSeverity": "Extremely Severe"
   },
   "mode": "MANUAL",
   "completedAt": {
-    "$date": "2025-08-10T10:28:33.374Z"
+    "$date": "2025-08-17T07:35:20.350Z"
   },
   "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "689874c1e7fcd6d56334171a"
-  },
-  "armyNo": "123456VKL",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334171b"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334171c"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334171d"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334171e"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334171f"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341720"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341721"
-      }
-    },
-    {
-      "questionId": "8",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341722"
-      }
-    },
-    {
-      "questionId": "9",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341723"
-      }
-    },
-    {
-      "questionId": "10",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341724"
-      }
-    },
-    {
-      "questionId": "11",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341725"
-      }
-    },
-    {
-      "questionId": "12",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341726"
-      }
-    },
-    {
-      "questionId": "13",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341727"
-      }
-    },
-    {
-      "questionId": "14",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341728"
-      }
-    },
-    {
-      "questionId": "15",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341729"
-      }
-    },
-    {
-      "questionId": "16",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334172a"
-      }
-    },
-    {
-      "questionId": "17",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334172b"
-      }
-    },
-    {
-      "questionId": "18",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334172c"
-      }
-    },
-    {
-      "questionId": "19",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334172d"
-      }
-    },
-    {
-      "questionId": "20",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334172e"
-      }
-    },
-    {
-      "questionId": "21",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334172f"
-      }
-    },
-    {
-      "questionId": "22",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341730"
-      }
-    },
-    {
-      "questionId": "23",
-      "answer": 3,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341731"
-      }
-    },
-    {
-      "questionId": "24",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341732"
-      }
-    },
-    {
-      "questionId": "25",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341733"
-      }
-    },
-    {
-      "questionId": "26",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341734"
-      }
-    },
-    {
-      "questionId": "27",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341735"
-      }
-    },
-    {
-      "questionId": "28",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341736"
-      }
-    },
-    {
-      "questionId": "29",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341737"
-      }
-    },
-    {
-      "questionId": "30",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341738"
-      }
-    },
-    {
-      "questionId": "31",
-      "answer": 1,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341739"
-      }
-    },
-    {
-      "questionId": "32",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334173a"
-      }
-    },
-    {
-      "questionId": "33",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334173b"
-      }
-    },
-    {
-      "questionId": "34",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334173c"
-      }
-    },
-    {
-      "questionId": "35",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334173d"
-      }
-    },
-    {
-      "questionId": "36",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334173e"
-      }
-    },
-    {
-      "questionId": "37",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d56334173f"
-      }
-    },
-    {
-      "questionId": "38",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341740"
-      }
-    },
-    {
-      "questionId": "39",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341741"
-      }
-    },
-    {
-      "questionId": "40",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341742"
-      }
-    },
-    {
-      "questionId": "41",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341743"
-      }
-    },
-    {
-      "questionId": "42",
-      "answer": 0,
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341744"
-      }
-    },
-    {
-      "questionId": "43",
-      "answer": "GOOD",
-      "_id": {
-        "$oid": "689874c1e7fcd6d563341745"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 4,
-    "depressionSeverity": "Normal",
-    "anxiety": 12,
-    "anxietySeverity": "Moderate",
-    "stress": 8,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-10T10:30:25.006Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "68989c7c75db7c5801a1c3fe"
-  },
-  "armyNo": "ARMY4",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 2,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c3ff"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 2,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c400"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c401"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c402"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c403"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c404"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 1,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c405"
-      }
-    },
-    {
-      "questionId": "8",
-      "answer": 3,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c406"
-      }
-    },
-    {
-      "questionId": "9",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c407"
-      }
-    },
-    {
-      "questionId": "10",
-      "answer": 1,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c408"
-      }
-    },
-    {
-      "questionId": "11",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c409"
-      }
-    },
-    {
-      "questionId": "12",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c40a"
-      }
-    },
-    {
-      "questionId": "13",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c40b"
-      }
-    },
-    {
-      "questionId": "14",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c40c"
-      }
-    },
-    {
-      "questionId": "15",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c40d"
-      }
-    },
-    {
-      "questionId": "16",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c40e"
-      }
-    },
-    {
-      "questionId": "17",
-      "answer": 1,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c40f"
-      }
-    },
-    {
-      "questionId": "18",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c410"
-      }
-    },
-    {
-      "questionId": "19",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c411"
-      }
-    },
-    {
-      "questionId": "20",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c412"
-      }
-    },
-    {
-      "questionId": "21",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c413"
-      }
-    },
-    {
-      "questionId": "22",
-      "answer": 1,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c414"
-      }
-    },
-    {
-      "questionId": "23",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c415"
-      }
-    },
-    {
-      "questionId": "24",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c416"
-      }
-    },
-    {
-      "questionId": "25",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c417"
-      }
-    },
-    {
-      "questionId": "26",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c418"
-      }
-    },
-    {
-      "questionId": "27",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c419"
-      }
-    },
-    {
-      "questionId": "28",
-      "answer": 1,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c41a"
-      }
-    },
-    {
-      "questionId": "29",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c41b"
-      }
-    },
-    {
-      "questionId": "30",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c41c"
-      }
-    },
-    {
-      "questionId": "31",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c41d"
-      }
-    },
-    {
-      "questionId": "32",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c41e"
-      }
-    },
-    {
-      "questionId": "33",
-      "answer": 2,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c41f"
-      }
-    },
-    {
-      "questionId": "34",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c420"
-      }
-    },
-    {
-      "questionId": "35",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c421"
-      }
-    },
-    {
-      "questionId": "36",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c422"
-      }
-    },
-    {
-      "questionId": "37",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c423"
-      }
-    },
-    {
-      "questionId": "38",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c424"
-      }
-    },
-    {
-      "questionId": "39",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c425"
-      }
-    },
-    {
-      "questionId": "40",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c426"
-      }
-    },
-    {
-      "questionId": "41",
-      "answer": 0,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c427"
-      }
-    },
-    {
-      "questionId": "42",
-      "answer": 1,
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c428"
-      }
-    },
-    {
-      "questionId": "43",
-      "answer": "okaisjh",
-      "_id": {
-        "$oid": "68989c7c75db7c5801a1c429"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 6,
-    "depressionSeverity": "Normal",
-    "anxiety": 8,
-    "anxietySeverity": "Mild",
-    "stress": 16,
-    "stressSeverity": "Mild"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-10T13:19:56.693Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6898a1e575db7c5801a1e00a"
-  },
-  "armyNo": "ARMY4",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": "this is working fine",
-      "_id": {
-        "$oid": "6898a1e575db7c5801a1e00b"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": "this is working fine",
-      "_id": {
-        "$oid": "6898a1e575db7c5801a1e00c"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": "this is working fine",
-      "_id": {
-        "$oid": "6898a1e575db7c5801a1e00d"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": "this is working fine",
-      "_id": {
-        "$oid": "6898a1e575db7c5801a1e00e"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": "this is working fine",
-      "_id": {
-        "$oid": "6898a1e575db7c5801a1e00f"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 0,
-    "depressionSeverity": "Normal",
-    "anxiety": 0,
-    "anxietySeverity": "Normal",
-    "stress": 0,
-    "stressSeverity": "Normal"
-  },
-  "mode": "AI",
-  "completedAt": {
-    "$date": "2025-08-10T13:43:01.860Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "689a29d91103b289f3ef8056"
-  },
-  "armyNo": "ARMY5",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8057"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8058"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8059"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 2,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef805a"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef805b"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef805c"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef805d"
-      }
-    },
-    {
-      "questionId": "8",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef805e"
-      }
-    },
-    {
-      "questionId": "9",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef805f"
-      }
-    },
-    {
-      "questionId": "10",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8060"
-      }
-    },
-    {
-      "questionId": "11",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8061"
-      }
-    },
-    {
-      "questionId": "12",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8062"
-      }
-    },
-    {
-      "questionId": "13",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8063"
-      }
-    },
-    {
-      "questionId": "14",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8064"
-      }
-    },
-    {
-      "questionId": "15",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8065"
-      }
-    },
-    {
-      "questionId": "16",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8066"
-      }
-    },
-    {
-      "questionId": "17",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8067"
-      }
-    },
-    {
-      "questionId": "18",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8068"
-      }
-    },
-    {
-      "questionId": "19",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8069"
-      }
-    },
-    {
-      "questionId": "20",
-      "answer": 3,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef806a"
-      }
-    },
-    {
-      "questionId": "21",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef806b"
-      }
-    },
-    {
-      "questionId": "22",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef806c"
-      }
-    },
-    {
-      "questionId": "23",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef806d"
-      }
-    },
-    {
-      "questionId": "24",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef806e"
-      }
-    },
-    {
-      "questionId": "25",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef806f"
-      }
-    },
-    {
-      "questionId": "26",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8070"
-      }
-    },
-    {
-      "questionId": "27",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8071"
-      }
-    },
-    {
-      "questionId": "28",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8072"
-      }
-    },
-    {
-      "questionId": "29",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8073"
-      }
-    },
-    {
-      "questionId": "30",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8074"
-      }
-    },
-    {
-      "questionId": "31",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8075"
-      }
-    },
-    {
-      "questionId": "32",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8076"
-      }
-    },
-    {
-      "questionId": "33",
-      "answer": 1,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8077"
-      }
-    },
-    {
-      "questionId": "34",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8078"
-      }
-    },
-    {
-      "questionId": "35",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8079"
-      }
-    },
-    {
-      "questionId": "36",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef807a"
-      }
-    },
-    {
-      "questionId": "37",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef807b"
-      }
-    },
-    {
-      "questionId": "38",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef807c"
-      }
-    },
-    {
-      "questionId": "39",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef807d"
-      }
-    },
-    {
-      "questionId": "40",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef807e"
-      }
-    },
-    {
-      "questionId": "41",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef807f"
-      }
-    },
-    {
-      "questionId": "42",
-      "answer": 0,
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8080"
-      }
-    },
-    {
-      "questionId": "43",
-      "answer": "Okay This is Good\n",
-      "_id": {
-        "$oid": "689a29d91103b289f3ef8081"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 4,
-    "depressionSeverity": "Normal",
-    "anxiety": 16,
-    "anxietySeverity": "Severe",
-    "stress": 4,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-11T17:35:21.757Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "689a2ac41103b289f3ef8889"
-  },
-  "armyNo": "ARMY5",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": "This is Working Nicely",
-      "_id": {
-        "$oid": "689a2ac41103b289f3ef888a"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": "this works too good",
-      "_id": {
-        "$oid": "689a2ac41103b289f3ef888b"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": "this works too good",
-      "_id": {
-        "$oid": "689a2ac41103b289f3ef888c"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": "this works too good",
-      "_id": {
-        "$oid": "689a2ac41103b289f3ef888d"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": "is this recording or not? avaazarahi hai ya? avaazarahi",
-      "_id": {
-        "$oid": "689a2ac41103b289f3ef888e"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 15.379999999999999,
-    "depressionSeverity": "Moderate",
-    "anxiety": 24.174999999999997,
-    "anxietySeverity": "Extremely Severe",
-    "stress": 20.380000000000003,
-    "stressSeverity": "Moderate"
-  },
-  "mode": "AI",
-  "completedAt": {
-    "$date": "2025-08-11T17:39:16.436Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "689ae43ea9fab77d301ca0d0"
-  },
-  "armyNo": "ARMY5",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d1"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d2"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d3"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": 2,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d4"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d5"
-      }
-    },
-    {
-      "questionId": "6",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d6"
-      }
-    },
-    {
-      "questionId": "7",
-      "answer": 3,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d7"
-      }
-    },
-    {
-      "questionId": "8",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d8"
-      }
-    },
-    {
-      "questionId": "9",
-      "answer": 2,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0d9"
-      }
-    },
-    {
-      "questionId": "10",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0da"
-      }
-    },
-    {
-      "questionId": "11",
-      "answer": 2,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0db"
-      }
-    },
-    {
-      "questionId": "12",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0dc"
-      }
-    },
-    {
-      "questionId": "13",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0dd"
-      }
-    },
-    {
-      "questionId": "14",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0de"
-      }
-    },
-    {
-      "questionId": "15",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0df"
-      }
-    },
-    {
-      "questionId": "16",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e0"
-      }
-    },
-    {
-      "questionId": "17",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e1"
-      }
-    },
-    {
-      "questionId": "18",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e2"
-      }
-    },
-    {
-      "questionId": "19",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e3"
-      }
-    },
-    {
-      "questionId": "20",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e4"
-      }
-    },
-    {
-      "questionId": "21",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e5"
-      }
-    },
-    {
-      "questionId": "22",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e6"
-      }
-    },
-    {
-      "questionId": "23",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e7"
-      }
-    },
-    {
-      "questionId": "24",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e8"
-      }
-    },
-    {
-      "questionId": "25",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0e9"
-      }
-    },
-    {
-      "questionId": "26",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0ea"
-      }
-    },
-    {
-      "questionId": "27",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0eb"
-      }
-    },
-    {
-      "questionId": "28",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0ec"
-      }
-    },
-    {
-      "questionId": "29",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0ed"
-      }
-    },
-    {
-      "questionId": "30",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0ee"
-      }
-    },
-    {
-      "questionId": "31",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0ef"
-      }
-    },
-    {
-      "questionId": "32",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f0"
-      }
-    },
-    {
-      "questionId": "33",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f1"
-      }
-    },
-    {
-      "questionId": "34",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f2"
-      }
-    },
-    {
-      "questionId": "35",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f3"
-      }
-    },
-    {
-      "questionId": "36",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f4"
-      }
-    },
-    {
-      "questionId": "37",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f5"
-      }
-    },
-    {
-      "questionId": "38",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f6"
-      }
-    },
-    {
-      "questionId": "39",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f7"
-      }
-    },
-    {
-      "questionId": "40",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f8"
-      }
-    },
-    {
-      "questionId": "41",
-      "answer": 1,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0f9"
-      }
-    },
-    {
-      "questionId": "42",
-      "answer": 0,
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0fa"
-      }
-    },
-    {
-      "questionId": "43",
-      "answer": "Good",
-      "_id": {
-        "$oid": "689ae43ea9fab77d301ca0fb"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 4,
-    "depressionSeverity": "Normal",
-    "anxiety": 18,
-    "anxietySeverity": "Severe",
-    "stress": 12,
-    "stressSeverity": "Normal"
-  },
-  "mode": "MANUAL",
-  "completedAt": {
-    "$date": "2025-08-12T06:50:38.667Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "689ae513a9fab77d301ca3e0"
-  },
-  "armyNo": "ARMY5",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": "This is working ",
-      "_id": {
-        "$oid": "689ae513a9fab77d301ca3e1"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": "This is working ",
-      "_id": {
-        "$oid": "689ae513a9fab77d301ca3e2"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": "This is working ",
-      "_id": {
-        "$oid": "689ae513a9fab77d301ca3e3"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": "This is working ",
-      "_id": {
-        "$oid": "689ae513a9fab77d301ca3e4"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": "This is working ",
-      "_id": {
-        "$oid": "689ae513a9fab77d301ca3e5"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 0,
-    "depressionSeverity": "Normal",
-    "anxiety": 0,
-    "anxietySeverity": "Normal",
-    "stress": 0,
-    "stressSeverity": "Normal"
-  },
-  "mode": "AI",
-  "completedAt": {
-    "$date": "2025-08-12T06:54:11.045Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "689ae96c83888845cf8e1f8c"
-  },
-  "armyNo": "ARMY5",
-  "answers": [
-    {
-      "questionId": "1",
-      "answer": "This is wroking Fine",
-      "_id": {
-        "$oid": "689ae96c83888845cf8e1f8d"
-      }
-    },
-    {
-      "questionId": "2",
-      "answer": "This is wroking Fine",
-      "_id": {
-        "$oid": "689ae96c83888845cf8e1f8e"
-      }
-    },
-    {
-      "questionId": "3",
-      "answer": "This is wroking Fine",
-      "_id": {
-        "$oid": "689ae96c83888845cf8e1f8f"
-      }
-    },
-    {
-      "questionId": "4",
-      "answer": "This is wroking Fine",
-      "_id": {
-        "$oid": "689ae96c83888845cf8e1f90"
-      }
-    },
-    {
-      "questionId": "5",
-      "answer": "This is wroking Fine",
-      "_id": {
-        "$oid": "689ae96c83888845cf8e1f91"
-      }
-    }
-  ],
-  "dassScores": {
-    "depression": 0,
-    "depressionSeverity": "Normal",
-    "anxiety": 0,
-    "anxietySeverity": "Normal",
-    "stress": 0,
-    "stressSeverity": "Normal"
-  },
-  "mode": "AI",
-  "completedAt": {
-    "$date": "2025-08-12T07:12:44.725Z"
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
+    "$oid": "689cc612c9f98b201426229e"
   },
   "__v": 0
 }]

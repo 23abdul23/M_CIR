@@ -19,6 +19,7 @@ app.use('/api/evaluation', require('./routes/evaluation'))
 app.use('/api/csv', require('./routes/csv'))
 app.use('/api/questions', require('./routes/questions')) 
 app.use('/api/severePersonnel', require('./routes/severePersonnel'))
+app.use('/api/interview', require('./routes/interview'))
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -35,8 +35,7 @@ router.get('/all',auth, async (req, res) => {
 
 router.get('/:id',auth, async (req, res) => {
   try {
-    console.log(req)
-    console.log(req.user)
+    
     // If user is CO, return all severe personnel
     if (req.user && req.user.role === 'CO') {
       const severePersonnel = await SeverePersonnel.find({});
@@ -101,9 +100,7 @@ router.post('/all', auth, async (req, res) => {
     .filter(Boolean);
 
     
-    console.log(severePersonnels)
     const savedDocs = await SeverePersonnel.insertMany(severePersonnels, { ordered: false });
-    console.log(savedDocs)
 
     res.status(200).json({ data: severePersonnels });
   } catch (error) {
@@ -115,22 +112,34 @@ router.post('/all', auth, async (req, res) => {
   }
 });
 
+
 router.post("/done/:armyNo", auth, async (req, res) => {
   try {
     const armyNo = req.params.armyNo;
 
-    const result = await SeverePersonnel.deleteOne({ armyNo });
-    if (result.deletedCount === 0) {
+    // Step 1: Find personnel
+    const interviewPersonnel = await Personnel.findOne({ armyNo });
+    if (!interviewPersonnel) {
       return res.status(404).json({ message: "No personnel found with this army number" });
     }
 
-    res.status(200).json({message : "Interview is Done"})
+    // Step 2: Delete from SeverePersonnel
+    const result = await SeverePersonnel.deleteOne({ armyNo });
+    if (result.deletedCount === 0) {
+      // optional: still continue if not in SeverePersonnel, depends on your logic
+      console.warn(`No severe personnel with armyNo ${armyNo}`);
+    }
+
+    // Step 3: Update and save
+    interviewPersonnel.interviewTaken = true;
+    await interviewPersonnel.save();
+
+    res.status(200).json({ message: "Interview is Done" });
+  } catch (error) {
+    console.error("Error", error);
+    res.status(500).json({ error: "Server error" });
   }
-  catch (error){
-    console.log("Error", error)
-    res.status(500)
-  }
-})
+});
 
 
 

@@ -132,7 +132,7 @@ const Login = ({ onLogin }) => {
             // Login form for selected role
             <div className="login-form-section">
               <button className="back-btn" onClick={handleBackToRoles}>
-                ← Back to Role Selection
+                Back
               </button>
               
               <form onSubmit={handleSubmit} className="login-form">

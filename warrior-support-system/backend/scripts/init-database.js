@@ -9,6 +9,7 @@ const User = require(path.join(__dirname, '../models/User'))
 const Battalion = require(path.join(__dirname, '../models/Battalion'))
 const Personnel = require(path.join(__dirname, '../models/Personnel'))
 const Question = require(path.join(__dirname, '../models/Question'))
+const QuestionAi = require(path.join(__dirname, '../models/QuestionAI'))
 const QuestionPeer = require(path.join(__dirname, '../models/Question_peer'))
 const Examination = require(path.join(__dirname, '../models/Examination'))
 const ReExam = require(path.join(__dirname, '../models/ReExam'))
@@ -69,6 +70,7 @@ async function initializeDatabase() {
     await Examination.deleteMany({})
     await Question.deleteMany({})
     await QuestionPeer.deleteMany({})
+    await QuestionAi.deleteMany({})
     console.log('✅ Cleared existing data')
 
     // Create Questions first
@@ -77,6 +79,15 @@ async function initializeDatabase() {
     const processedQuestions = questionsData.map(q => convertDates(q))
     const questions = await Question.insertMany(processedQuestions)
     console.log(`✅ Created ${questions.length} questions`)
+
+    // Create Question Ai first
+
+    console.log('📝 Creating questions...')
+    const questionsAIData = readTestData('questionais.json')
+    const processedQuestionsAI = questionsAIData.map(q => convertDates(q))
+    const questionsAI = await QuestionAi.insertMany(processedQuestionsAI)
+    console.log(`✅ Created ${questionsAI.length} questions`)
+
 
     // Create Peer Questions first
     console.log('📝 Creating questions...')
@@ -116,6 +127,7 @@ async function initializeDatabase() {
     console.log('\n🎉 === DATABASE INITIALIZATION COMPLETED ===')
     console.log('\n📊 Summary:')
     console.log(`   Questions: ${questions.length}`)
+    console.log(`   Questions AI: ${questionsAI.length}`)
     console.log(`   Peer Questions: ${peer_questions.length}`)
     console.log(`   Users: ${users.length}`)
     console.log(`   Battalions: ${battalions.length}`)

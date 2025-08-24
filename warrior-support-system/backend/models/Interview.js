@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const InterviewSchema = new mongoose.Schema({
     armyNo : {
         type : String,
-        required : true
+        required : true,
+        unique: true
     },
     interviewDate : {
         type : Date,

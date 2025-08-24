@@ -1,441 +1,127 @@
 [{
   "_id": {
-    "$oid": "688a3eec0089aace3be35f4c"
+    "$oid": "689cd3b537c4a0d6231b5a35"
   },
-  "armyNo": "123456VKL",
-  "rank": "Sub",
-  "name": "abcd",
-  "subBty": "Q Bty",
-  "service": "6",
-  "dateOfInduction": {
-    "$date": "2025-07-03T00:00:00.000Z"
-  },
-  "medCat": "B2",
-  "leaveAvailed": "2",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "COMPLETED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "addedBattalion": "",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-08-10T10:30:25.101Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T15:49:00.261Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a4032b80ee98cad85e2c3"
-  },
-  "armyNo": "123456GLK",
-  "rank": "Nk",
-  "name": "abdef",
-  "subBty": "Q Bty",
-  "service": "6",
-  "dateOfInduction": {
-    "$date": "2025-07-25T00:00:00.000Z"
-  },
-  "medCat": "C1",
-  "leaveAvailed": "14",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "688a4032b80ee98cad85e2c4"
-  },
-  "addedBattalion": "",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-07-30T15:54:26.273Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T15:54:26.273Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a43b2175e869c09fb9d0b"
-  },
-  "armyNo": "123456VOK",
-  "rank": "2Lt",
+  "armyNo": "ARMY1",
+  "rank": "Maj",
   "name": "Abdul Azeem Ansari ",
-  "subBty": "R Bty",
-  "service": "24",
-  "dateOfInduction": {
-    "$date": "2025-07-11T00:00:00.000Z"
-  },
-  "medCat": "B1",
-  "leaveAvailed": "2",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "COMPLETED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "addedBattalion": "",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-08-10T08:46:12.013Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T16:09:22.592Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a4d21eb15ce838fd1e509"
-  },
-  "armyNo": "123456ABC",
-  "rank": "Maj",
-  "name": "Admin try ",
-  "subBty": "HQ Bty",
-  "service": "6",
-  "dateOfInduction": {
-    "$date": "2025-07-19T00:00:00.000Z"
-  },
-  "medCat": "B2",
-  "leaveAvailed": "5",
-  "maritalStatus": "MARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "688a4d21eb15ce838fd1e50a"
-  },
-  "addedBattalion": "yes ",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-07-30T16:49:37.407Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T16:49:37.407Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a5a7e1331c7849f38dcb5"
-  },
-  "armyNo": "advadv",
-  "rank": "Maj",
-  "name": "test1",
-  "subBty": "R Bty",
-  "service": "6",
-  "dateOfInduction": {
-    "$date": "2025-07-01T00:00:00.000Z"
-  },
-  "medCat": "B2",
-  "leaveAvailed": "14",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "688a5a7e1331c7849f38dcb6"
-  },
-  "addedBattalion": "TESTBTY3",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-07-30T17:46:38.654Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T17:46:38.654Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a5c28ec3b2c50aa3bc5a5"
-  },
-  "armyNo": "SSS1rt782K",
-  "rank": "Capt",
-  "name": "test345",
-  "subBty": "Q Bty",
-  "service": "61",
-  "dateOfInduction": {
-    "$date": "2025-07-25T00:00:00.000Z"
-  },
-  "medCat": "B1",
-  "leaveAvailed": "50",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "688a5c28ec3b2c50aa3bc5a6"
-  },
-  "addedBattalion": "testfinal",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-07-30T17:53:44.246Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T17:53:44.246Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688a5fd4564a98dfe5561ba7"
-  },
-  "armyNo": "123456ATER",
-  "rank": "Capt",
-  "name": "xyz",
-  "subBty": "Q Bty",
-  "service": "61",
-  "dateOfInduction": {
-    "$date": "2025-07-17T00:00:00.000Z"
-  },
-  "medCat": "B1",
-  "leaveAvailed": "5",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "COMPLETED",
-  "peerEvaluation": {
-    "status": "EVALUATED",
-    "evaluatedBy": {
-      "$oid": "6883152ffa5537a2db906434"
-    },
-    "evaluatedAt": {
-      "$date": "2025-08-11T02:58:50.682Z"
-    },
-    "answers": [
-      {
-        "questionId": "68995b979bff53b7ddf151ef",
-        "answer": "8",
-        "_id": {
-          "$oid": "68995c6afead3c51d637b7d0"
-        }
-      },
-      {
-        "questionId": "68995b979bff53b7ddf151fa",
-        "answer": "7",
-        "_id": {
-          "$oid": "68995c6afead3c51d637b7d1"
-        }
-      },
-      {
-        "questionId": "68995b979bff53b7ddf15205",
-        "answer": "10",
-        "_id": {
-          "$oid": "68995c6afead3c51d637b7d2"
-        }
-      },
-      {
-        "questionId": "68995b979bff53b7ddf15210",
-        "answer": "6",
-        "_id": {
-          "$oid": "68995c6afead3c51d637b7d3"
-        }
-      },
-      {
-        "questionId": "68995b979bff53b7ddf1521b",
-        "answer": "8",
-        "_id": {
-          "$oid": "68995c6afead3c51d637b7d4"
-        }
-      }
-    ],
-    "finalScore": 7.8
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "addedBattalion": "",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-07-30T18:09:24.917Z"
-  },
-  "createdAt": {
-    "$date": "2025-07-30T18:09:24.917Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688cff8ce283dc5b99f93e8a"
-  },
-  "armyNo": "123456Abcde",
-  "rank": "Nk",
-  "name": "Rajma",
-  "subBty": "R Bty",
-  "service": "6",
-  "dateOfInduction": {
-    "$date": "2025-08-22T00:00:00.000Z"
-  },
-  "medCat": "B1",
-  "leaveAvailed": "14",
-  "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "COMPLETED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
-  },
-  "addedBattalion": "",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-08-10T10:28:33.524Z"
-  },
-  "createdAt": {
-    "$date": "2025-08-01T17:55:24.792Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "688cffe6e283dc5b99f93f45"
-  },
-  "armyNo": "123456Atdgghedc",
-  "rank": "Lt",
-  "name": "Rajma2",
-  "subBty": "R Bty",
-  "service": "61",
+  "subBty": "P BTY",
+  "service": "1",
   "dateOfInduction": {
     "$date": "2025-08-11T00:00:00.000Z"
   },
-  "medCat": "B1",
-  "leaveAvailed": "12",
+  "medCat": "A2",
+  "leaveAvailed": "5",
   "maritalStatus": "UNMARRIED",
-  "selfEvaluation": "NOT_ATTEMPTED",
-  "peerEvaluation": {
-    "status": "PENDING",
-    "answers": [],
-    "finalScore": 0
-  },
-  "battalion": {
-    "$oid": "688cffe6e283dc5b99f93f46"
-  },
-  "addedBattalion": "nEW bASTTALION",
-  "status": "APPROVED",
-  "updatedAt": {
-    "$date": "2025-08-01T17:56:54.822Z"
-  },
-  "createdAt": {
-    "$date": "2025-08-01T17:56:54.822Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6890e9f8457fae0ecf63a484"
-  },
-  "armyNo": "SSS1782KOKO",
-  "rank": "Maj",
-  "name": "test",
-  "subBty": "R Bty",
-  "service": "61",
-  "dateOfInduction": {
-    "$date": "2025-08-27T00:00:00.000Z"
-  },
-  "medCat": "B2",
-  "leaveAvailed": "14",
-  "maritalStatus": "MARRIED",
   "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
     "status": "EVALUATED",
     "evaluatedBy": {
-      "$oid": "6883152ffa5537a2db906434"
+      "$oid": "689cc4bdaf41d22d7d8a71c6"
     },
     "evaluatedAt": {
-      "$date": "2025-08-12T07:11:23.694Z"
+      "$date": "2025-08-15T05:13:23.385Z"
     },
     "answers": [
       {
-        "questionId": "68995b979bff53b7ddf151ef",
-        "answer": "3",
+        "questionId": "689cbb8d22d3b0877ca7081d",
+        "answer": "4",
         "_id": {
-          "$oid": "689ae91b83888845cf8e0fc2"
+          "$oid": "689ec1f310a656f3195d6409"
         }
       },
       {
-        "questionId": "68995b979bff53b7ddf151fa",
-        "answer": "8",
+        "questionId": "689cbb8d22d3b0877ca70828",
+        "answer": "10",
         "_id": {
-          "$oid": "689ae91b83888845cf8e0fc3"
+          "$oid": "689ec1f310a656f3195d640a"
         }
       },
       {
-        "questionId": "68995b979bff53b7ddf15205",
+        "questionId": "689cbb8d22d3b0877ca70833",
+        "answer": "10",
+        "_id": {
+          "$oid": "689ec1f310a656f3195d640b"
+        }
+      },
+      {
+        "questionId": "689cbb8d22d3b0877ca7083e",
+        "answer": "7",
+        "_id": {
+          "$oid": "689ec1f310a656f3195d640c"
+        }
+      },
+      {
+        "questionId": "689cbb8d22d3b0877ca70849",
         "answer": "6",
         "_id": {
-          "$oid": "689ae91b83888845cf8e0fc4"
-        }
-      },
-      {
-        "questionId": "68995b979bff53b7ddf15210",
-        "answer": "10",
-        "_id": {
-          "$oid": "689ae91b83888845cf8e0fc5"
-        }
-      },
-      {
-        "questionId": "68995b979bff53b7ddf1521b",
-        "answer": "10",
-        "_id": {
-          "$oid": "689ae91b83888845cf8e0fc6"
+          "$oid": "689ec1f310a656f3195d640d"
         }
       }
     ],
     "finalScore": 7.4
   },
   "battalion": {
-    "$oid": "68832bf35a9c9096000530f4"
+    "$oid": "689cb8f4e9d9008ac45bde34"
   },
   "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-08-10T08:44:05.317Z"
+    "$date": "2025-08-15T05:10:01.084Z"
   },
   "createdAt": {
-    "$date": "2025-08-04T17:12:24.597Z"
+    "$date": "2025-08-13T18:04:37.738Z"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "68989ae375db7c5801a1bf08"
+    "$oid": "689cd55337c4a0d6231b5dc4"
   },
-  "armyNo": "ARMY4",
+  "armyNo": "ARMY2",
   "rank": "Maj",
-  "name": "Testing",
-  "subBty": "R Bty",
-  "service": "6",
+  "name": "Surya Dev",
+  "subBty": "P BTY",
+  "service": "2",
   "dateOfInduction": {
-    "$date": "2025-06-10T00:00:00.000Z"
+    "$date": "2025-08-12T00:00:00.000Z"
   },
-  "medCat": "A2",
-  "leaveAvailed": "5",
+  "medCat": "B2",
+  "leaveAvailed": "32",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "COMPLETED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "finalScore": 0,
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "689cb8f4e9d9008ac45bde34"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-15T05:12:29.882Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-13T18:11:31.377Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689cd5be37c4a0d6231b5dd8"
+  },
+  "armyNo": "ARMY3",
+  "rank": "Lt Col",
+  "name": "Shon",
+  "subBty": "HQ BTY",
+  "service": "4",
+  "dateOfInduction": {
+    "$date": "2025-08-09T00:00:00.000Z"
+  },
+  "medCat": "B2",
+  "leaveAvailed": "45",
   "maritalStatus": "MARRIED",
   "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
@@ -449,28 +135,28 @@
   "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-08-10T13:43:01.880Z"
+    "$date": "2025-08-15T10:37:00.343Z"
   },
   "createdAt": {
-    "$date": "2025-08-10T13:13:07.779Z"
+    "$date": "2025-08-13T18:13:18.937Z"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "689a292a1103b289f3ef7671"
+    "$oid": "689cd5ec37c4a0d6231b5de5"
   },
-  "armyNo": "ARMY5",
-  "rank": "Capt",
-  "name": "Ayush Singh",
-  "subBty": "P Bty",
-  "service": "1",
+  "armyNo": "ARMY4",
+  "rank": "2Lt",
+  "name": "Surya Prakash",
+  "subBty": "HQ BTY",
+  "service": "6",
   "dateOfInduction": {
-    "$date": "2025-08-03T00:00:00.000Z"
+    "$date": "2025-08-29T00:00:00.000Z"
   },
-  "medCat": "A1",
-  "leaveAvailed": "56",
-  "maritalStatus": "UNMARRIED",
+  "medCat": "B2",
+  "leaveAvailed": "14",
+  "maritalStatus": "MARRIED",
   "selfEvaluation": "COMPLETED",
   "peerEvaluation": {
     "status": "PENDING",
@@ -483,10 +169,154 @@
   "addedBattalion": "",
   "status": "APPROVED",
   "updatedAt": {
-    "$date": "2025-08-12T07:12:44.751Z"
+    "$date": "2025-08-15T12:27:36.016Z"
   },
   "createdAt": {
-    "$date": "2025-08-11T17:32:26.199Z"
+    "$date": "2025-08-13T18:14:04.905Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689ce94eaf510a7221115e69"
+  },
+  "armyNo": "ARMY6",
+  "rank": "Lt",
+  "name": "Raghav Yadav ",
+  "subBty": "Q BTY",
+  "service": "9",
+  "dateOfInduction": {
+    "$date": "2025-09-02T00:00:00.000Z"
+  },
+  "medCat": "A2",
+  "leaveAvailed": "14",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "finalScore": 0,
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "689cc0094e2d40c796ea7f2b"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-13T19:36:46.626Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-13T19:36:46.626Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689f29097e5d3815c1c5f38e"
+  },
+  "armyNo": "frgredg",
+  "rank": "Capt",
+  "name": "kjk",
+  "subBty": "Q BTY",
+  "service": "4",
+  "dateOfInduction": {
+    "$date": "2025-08-28T00:00:00.000Z"
+  },
+  "medCat": "A2",
+  "leaveAvailed": "3",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "NOT_ATTEMPTED",
+  "peerEvaluation": {
+    "status": "PENDING",
+    "finalScore": 0,
+    "answers": []
+  },
+  "battalion": {
+    "$oid": "689cc0094e2d40c796ea7f2b"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-15T12:33:13.397Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-15T12:33:13.397Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a185c0cf622b28a43b3b61"
+  },
+  "armyNo": "ARMY9",
+  "rank": "Capt",
+  "name": "Surya Prakash",
+  "subBty": "P BTY",
+  "service": "3",
+  "dateOfInduction": {
+    "$date": "2025-08-19T00:00:00.000Z"
+  },
+  "medCat": "A2",
+  "leaveAvailed": "2",
+  "maritalStatus": "MARRIED",
+  "selfEvaluation": "COMPLETED",
+  "peerEvaluation": {
+    "status": "EVALUATED",
+    "evaluatedBy": {
+      "$oid": "689f0760b0493bb90510a862"
+    },
+    "evaluatedAt": {
+      "$date": "2025-08-17T08:21:07.053Z"
+    },
+    "answers": [
+      {
+        "questionId": "689cbb8d22d3b0877ca7081d",
+        "answer": "8",
+        "_id": {
+          "$oid": "68a190f3f322a995b39c01f8"
+        }
+      },
+      {
+        "questionId": "689cbb8d22d3b0877ca70828",
+        "answer": "10",
+        "_id": {
+          "$oid": "68a190f3f322a995b39c01f9"
+        }
+      },
+      {
+        "questionId": "689cbb8d22d3b0877ca70833",
+        "answer": "9",
+        "_id": {
+          "$oid": "68a190f3f322a995b39c01fa"
+        }
+      },
+      {
+        "questionId": "689cbb8d22d3b0877ca7083e",
+        "answer": "8",
+        "_id": {
+          "$oid": "68a190f3f322a995b39c01fb"
+        }
+      },
+      {
+        "questionId": "689cbb8d22d3b0877ca70849",
+        "answer": "8",
+        "_id": {
+          "$oid": "68a190f3f322a995b39c01fc"
+        }
+      }
+    ],
+    "finalScore": 8.6
+  },
+  "battalion": {
+    "$oid": "689cc612c9f98b201426229e"
+  },
+  "addedBattalion": "",
+  "status": "APPROVED",
+  "updatedAt": {
+    "$date": "2025-08-17T07:35:20.505Z"
+  },
+  "createdAt": {
+    "$date": "2025-08-17T07:33:20.296Z"
   },
   "__v": 0
 }]

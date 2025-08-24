@@ -70,35 +70,50 @@ router.post("/updateUser/:armyNo", auth, async (req, res) => {
   }
 })
 
+router.get("/battalion/jco/:battalionId", auth, async (req, res) => {
+  try {
+    const { battalionId } = req.params
+    const personnel = await Personnel.find({
+      battalion: battalionId,
+    });
+
+    // Enhance personnel data with examination status and DASS scores
+    const enhancedPersonnel = await Promise.all(
+      personnel.map(async (person) => {
+        const examination = await Examination.findOne({ armyNo: person.armyNo })
+        return {
+          ...person.toObject(),
+          hasExamination: !!examination,
+          dassScores: examination ? examination.dassScores : null,
+          mode: examination ? examination.mode : null,
+          examinationDate: examination ? examination.completedAt : null,
+        }
+      }),
+    )
+
+    res.json(enhancedPersonnel)
+    
+  } catch (error) {
+    console.error("Error fetching personnel:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+})
+
 // Get personnel by battalion (CO sees all, JSO sees only his battalion)
 router.get("/battalion/:battalionId", auth, async (req, res) => {
   try {
+
     const { battalionId } = req.params
+
+
     const allBattalions = await Battalion.find({'name' : battalionId});
     const allBattalionIds = allBattalions.map(b => b._id)
 
     const personnel = await Personnel.find({
-      battalion: { $in: allBattalionIds }
+      battalion: { $in: allBattalionIds },
+      interviewTaken : false,
     });
-
-    // Role-based access control
-    if (req.user.role === "USER") {
-      return res.status(403).json({ message: "Access denied" })
-    }
-
-    if (req.user.role === "JCO") {
-      // JSO can only see personnel from their battalion
-      const user = await User.findOne({ armyNo: req.user.armyNo })
-      if (user.battalion.toString() !== battalionId) {
-        return res.status(403).json({ message: "Access denied to this battalion" })
-      }
-    }
-
-
-
-    // const personnel = await Personnel.find({ battalion: battalionId })
-    //   .populate("battalion", "name")
-    //   .sort({ createdAt: -1 })
+    
 
     // Enhance personnel data with examination status and DASS scores
     const enhancedPersonnel = await Promise.all(
