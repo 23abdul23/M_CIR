@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from "./Header"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import '../styles/CombinedAssessment.css';
+import { pythonApiBase } from '../api';
 
 const CombinedAssessment = () => {
   const navigate = useNavigate();
@@ -262,7 +263,7 @@ const CombinedAssessment = () => {
       // Get final results when stopping
       if (facialSessionId) {
         try {
-          const result = await axios.get(`http://localhost:8000/api/final_score?session_id=${facialSessionId}`);
+          const result = await axios.get(`${pythonApiBase}/api/final_score?session_id=${facialSessionId}`);
           setFacialResults(result.data);
           console.log('Facial analysis stopped and results retrieved');
         } catch (error) {
@@ -357,7 +358,7 @@ const CombinedAssessment = () => {
     formData.append('duration', durationMs || 0);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/stream_frame', formData, {
+      const response = await axios.post(`${pythonApiBase}/api/stream_frame`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -434,7 +435,7 @@ const CombinedAssessment = () => {
             setIsProcessingAudio(true);
             console.log('📤 Sending audio to backend for transcription...');
 
-            const response = await axios.post('http://localhost:8000/api/translate', formData, {
+            const response = await axios.post(`${pythonApiBase}/api/translate`, formData, {
               headers: { 'Content-Type': 'multipart/form-data' },
               
             });
@@ -573,7 +574,7 @@ const CombinedAssessment = () => {
       setIsSubmitting(true);
       try {
         const response = await axios.post(
-          'http://localhost:8000/api/get_sentiment',
+          `${pythonApiBase}/api/get_sentiment`,
           { text: manualInput },
           { headers: { 'Content-Type': 'application/json' } }
         );

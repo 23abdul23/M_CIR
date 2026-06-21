@@ -17,8 +17,8 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 # Model Configuration - CPU ONLY, OFFLINE CAPABLE
-MODELS_DIR = BASE_DIR / "models"
-MODELS_DIR.mkdir(exist_ok=True)
+MODELS_DIR = Path(os.getenv("MODELS_DIR", str(BASE_DIR / "data" / "models")))
+MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Force CPU usage - NO GPU
 import os

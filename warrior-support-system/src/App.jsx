@@ -22,12 +22,13 @@ import FinancialForm from './components/FinancialForm'
 import IndividualMonitoring from './components/IndividualMonitoring'
 import CombinedAssessment from './components/CombinedAssessment'
 import Interview_CO from './components/Interview_CO'
+import { nodeApiBase } from './api'
 
 // Styles
 import './styles/App.css'
 
 // Set axios base URL
-axios.defaults.baseURL = 'http://localhost:5000'
+axios.defaults.baseURL = nodeApiBase
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
