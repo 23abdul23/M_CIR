@@ -23,6 +23,8 @@ services:
       - mongodb
     ports:
       - "5000:5000"
+    volumes:
+      - ./warrior-support-system/test-data:/test-data:ro
     restart: unless-stopped
 
   python-backend:

@@ -49,10 +49,16 @@ Notes:
    ```
 3. Open `http://localhost:8080`.
 
-Optional seed step:
+Initialize MongoDB seed data:
 
 ```bash
 docker compose exec backend npm run init-db
+```
+
+Or run everything in one go:
+
+```bash
+docker compose up --build -d && docker compose exec backend npm run init-db
 ```
 
 ## Persistent volumes
