@@ -18,6 +18,20 @@
   border: 1.5px solid #e3e6ec;
 }
 
+.register-container--personnel {
+  min-height: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.register-content--personnel {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -94,6 +108,89 @@
 
 .register-form-container {
   padding: 40px 36px 36px 36px;
+}
+
+.register-content--personnel .register-header {
+  padding: 12px 18px 10px 18px;
+}
+
+.register-content--personnel .register-header h1 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.register-content--personnel .register-subtitle {
+  font-size: 12px;
+}
+
+.register-content--personnel .logo-section {
+  margin-bottom: 6px;
+  gap: 12px;
+}
+
+.register-content--personnel .logo-placeholder {
+  width: 34px;
+  height: 34px;
+}
+
+.register-content--personnel .register-form-container {
+  padding: 10px 16px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.personnel-register-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.personnel-register-form h2 {
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.personnel-register-form h2::after {
+  bottom: -8px;
+}
+
+.personnel-register-form .error-message {
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.personnel-register-form .form-group {
+  margin-bottom: 0;
+}
+
+.personnel-register-form .form-group label {
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.personnel-register-form .form-group input,
+.personnel-register-form .form-group select {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.personnel-register-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px 10px;
+  align-content: start;
+}
+
+.personnel-register-form .register-actions {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.personnel-register-form .register-btn {
+  margin-top: 0;
+  padding: 10px;
+  font-size: 14px;
 }
 
 .register-form h2 {
@@ -369,6 +466,18 @@ body::-webkit-scrollbar, html::-webkit-scrollbar, .register-container::-webkit-s
   .form-group {
     margin-bottom: 16px;
   }
+
+  .personnel-register-form .form-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .register-content--personnel {
+    height: auto;
+  }
+
+  .register-content--personnel .register-form-container {
+    overflow: auto;
+  }
 }
 
 @media (max-width: 480px) {
@@ -414,6 +523,10 @@ body::-webkit-scrollbar, html::-webkit-scrollbar, .register-container::-webkit-s
   .register-btn {
     padding: 15px;
     font-size: 16px;
+  }
+
+  .personnel-register-form .form-grid {
+    grid-template-columns: 1fr;
   }
 }
 

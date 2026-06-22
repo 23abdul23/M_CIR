@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import "../styles/Register.css"
 
@@ -26,7 +25,6 @@ const UserRegister = ({ onRegister }) => {
   const [showAddForm, setShowAddForm] = useState(false)
   const [newBattalion, setNewBattalion] = useState({ name: '', postedStr: '' })
   const [selectedSubBattalion, setSelectedSubBattalion] = useState('')
-  const navigate = useNavigate()
 
   
 
@@ -97,11 +95,14 @@ const UserRegister = ({ onRegister }) => {
       })
 
       const data = await response.json()
+      if (!response.ok) {
+        setError(data?.message || "Failed to register. Please try again.")
+        return
+      }
 
       
 
       onRegister(data)
-      navigate("/dashboard")
     } catch (err) {
       setError("Failed to register. Please try again later.")
     } finally {
@@ -111,8 +112,8 @@ const UserRegister = ({ onRegister }) => {
 
   
   return (
-    <div className="register-container">
-      <div className="register-content">
+    <div className="register-container register-container--personnel">
+      <div className="register-content register-content--personnel">
         <div className="register-header">
           <div className="logo-section">
             <div className="logo-placeholder logo1"></div>
@@ -123,7 +124,7 @@ const UserRegister = ({ onRegister }) => {
         </div>
 
         <div className="register-form-container">
-          <form onSubmit={handleSubmit} className="register-form">
+          <form onSubmit={handleSubmit} className="register-form personnel-register-form">
             <h2>REGISTER</h2>
 
             {error && <div className="error-message">{error}</div>}
@@ -241,25 +242,25 @@ const UserRegister = ({ onRegister }) => {
                     <option value="UNMARRIED">UNMARRIED</option>
                 </select>
                 </div>
-            </div>
-            
-            
-            
-            <div className="form-group">
-            <label htmlFor="battalionId">Battalion</label>
-            <select id="battalion" name="battalion" value={formData.battalion} onChange={handleChange}>
-                <option value="">Select Battalion</option>
-                {battalions.map((battalion) => (
-                <option key={battalion._id} value={battalion._id}>
-                    {battalion.name + " (" + battalion.postedStr + ")"}
-                </option>
-                ))}
-            </select>
+                
+                <div className="form-group">
+                <label htmlFor="battalionId">BATTALION</label>
+                <select id="battalion" name="battalion" value={formData.battalion} onChange={handleChange}>
+                    <option value="">Select Battalion</option>
+                    {battalions.map((battalion) => (
+                    <option key={battalion._id} value={battalion._id}>
+                        {battalion.name + " (" + battalion.postedStr + ")"}
+                    </option>
+                    ))}
+                </select>
+                </div>
             </div>
 
-            <button type="submit" className="register-btn" disabled={loading}>
-              {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
-            </button>
+            <div className="register-actions">
+              <button type="submit" className="register-btn" disabled={loading}>
+                {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
+              </button>
+            </div>
           </form>
 
           

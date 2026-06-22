@@ -328,7 +328,8 @@ router.get("/co-set-date", auth, async (req, res) => {
     const coSetDate = await ReExamPeriod.findOne({});
 
     if (!coSetDate) {
-      return res.status(404).json({ message: "CO set date not found." });
+      // Default to immediate re-attempt if CO has not configured the period yet.
+      return res.json({ setPeriod: 0 });
     }
 
     res.json({ setPeriod: coSetDate.period });

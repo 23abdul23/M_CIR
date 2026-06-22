@@ -27,32 +27,39 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
     navigate('/login')
   }
 
-  const handleLogin = async (user, token) => {
-    // setCurrentUser(user)
-    localStorage.getItem('token')
-    localStorage.getItem('user')
-
-    
+  const handleLogin = async (data) => {
+    const registeredArmyNo = data?.personnel?.armyNo
+    if (registeredArmyNo) {
+      setArmyNo(registeredArmyNo)
+    }
+    setShowRegister(false)
+    setError('Registration submitted. Your application is pending approval by the CO.')
   }
 
   const handleProceed = async () => {
+    setError('')
+
     if (!armyNo.trim()) {
       setError('Please enter Army Number')
       return
     }
 
     try {
-      // Fetch the CO's set date for the exam period
-      const coDateResponse = await axios.get('/api/examination/co-set-date', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-
-      const coSetPeriod = (coDateResponse.data.setPeriod)
-
       // Verify if army number exists
       const response = await axios.get(`/api/personnel/army-no/${armyNo}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+
+      // Fetch CO period with safe fallback so this call never triggers registration UI.
+      let coSetPeriod = 0
+      try {
+        const coDateResponse = await axios.get('/api/examination/co-set-date', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        coSetPeriod = Number(coDateResponse?.data?.setPeriod ?? 0)
+      } catch (periodError) {
+        coSetPeriod = 0
+      }
 
       let examModes = new Set();
 
@@ -72,6 +79,7 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
 
 
       if (response.data) {
+        setShowRegister(false)
 
         const examTaken = response.data.selfEvaluation
         const completedAt = new Date(response.data.updatedAt).getTime();
@@ -101,14 +109,20 @@ const ArmyNumberEntry = ({ currentUser, onLogout }) => {
         const message = error.response.data.message
         if (message === 'Your application is pending approval by the CO.') {
           setError('Your application is pending approval by the CO.')
+          setShowRegister(false)
         } else {
           setError(message || 'An error occurred.')
+          setShowRegister(false)
           return 
         }
+      } else if (error.response && error.response.status === 404) {
+        setError('Army Number Not Valid, Register First')
+        setShowRegister(true) // Show the registration component only when army number does not exist
       } else {
         console.log(error)
-        setError('Army Number Not Valid, Register First')
-        setShowRegister(true) // Show the registration component
+        const message = error.response?.data?.message || 'Unable to verify Army Number. Please try again.'
+        setError(message)
+        setShowRegister(false)
       }
     }
   }
