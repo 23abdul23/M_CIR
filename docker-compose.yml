@@ -3,9 +3,6 @@ services:
     build:
       context: ./warrior-support-system
       dockerfile: Dockerfile.frontend
-    depends_on:
-      - backend
-      - python-backend
     ports:
       - "8080:80"
     restart: unless-stopped

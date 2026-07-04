@@ -62,7 +62,13 @@ const CombinedAssessment = () => {
   useEffect(() => {
     initializeAssessment();
 
-    // Prevent accidental page reload during audio processing
+    return () => {
+      cleanup();
+    };
+  }, []);
+
+  // Prevent accidental page reload during audio processing
+  useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (isProcessingAudio) {
         e.preventDefault();
@@ -74,7 +80,6 @@ const CombinedAssessment = () => {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      cleanup();
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isProcessingAudio]);
@@ -762,19 +767,19 @@ const CombinedAssessment = () => {
         <div className="personnel-info">
           <div className="info-item">
             <span>ARMY NO</span>
-            <span>{personnelInfo.armyNo}</span>
+            <span>{personnelInfo?.armyNo || 'Loading...'}</span>
           </div>
           <div className="info-item">
             <span>RANK</span>
-            <span>{personnelInfo.rank}</span>
+            <span>{personnelInfo?.rank || 'Loading...'}</span>
           </div>
           <div className="info-item">
             <span>NAME</span>
-            <span>{personnelInfo.name}</span>
+            <span>{personnelInfo?.name || 'Loading...'}</span>
           </div>
           <div className="info-item">
             <span>COY/SQN/BTY</span>
-            <span>{personnelInfo.subBty}</span>
+            <span>{personnelInfo?.subBty || 'Loading...'}</span>
           </div>
         </div>
       </div>      
@@ -1058,7 +1063,7 @@ const CombinedAssessment = () => {
           <div className="progress-bar">
             <div 
               className="progress-fill" 
-              style={{ width: `${(Object.keys(answers).length / questions.length) * 100}%` }}
+              style={{ width: `${questions.length > 0 ? (Object.keys(answers).length / questions.length) * 100 : 0}%` }}
             />
           </div>
         </div>

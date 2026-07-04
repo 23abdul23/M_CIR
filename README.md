@@ -1,73 +1,114 @@
 # SOLDIER SUPPORT SYSTEM
 
-## What actually runs
+## WSL + Docker Run
 
-This repo is a 4-part stack:
+### 1. Install WSL
 
-- `warrior-support-system/` React + Vite frontend
-- `warrior-support-system/backend/` Node + Express + MongoDB API
-- `warrior-support-system/python-backend/` FastAPI service for voice, facial, sentiment, and financial scoring
-- MongoDB for the Node backend
+Open **PowerShell as Administrator** and run:
 
-The frontend talks to both backends. The original repo hardcoded `localhost` in several places; the Docker setup now routes everything through the frontend container.
-
-## Local run without Docker
-
-1. Start MongoDB locally.
-2. Start the Node backend:
-   ```bash
-   cd warrior-support-system/backend
-   npm install
-   npm start
-   ```
-3. Start the Python backend:
-   ```bash
-   cd warrior-support-system/python-backend
-   pip install -r requirements.txt
-   uvicorn app:app --host 0.0.0.0 --port 8000 --reload
-   ```
-4. Start the frontend:
-   ```bash
-   cd warrior-support-system
-   npm install
-   npm run dev
-   ```
-5. Open `http://localhost:5173`.
-
-Notes:
-
-- The frontend expects the Node API on port `5000`.
-- The Python API listens on port `8000`.
-- The Python service downloads large models on first use.
-
-## Docker run
-
-1. Copy `.env.example` to `.env` and set `JWT_SECRET`.
-2. Build and start:
-   ```bash
-   docker compose up --build
-   ```
-3. Open `http://localhost:8080`.
-
-Initialize MongoDB seed data:
-
-```bash
-docker compose exec backend npm run init-db
+```powershell
+wsl --install
 ```
 
-Or run everything in one go:
+Then restart Windows when prompted.
 
-```bash
-docker compose up --build -d && docker compose exec backend npm run init-db
+After reboot:
+
+1. Open the new Ubuntu terminal.
+2. Finish the first-run Ubuntu setup.
+3. Verify WSL is running version 2:
+
+```powershell
+wsl -l -v
 ```
 
-## Persistent volumes
+If your Ubuntu distro is not on version 2:
 
-The Compose stack keeps state in named volumes:
+```powershell
+wsl --set-version Ubuntu 2
+```
 
-- `mongo_data` for MongoDB data
-- `python_model_data` for explicit Python model downloads under `/app/data/models`
-- `python_cache` for Hugging Face, Whisper, and Torch caches
-- `python_sessions` for temporary facial-analysis session files
+### 2. Install Docker inside WSL (Ubuntu)
 
-That avoids re-downloading heavyweight models on every rebuild while not masking the Python source package under `python-backend/models/`.
+Run these commands in the Ubuntu shell:
+
+```bash
+sudo apt update
+sudo apt install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo service docker start
+sudo docker run hello-world
+```
+
+If `hello-world` works, Docker is ready.
+
+### 3. Start the containers
+
+Clone this repo inside WSL or open the existing checkout from your Ubuntu shell, then go to the repo root:
+
+```bash
+cd /path/to/M_CIR
+```
+
+Create the env file:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and set a real `JWT_SECRET`.
+
+Build and start:
+
+```bash
+sudo docker compose up --build -d
+```
+
+Check that all containers are up:
+
+```bash
+sudo docker compose ps
+```
+
+If something fails during boot:
+
+```bash
+sudo docker compose logs -f
+```
+
+### 4. Ingest the data
+
+The backend container includes a database init script. Run it once after the containers are up:
+
+```bash
+sudo docker compose exec backend npm run init-db
+```
+
+This loads the JSON files from `warrior-support-system/test-data/` into MongoDB.
+
+If you want to wipe and reload the database later:
+
+```bash
+sudo docker compose exec backend npm run reset-db
+```
+
+## URLs
+
+After startup:
+
+- Frontend: `http://localhost:8080`
+- Node API: `http://localhost:5000`
+- Python API: `http://localhost:8000`
+- MongoDB: `localhost:27017`
